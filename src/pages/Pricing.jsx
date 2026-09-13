@@ -1,16 +1,16 @@
 import React from 'react';
 import PageHeader from '../components/common/PageHeader';
 import PricingSection from '../components/home/PricingSection';
-import { ShieldCheck, HelpCircle, CheckCircle } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Pricing() {
   return (
     <div>
       <PageHeader
-        title="Transparent Pricing Plans"
-        subtitle="Choose the perfect subscription plan for your learning pace and professional objectives."
-        breadcrumbs={[{ label: 'Pricing Plans' }]}
+        title="English Tutoring Plans & Memberships"
+        subtitle="Choose the perfect subscription plan for your learning pace, 1-on-1 speaking practice, and exam preparation."
+        breadcrumbs={[{ label: 'Tutoring Plans' }]}
       />
 
       <PricingSection />
@@ -25,16 +25,16 @@ export default function Pricing() {
               </div>
               <div>
                 <h4 className="text-lg sm:text-xl font-bold font-jost text-theme-navy">
-                  30-Day Money-Back Guarantee
+                  30-Day Fluency Guarantee
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-500">
-                  Try any plan risk-free. If you're not 100% satisfied, get a complete refund within 30 days.
+                  Try any tutoring plan risk-free. If you're not completely satisfied with your learning progress, receive a full 100% refund.
                 </p>
               </div>
             </div>
 
             <Link to="/faq" className="btn-outline text-sm px-6 py-2.5 rounded whitespace-nowrap">
-              View FAQs
+              View Tutoring FAQs
             </Link>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
 import VideoModal from '../components/common/VideoModal';
 import { courses } from '../data/mockData';
-import { Star, Clock, BookOpen, Users, CheckCircle2, Play, Lock, ChevronDown, ChevronUp, Share2, Award, Globe } from 'lucide-react';
+import { Star, Clock, BookOpen, CheckCircle2, Play, Lock, ChevronDown, ChevronUp, Award, Globe } from 'lucide-react';
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -15,37 +15,37 @@ export default function CourseDetails() {
 
   const curriculumSections = [
     {
-      title: "Module 1: Foundations & Core Principles",
-      lecturesCount: 4,
-      duration: "2 hours",
-      lessons: [
-        { title: "1.1 Introduction & Course Objectives", duration: "15 min", preview: true },
-        { title: "1.2 Essential Vocabulary & Terminology", duration: "25 min", preview: true },
-        { title: "1.3 Interactive Practice Quiz 1", duration: "30 min", preview: false },
-        { title: "1.4 Practical Case Study Walkthrough", duration: "50 min", preview: false },
-      ]
-    },
-    {
-      title: "Module 2: Intermediate Techniques & Applied Scenarios",
-      lecturesCount: 5,
-      duration: "3.5 hours",
-      lessons: [
-        { title: "2.1 Step-by-Step Implementation", duration: "40 min", preview: false },
-        { title: "2.2 Common Mistakes & Troubleshooting", duration: "35 min", preview: false },
-        { title: "2.3 Real-World Project Assignment", duration: "60 min", preview: false },
-        { title: "2.4 Instructor Feedback Breakdown", duration: "45 min", preview: false },
-        { title: "2.5 Knowledge Check Quiz 2", duration: "30 min", preview: false },
-      ]
-    },
-    {
-      title: "Module 3: Advanced Mastery & Final Certification Project",
+      title: "Module 1: Conversational Fluency & Core Vocabulary",
       lecturesCount: 4,
       duration: "3 hours",
       lessons: [
-        { title: "3.1 Professional Best Practices", duration: "45 min", preview: false },
-        { title: "3.2 Capstone Project Overview", duration: "60 min", preview: false },
-        { title: "3.3 Portfolio Review & Optimization", duration: "45 min", preview: false },
-        { title: "3.4 Final Exam & Certificate Issuance", duration: "30 min", preview: false },
+        { title: "1.1 Eliminating Speech Hesitation & Mindset Shift", duration: "25 min", preview: true },
+        { title: "1.2 Top 500 High-Frequency Spoken Idioms", duration: "45 min", preview: true },
+        { title: "1.3 Interactive Dialogue Drill: Everyday Scenarios", duration: "40 min", preview: false },
+        { title: "1.4 Native Pronunciation & Connected Speech", duration: "50 min", preview: false },
+      ]
+    },
+    {
+      title: "Module 2: Grammar Mastery & Complex Phrasing",
+      lecturesCount: 5,
+      duration: "4 hours",
+      lessons: [
+        { title: "2.1 Natural Use of Perfect & Conditional Tenses", duration: "45 min", preview: false },
+        { title: "2.2 Phrasal Verbs & Prepositions in Context", duration: "40 min", preview: false },
+        { title: "2.3 Listening Comprehension with Native Podcasts", duration: "55 min", preview: false },
+        { title: "2.4 Live Tutor Feedback & Mistake Analysis", duration: "45 min", preview: false },
+        { title: "2.5 Vocabulary Retention Quiz & Flashcards", duration: "35 min", preview: false },
+      ]
+    },
+    {
+      title: "Module 3: Advanced Discussions, Debates & Certification",
+      lecturesCount: 4,
+      duration: "3.5 hours",
+      lessons: [
+        { title: "3.1 Professional & Academic Argumentation", duration: "50 min", preview: false },
+        { title: "3.2 1-on-1 Mock Speaking Assessment", duration: "60 min", preview: false },
+        { title: "3.3 Accent Reduction: Intonation & Syllable Stress", duration: "45 min", preview: false },
+        { title: "3.4 Final CEFR Evaluation & Certificate Award", duration: "35 min", preview: false },
       ]
     }
   ];
@@ -62,7 +62,7 @@ export default function CourseDetails() {
       <PageHeader
         title={course.title}
         breadcrumbs={[
-          { label: 'Courses', path: '/courses' },
+          { label: 'English Courses', path: '/courses' },
           { label: 'Course Details' }
         ]}
       />
@@ -100,7 +100,7 @@ export default function CourseDetails() {
                     className="w-12 h-12 rounded-full object-cover border border-slate-200"
                   />
                   <div>
-                    <span className="text-xs text-slate-400 block">Instructor</span>
+                    <span className="text-xs text-slate-400 block">Lead Native Tutor</span>
                     <span className="text-sm sm:text-base font-bold font-jost text-theme-navy">
                       {course.instructor.name}
                     </span>
@@ -133,20 +133,20 @@ export default function CourseDetails() {
                       <div>
                         <h3 className="text-xl font-bold font-jost text-theme-navy mb-3">Course Description</h3>
                         <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
-                          {course.description || "This course delivers an immersive and comprehensive study program crafted by industry leaders. You will explore core concepts, hands-on scenarios, practical assignments, and interactive exercises to build true mastery."}
+                          {course.description || "This course delivers an immersive, practical English learning experience. You will practice real-time dialogues, master high-frequency conversational expressions, and eliminate pronunciation hesitation with certified native tutors."}
                         </p>
                       </div>
 
                       <div>
-                        <h3 className="text-xl font-bold font-jost text-theme-navy mb-4">What You Will Learn</h3>
+                        <h3 className="text-xl font-bold font-jost text-theme-navy mb-4">What You Will Master</h3>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                           {[
-                            "Master core linguistic & technical frameworks",
-                            "Real-world problem solving methodologies",
-                            "Conversational fluency & active listening",
-                            "Live interactive project reviews & critiques",
-                            "Accredited shareable certificate for LinkedIn",
-                            "24/7 access to instructor Q&A community"
+                            "Speak with spontaneous confidence without translating",
+                            "Master natural English rhythm, intonation & linking",
+                            "Overcome fear of speaking in professional settings",
+                            "High-scoring IELTS / TOEFL response structures",
+                            "Accredited CEFR English Certificate for LinkedIn",
+                            "24/7 access to downloadable audio drills & notes"
                           ].map((item, idx) => (
                             <div key={idx} className="flex items-start space-x-2.5">
                               <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-1" />
@@ -162,7 +162,7 @@ export default function CourseDetails() {
                   {activeTab === 'curriculum' && (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between text-xs sm:text-sm text-slate-500 mb-2">
-                        <span>3 Modules • 13 Lectures • 8.5 Hours Total</span>
+                        <span>3 Modules • 13 Lessons • {course.duration || "18 Hours"} Total</span>
                       </div>
 
                       {curriculumSections.map((section, sIdx) => {
@@ -178,7 +178,7 @@ export default function CourseDetails() {
                                   {section.title}
                                 </h4>
                                 <span className="text-xs text-slate-500">
-                                  {section.lecturesCount} Lectures • {section.duration}
+                                  {section.lecturesCount} Lessons • {section.duration}
                                 </span>
                               </div>
                               {isExpanded ? (
@@ -206,7 +206,7 @@ export default function CourseDetails() {
                                           onClick={() => setVideoOpen(true)}
                                           className="text-xs font-semibold text-theme-primary hover:underline"
                                         >
-                                          Preview
+                                          Preview Lesson
                                         </button>
                                       )}
                                       <span className="text-xs text-slate-400">{lesson.duration}</span>
@@ -234,10 +234,10 @@ export default function CourseDetails() {
                           {course.instructor.name}
                         </h4>
                         <p className="text-sm text-theme-primary font-medium">
-                          {course.instructor.role || "Certified Lead Tutor"}
+                          {course.instructor.role || "Certified Native English Tutor"}
                         </p>
                         <p className="text-sm text-slate-600 leading-relaxed">
-                          With over a decade of hands-on teaching experience, our instructors are passionate about breaking down advanced concepts into easy-to-master practical lessons.
+                          With over a decade of certified ESL teaching experience, our tutors excel at creating a supportive environment where students feel confident practicing spoken English and achieving their personal milestones.
                         </p>
                       </div>
                     </div>
@@ -263,7 +263,7 @@ export default function CourseDetails() {
                     </div>
                   </div>
                   <span className="absolute bottom-3 left-3 bg-black/70 text-white text-xs px-2.5 py-1 rounded">
-                    Preview Course
+                    Preview Sample Lesson
                   </span>
                 </div>
 
@@ -291,19 +291,19 @@ export default function CourseDetails() {
                     <h5 className="font-bold font-jost text-theme-navy text-base">This course includes:</h5>
                     <div className="flex items-center space-x-3 text-slate-600">
                       <Clock className="w-4 h-4 text-theme-primary" />
-                      <span>{course.duration || "14 Hours"} on-demand video</span>
+                      <span>{course.duration || "18 Hours"} on-demand video</span>
                     </div>
                     <div className="flex items-center space-x-3 text-slate-600">
                       <BookOpen className="w-4 h-4 text-theme-primary" />
-                      <span>{course.lessons} downloadable learning modules</span>
+                      <span>{course.lessons} downloadable speaking worksheets</span>
                     </div>
                     <div className="flex items-center space-x-3 text-slate-600">
                       <Award className="w-4 h-4 text-theme-primary" />
-                      <span>Verifiable Certificate of Completion</span>
+                      <span>Accredited CEFR English Certificate</span>
                     </div>
                     <div className="flex items-center space-x-3 text-slate-600">
                       <Globe className="w-4 h-4 text-theme-primary" />
-                      <span>100% Online & Self-Paced</span>
+                      <span>100% Online & Mobile Friendly</span>
                     </div>
                   </div>
                 </div>

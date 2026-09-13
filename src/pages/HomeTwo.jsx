@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, BookOpen, Users, Award, Star, CheckCircle } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import StatsCounter from '../components/home/StatsCounter';
 import CourseFilterSection from '../components/home/CourseFilterSection';
 import AboutSection from '../components/home/AboutSection';
@@ -24,13 +24,13 @@ export default function HomeTwo() {
             
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <span className="inline-block text-theme-coral font-bold text-xs sm:text-sm uppercase tracking-wider bg-theme-coral/10 px-4 py-1.5 rounded-full">
-                Welcome to Eduleb Global Academy
+                Welcome to ENGtutor Online Academy
               </span>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-jost text-white leading-tight">
-                Empower Your Mind With <span className="text-theme-coral">Quality Online</span> Education
+                Empower Your Voice With <span className="text-theme-coral">Fluent English</span> Mastery
               </h1>
               <p className="text-slate-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Connect with world-class mentors, enroll in top-rated courses, and gain verifiable skill credentials that accelerate your career.
+                Connect with certified native tutors, practice real-time conversational dialogues, and achieve verifiable CEFR English language certifications.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                 <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-md">
@@ -42,7 +42,7 @@ export default function HomeTwo() {
                   className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-md flex items-center justify-center space-x-2"
                 >
                   <Play className="w-4 h-4 fill-current" />
-                  <span>Watch Intro</span>
+                  <span>Watch Lesson Tour</span>
                 </button>
               </div>
             </div>
@@ -50,12 +50,9 @@ export default function HomeTwo() {
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 bg-white/5 backdrop-blur-sm p-2">
                 <img
-                  src="/assets/img/about3.png"
-                  alt="Online Study"
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&auto=format&fit=crop&q=80"
+                  alt="Online English Study"
                   className="rounded-2xl w-full h-auto object-cover"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80';
-                  }}
                 />
               </div>
             </div>

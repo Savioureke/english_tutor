@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
 import { blogPosts } from '../data/mockData';
-import { Calendar, MessageSquare, User, Tag, ArrowRight, Send, CheckCircle2 } from 'lucide-react';
+import { Calendar, MessageSquare, User, Send, CheckCircle2 } from 'lucide-react';
 
 export default function BlogDetails() {
   const { id } = useParams();
@@ -29,8 +29,8 @@ export default function BlogDetails() {
       <PageHeader
         title={blog.title}
         breadcrumbs={[
-          { label: 'Blog', path: '/blog' },
-          { label: 'Blog Details' }
+          { label: 'English Blog', path: '/blog' },
+          { label: 'Article Details' }
         ]}
       />
 
@@ -47,9 +47,6 @@ export default function BlogDetails() {
                     src={blog.image}
                     alt={blog.title}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&auto=format&fit=crop&q=80';
-                    }}
                   />
                 </div>
 
@@ -57,7 +54,7 @@ export default function BlogDetails() {
                 <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 mb-6 pb-6 border-b border-slate-100">
                   <span className="flex items-center space-x-1.5">
                     <User className="w-4 h-4 text-theme-primary" />
-                    <span>By {blog.author}</span>
+                    <span>By {blog.author} (Native Tutor)</span>
                   </span>
                   <span className="flex items-center space-x-1.5">
                     <Calendar className="w-4 h-4 text-theme-primary" />
@@ -75,25 +72,25 @@ export default function BlogDetails() {
                 {/* Article Text Content */}
                 <div className="space-y-6 text-slate-700 leading-relaxed text-base sm:text-lg">
                   <p>
-                    Mastering a new language or digital skill in 2026 is no longer about rote memorization or tedious grammatical drilling. With modern interactive learning platforms, learners can achieve conversational confidence in record time by immersing themselves in practical contexts.
+                    Achieving effortless conversational English is the goal of millions of international professionals and students. Too many learners get trapped in endless grammar rule memorization rather than developing spontaneous speech habits with native speakers.
                   </p>
 
                   <h3 className="text-2xl font-bold font-jost text-theme-navy mt-8 mb-4">
-                    1. Focus on High-Frequency Speaking Scenarios
+                    1. Practice Thinking in English Through Daily Self-Talk
                   </h3>
                   <p>
-                    Studies demonstrate that the top 1,000 conversational words account for nearly 85% of daily professional speech. By prioritizing active verbal practice with certified native tutors, students bypass cognitive fatigue and develop instinctual fluency.
+                    Narrating your daily activities in English in your mind replaces internal translation from your native language. By pairing this habit with 2–3 live 1-on-1 tutoring sessions per week, you develop intuitive conversational reflexes.
                   </p>
 
                   <blockquote className="p-6 rounded-2xl bg-[#f8f9fc] border-l-4 border-theme-primary my-6 font-jost italic text-theme-navy text-lg">
-                    "Fluency is not the perfection of grammar; it is the confidence to connect, listen, and articulate your ideas without hesitation."
+                    "Language is a muscle. Spoken fluency is built through active verbal interaction, emotional connection, and consistent conversational feedback."
                   </blockquote>
 
                   <h3 className="text-2xl font-bold font-jost text-theme-navy mt-8 mb-4">
-                    2. Consistency Trumps Long Study Cramming
+                    2. Shadow Native Speakers for Intonation and Connected Speech
                   </h3>
                   <p>
-                    Committing to 20 minutes of daily deliberate practice produces substantially higher neural retention than a single 3-hour marathon session per week. Micro-learning modules and conversational quizzes keep your brain stimulated and engaged.
+                    Listen to short audio clips from podcasts or video lessons, then mimic the exact pitch, pauses, and linked consonants. This technique rapidly eliminates robotic pronunciation and builds natural vocal rhythm.
                   </p>
                 </div>
               </article>
@@ -132,7 +129,7 @@ export default function BlogDetails() {
                   </div>
                   <textarea
                     rows={4}
-                    placeholder="Write your comment here..."
+                    placeholder="Write your thoughts or ask a question about English study..."
                     required
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
@@ -151,7 +148,7 @@ export default function BlogDetails() {
               {/* Recent Articles Widget */}
               <div className="bg-white rounded-2xl p-6 shadow-card border border-slate-100">
                 <h4 className="text-lg font-bold font-jost text-theme-navy mb-5 pb-3 border-b border-slate-100">
-                  Recent Articles
+                  Recent English Articles
                 </h4>
                 <div className="space-y-4">
                   {blogPosts.map((item) => (
@@ -178,13 +175,13 @@ export default function BlogDetails() {
               {/* Promo Banner Widget */}
               <div className="bg-theme-navy text-white rounded-2xl p-6 text-center space-y-4 shadow-xl">
                 <h4 className="text-xl font-bold font-jost text-white">
-                  Join Our Free English Webinar
+                  Free Spoken English Assessment
                 </h4>
                 <p className="text-xs text-slate-300">
-                  Reserve your live virtual seat and receive our 2026 English Career Vocabulary Guide.
+                  Book a 15-minute 1-on-1 diagnostic call with an Oxford-certified tutor and get your CEFR level score.
                 </p>
                 <Link to="/contact" className="btn-primary w-full text-center text-sm py-2.5 rounded block">
-                  Register for Free
+                  Book Free Assessment
                 </Link>
               </div>
             </div>

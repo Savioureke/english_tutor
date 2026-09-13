@@ -2,15 +2,15 @@ import React from 'react';
 import PageHeader from '../components/common/PageHeader';
 import InstructorCard from '../components/common/InstructorCard';
 import { instructors } from '../data/mockData';
-import { Award, Users, BookOpen, Star } from 'lucide-react';
+import { Award, Users, Star } from 'lucide-react';
 
 export default function Instructors() {
   return (
     <div>
       <PageHeader
-        title="Meet Our Certified Instructors"
-        subtitle="Learn from accredited industry leaders passionate about personal mentorship and educational excellence."
-        breadcrumbs={[{ label: 'Instructors' }]}
+        title="Meet Our Certified Native Tutors"
+        subtitle="Learn from accredited ESL educators passionate about personalized speaking practice and English language success."
+        breadcrumbs={[{ label: 'English Tutors' }]}
       />
 
       <section className="py-16 lg:py-24 bg-[#f8f9fc]">
@@ -29,24 +29,24 @@ export default function Instructors() {
                 <div className="w-12 h-12 rounded-2xl bg-theme-primary/10 text-theme-primary flex items-center justify-center mx-auto">
                   <Award className="w-6 h-6" />
                 </div>
-                <h4 className="text-lg font-bold font-jost text-theme-navy">Vetted & Certified</h4>
-                <p className="text-xs sm:text-sm text-slate-500">Every instructor undergoes rigorous screening and pedagogical review.</p>
+                <h4 className="text-lg font-bold font-jost text-theme-navy">CELTA & TEFL Certified</h4>
+                <p className="text-xs sm:text-sm text-slate-500">Every tutor holds verified international teaching credentials and linguistics background.</p>
               </div>
 
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-theme-coral/10 text-theme-coral flex items-center justify-center mx-auto">
                   <Users className="w-6 h-6" />
                 </div>
-                <h4 className="text-lg font-bold font-jost text-theme-navy">1-on-1 Mentorship</h4>
-                <p className="text-xs sm:text-sm text-slate-500">Get direct code reviews, speaking practice, and career roadmap guidance.</p>
+                <h4 className="text-lg font-bold font-jost text-theme-navy">1-on-1 Dialogue Coaching</h4>
+                <p className="text-xs sm:text-sm text-slate-500">Practice live conversations, get accent corrections, and build spontaneous confidence.</p>
               </div>
 
               <div className="space-y-3">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                   <Star className="w-6 h-6" />
                 </div>
-                <h4 className="text-lg font-bold font-jost text-theme-navy">5-Star Rated Feedback</h4>
-                <p className="text-xs sm:text-sm text-slate-500">Over 98% of students rate our instructor sessions 5 out of 5 stars.</p>
+                <h4 className="text-lg font-bold font-jost text-theme-navy">4.9+ Average Rating</h4>
+                <p className="text-xs sm:text-sm text-slate-500">Over 99% of our students report noticeable conversational fluency within 4 weeks.</p>
               </div>
             </div>
           </div>

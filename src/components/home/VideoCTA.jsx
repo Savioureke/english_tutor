@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Play, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Play, ArrowRight } from 'lucide-react';
 
 export default function VideoCTA({ onOpenVideo }) {
   return (
@@ -15,7 +15,7 @@ export default function VideoCTA({ onOpenVideo }) {
         <div className="mb-8">
           <button
             onClick={onOpenVideo}
-            aria-label="Play Video Presentation"
+            aria-label="Play Lesson Video"
             className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-theme-primary text-white flex items-center justify-center mx-auto hover:bg-theme-coral transition-all transform hover:scale-110 shadow-2xl animate-pulse-slow"
           >
             <Play className="w-8 h-8 sm:w-10 sm:h-10 fill-current ml-1" />
@@ -23,24 +23,24 @@ export default function VideoCTA({ onOpenVideo }) {
         </div>
 
         <span className="inline-block text-theme-coral font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-          Interactive Video Tour
+          Interactive Live Lesson Tour
         </span>
 
         <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-jost text-white leading-tight mb-6">
-          Learn English with Confidence & Clarity from Real Certified Experts
+          Experience How 1-on-1 English Tutoring Unlocks Spoken Fluency Fast
         </h2>
 
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
-          Watch how our conversational English method and personalized instruction help learners reach conversational fluency 3x faster than traditional classrooms.
+          Watch a sample lesson with our native tutors to see how real-time dialogue coaching, pronunciation correction, and personalized feedback build confidence.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-md">
-            <span>Get Started Today</span>
+            <span>Explore English Courses</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
           <Link to="/contact" className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-md">
-            <span>Book Free Demo</span>
+            <span>Book Free Trial Lesson</span>
           </Link>
         </div>
       </div>

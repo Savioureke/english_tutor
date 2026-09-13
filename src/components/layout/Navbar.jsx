@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ChevronRight, Phone, Mail, User, BookOpen } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronRight, Phone, Mail, GraduationCap } from 'lucide-react';
 import { navLinks } from '../../data/mockData';
 
 export default function Navbar() {
@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Top Bar for contact info & quick links */}
+      {/* Top Bar for contact info & placement test banner */}
       <div className="bg-[#0b104a] text-white/80 text-xs sm:text-sm py-2 px-4 border-b border-white/10 hidden md:block">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-6">
@@ -50,14 +50,14 @@ export default function Navbar() {
               <Phone className="w-3.5 h-3.5 text-theme-primary" />
               <span>+1 (234) 567-890</span>
             </a>
-            <a href="mailto:info@eduleb.com" className="flex items-center space-x-1.5 hover:text-white transition-colors">
+            <a href="mailto:support@engtutor.com" className="flex items-center space-x-1.5 hover:text-white transition-colors">
               <Mail className="w-3.5 h-3.5 text-theme-primary" />
-              <span>info@eduleb.com</span>
+              <span>support@engtutor.com</span>
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-white/60">English Language Learning Platform</span>
-            <span className="text-theme-coral font-medium">Free Placement Test Available</span>
+            <span className="text-white/60">Certified Native English Tutors</span>
+            <span className="text-theme-coral font-medium">Free 15-Min Level Assessment</span>
           </div>
         </div>
       </div>
@@ -71,22 +71,14 @@ export default function Navbar() {
         }`}
       >
         <div className="container mx-auto flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center space-x-2.5">
-            <img
-              src="/assets/img/logo.png"
-              alt="Eduleb Logo"
-              className="h-9 sm:h-10 w-auto object-contain"
-              onError={(e) => {
-                // Fallback text logo if image fails
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            <div className="hidden items-center space-x-2 text-theme-navy font-jost font-bold text-2xl tracking-tight">
-              <BookOpen className="w-7 h-7 text-theme-primary" />
-              <span>Edu<span className="text-theme-primary">leb</span></span>
+          {/* Brand Logo: ENGtutor */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-theme-primary flex items-center justify-center text-white shadow-md shadow-theme-primary/30">
+              <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
+            <span className="text-2xl sm:text-3xl font-extrabold font-jost text-theme-navy tracking-tight">
+              ENG<span className="text-theme-primary">tutor</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -179,7 +171,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Mobile Navigation Drawer Backdrop & Panel */}
+      {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div
           className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 lg:hidden transition-opacity"
@@ -192,8 +184,13 @@ export default function Navbar() {
             {/* Drawer Header */}
             <div>
               <div className="p-5 flex items-center justify-between border-b border-slate-100 bg-slate-50">
-                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-                  <img src="/assets/img/logo.png" alt="Eduleb" className="h-8 w-auto" />
+                <Link to="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center space-x-2">
+                  <div className="w-8 h-8 rounded-lg bg-theme-primary flex items-center justify-center text-white">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                  <span className="text-xl font-extrabold font-jost text-theme-navy">
+                    ENG<span className="text-theme-primary">tutor</span>
+                  </span>
                 </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
@@ -204,7 +201,7 @@ export default function Navbar() {
                 </button>
               </div>
 
-              {/* Mobile Menu Navigation Items */}
+              {/* Mobile Menu Items */}
               <div className="p-4 space-y-1">
                 {navLinks.map((item, index) => {
                   const hasChildren = item.sublinks && item.sublinks.length > 0;
@@ -256,7 +253,7 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Mobile Drawer Footer with Sign In & Sign Up */}
+            {/* Mobile Drawer Footer */}
             <div className="p-5 border-t border-slate-100 bg-slate-50 space-y-3">
               <Link
                 to="/contact"
@@ -273,7 +270,7 @@ export default function Navbar() {
                 Sign Up Now
               </Link>
               <div className="text-center pt-2">
-                <p className="text-xs text-slate-500">Need help? support@eduleb.com</p>
+                <p className="text-xs text-slate-500">Need help? support@engtutor.com</p>
               </div>
             </div>
           </div>

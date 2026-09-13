@@ -12,13 +12,13 @@ export default function PricingSection() {
         {/* Section Title */}
         <div className="section-title">
           <span className="section-title-tag">
-            Pricing Plans
+            Tutoring Plans
           </span>
           <h2 className="section-title-heading">
-            Simple, Transparent Membership Plans
+            Flexible English Tutoring Memberships
           </h2>
           <p className="section-title-desc">
-            Choose the ideal learning path that fits your budget and career goals. Cancel anytime.
+            Choose the ideal learning path that fits your schedule and fluency goals. Cancel or switch tutors anytime.
           </p>
         </div>
 

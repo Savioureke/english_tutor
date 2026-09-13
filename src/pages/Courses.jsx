@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PageHeader from '../components/common/PageHeader';
 import CourseCard from '../components/common/CourseCard';
 import { courses, courseCategories } from '../data/mockData';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function Courses() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,16 +11,17 @@ export default function Courses() {
   const filteredCourses = courses.filter((course) => {
     const matchesCategory = selectedCategory === 'All' || course.category === selectedCategory;
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          course.category.toLowerCase().includes(searchTerm.toLowerCase());
+                          course.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          course.instructor.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   return (
     <div>
       <PageHeader
-        title="Explore Online Courses"
-        subtitle="Browse our comprehensive library of accredited courses taught by certified native tutors and specialists."
-        breadcrumbs={[{ label: 'Courses' }]}
+        title="Explore English Tutoring Courses"
+        subtitle="Browse our comprehensive catalog of accredited English courses taught by certified native tutors."
+        breadcrumbs={[{ label: 'English Courses' }]}
       />
 
       <section className="py-16 lg:py-20 bg-[#f8f9fc]">
@@ -34,7 +35,7 @@ export default function Courses() {
               <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search courses..."
+                placeholder="Search English courses or tutors..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-11 pr-4 text-sm text-theme-navy placeholder-slate-400 focus:outline-none focus:border-theme-primary focus:ring-1 focus:ring-theme-primary"
@@ -62,13 +63,13 @@ export default function Courses() {
 
           {/* Results Summary */}
           <div className="flex items-center justify-between mb-8 text-sm text-slate-500">
-            <span>Showing <strong className="text-theme-navy">{filteredCourses.length}</strong> available courses</span>
+            <span>Showing <strong className="text-theme-navy">{filteredCourses.length}</strong> available English courses</span>
             {searchTerm && (
               <button
                 onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
                 className="text-theme-coral hover:underline font-medium text-xs"
               >
-                Clear Filters
+                Clear Search
               </button>
             )}
           </div>
@@ -82,8 +83,8 @@ export default function Courses() {
             </div>
           ) : (
             <div className="bg-white rounded-2xl p-12 text-center border border-slate-100 shadow-sm max-w-lg mx-auto">
-              <p className="text-lg font-bold font-jost text-theme-navy mb-2">No courses found</p>
-              <p className="text-sm text-slate-500 mb-6">Try searching with a different keyword or selecting a different category.</p>
+              <p className="text-lg font-bold font-jost text-theme-navy mb-2">No English courses found</p>
+              <p className="text-sm text-slate-500 mb-6">Try searching with a different keyword or selecting another category.</p>
               <button
                 onClick={() => { setSearchTerm(''); setSelectedCategory('All'); }}
                 className="btn-primary text-sm px-6 py-2.5 rounded"

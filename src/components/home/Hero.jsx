@@ -16,13 +16,13 @@ export default function Hero({ onOpenVideo }) {
           <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center space-x-2 bg-theme-primary/10 text-theme-primary px-4 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide">
               <Sparkles className="w-4 h-4 text-theme-primary" />
-              <span>#1 English & Digital Learning Platform</span>
+              <span>#1 Live Online English Tutoring Academy</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold font-jost text-theme-navy leading-[1.15] tracking-tight">
-              Master English & Unlock <br className="hidden sm:inline" />
+              Speak Fluent English & <br className="hidden sm:inline" />
               <span className="text-theme-primary relative inline-block">
-                Global Career
+                Unlock Global
                 <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 250 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3 9C60 3 190 3 247 9" stroke="#f26b65" strokeWidth="4" strokeLinecap="round"/>
                 </svg>
@@ -30,13 +30,13 @@ export default function Hero({ onOpenVideo }) {
             </h1>
 
             <p className="text-base sm:text-lg text-theme-body max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Accelerate your language fluency and acquire in-demand professional skills through interactive live classes, 1-on-1 mentorship, and accredited certifications.
+              Achieve natural spoken fluency, ace your IELTS/TOEFL exams, and elevate your international career with certified native English tutors in customized 1-on-1 lessons.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-4 text-base rounded-md shadow-md hover:shadow-lg">
-                <span>Explore All Courses</span>
+                <span>Find Your English Course</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
               
@@ -47,7 +47,7 @@ export default function Hero({ onOpenVideo }) {
                 <span className="w-12 h-12 rounded-full bg-theme-primary/10 text-theme-primary flex items-center justify-center group-hover:bg-theme-primary group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm">
                   <Play className="w-5 h-5 fill-current ml-0.5" />
                 </span>
-                <span>Watch Video Tour</span>
+                <span>Watch Demo Lesson</span>
               </button>
             </div>
 
@@ -55,44 +55,40 @@ export default function Hero({ onOpenVideo }) {
             <div className="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm text-slate-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Certified Native Tutors</span>
+                <span>100% Native English Tutors</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Lifetime Video Access</span>
+                <span>1-on-1 Speaking Practice</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Verified Certificates</span>
+                <span>Verifiable CEFR Certificate</span>
               </div>
             </div>
           </div>
 
           {/* Right Column: Hero Visual Showcase */}
           <div className="lg:col-span-5 relative flex justify-center items-center">
-            {/* Background Decorative Shape */}
             <div className="relative w-full max-w-md lg:max-w-none">
               
-              {/* Main Image Frame */}
+              {/* Main Image Frame with distinct English student photo */}
               <div className="relative z-10 rounded-3xl overflow-hidden border-8 border-white shadow-2xl bg-white">
                 <img
-                  src="/assets/img/about1.png"
-                  alt="Student Learning English"
+                  src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=700&auto=format&fit=crop&q=80"
+                  alt="Student Learning English Online"
                   className="w-full h-auto object-cover transform hover:scale-102 transition-transform duration-500"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&auto=format&fit=crop&q=80';
-                  }}
                 />
               </div>
 
-              {/* Floating Stat Badge: Satisfied Students */}
+              {/* Floating Stat Badge */}
               <div className="absolute -bottom-6 -left-4 sm:-left-8 z-20 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-2xl shadow-xl border border-slate-100 flex items-center space-x-4 animate-float">
                 <div className="w-12 h-12 rounded-xl bg-theme-primary/10 flex items-center justify-center text-theme-primary">
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">45,000+</div>
-                  <div className="text-xs text-slate-500">Enrolled Students Worldwide</div>
+                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">35,000+</div>
+                  <div className="text-xs text-slate-500">Fluent English Learners</div>
                 </div>
               </div>
 
@@ -103,7 +99,7 @@ export default function Hero({ onOpenVideo }) {
                 </div>
                 <div>
                   <div className="text-base font-bold font-jost text-theme-navy">4.9 / 5.0</div>
-                  <div className="text-xs text-slate-500">Rated by 2,400+ Reviews</div>
+                  <div className="text-xs text-slate-500">Rated by 3,800+ Students</div>
                 </div>
               </div>
             </div>

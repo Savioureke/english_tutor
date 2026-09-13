@@ -38,8 +38,8 @@ export default function Contact() {
   return (
     <div>
       <PageHeader
-        title="Contact Us"
-        subtitle="Get in touch with our admissions and student support team. We're here to help you get started."
+        title="Contact ENGtutor"
+        subtitle="Get in touch with our English student advisors. Book your free 1-on-1 placement assessment or ask any questions."
         breadcrumbs={[{ label: 'Contact Us' }]}
       />
 
@@ -52,7 +52,7 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-xl bg-theme-primary/10 text-theme-primary flex items-center justify-center mx-auto mb-4">
                 <MapPin className="w-6 h-6" />
               </div>
-              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Our Campus</h4>
+              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">London Academy</h4>
               <p className="text-xs sm:text-sm text-slate-500">124 King Street, London, United Kingdom</p>
             </div>
 
@@ -60,7 +60,7 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-xl bg-theme-coral/10 text-theme-coral flex items-center justify-center mx-auto mb-4">
                 <Phone className="w-6 h-6" />
               </div>
-              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Phone Number</h4>
+              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Direct Hotline</h4>
               <p className="text-xs sm:text-sm text-slate-500">+1 (234) 567-890<br />+1 (987) 654-321</p>
             </div>
 
@@ -68,16 +68,16 @@ export default function Contact() {
               <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4">
                 <Mail className="w-6 h-6" />
               </div>
-              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Email Address</h4>
-              <p className="text-xs sm:text-sm text-slate-500">info@eduleb.com<br />admissions@eduleb.com</p>
+              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Student Support</h4>
+              <p className="text-xs sm:text-sm text-slate-500">support@engtutor.com<br />admissions@engtutor.com</p>
             </div>
 
             <div className="bg-white rounded-2xl p-6 text-center border border-slate-100 shadow-card">
               <div className="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center mx-auto mb-4">
                 <Clock className="w-6 h-6" />
               </div>
-              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Working Hours</h4>
-              <p className="text-xs sm:text-sm text-slate-500">Mon - Fri: 8:00 AM - 8:00 PM<br />Sat - Sun: 10:00 AM - 4:00 PM</p>
+              <h4 className="font-bold font-jost text-theme-navy text-lg mb-1">Tutoring Hours</h4>
+              <p className="text-xs sm:text-sm text-slate-500">24/7 Global Timezone Availability<br />Live Sessions on Zoom / WebRTC</p>
             </div>
           </div>
 
@@ -86,16 +86,16 @@ export default function Contact() {
             {/* Contact Form (7 Cols) */}
             <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-12 shadow-card border border-slate-100">
               <div className="mb-8">
-                <span className="section-title-tag">Send Message</span>
+                <span className="section-title-tag">Get Started</span>
                 <h3 className="text-2xl sm:text-3xl font-bold font-jost text-theme-navy mt-1">
-                  Have Questions? Send Us a Message
+                  Book a Free Level Assessment or Send an Inquiry
                 </h3>
               </div>
 
               {submitted && (
                 <div className="mb-6 p-4 rounded-xl bg-emerald-50 text-emerald-700 flex items-center space-x-3 text-sm">
                   <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-emerald-600" />
-                  <span>Thank you! Your message has been sent successfully. We will reply within 24 hours.</span>
+                  <span>Thank you! We received your message and an English advisor will reach out to you within 24 hours.</span>
                 </div>
               )}
 
@@ -111,7 +111,7 @@ export default function Contact() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="e.g. Sarah Connor"
+                      placeholder="e.g. Elena Gomez"
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm focus:outline-none focus:border-theme-primary"
                     />
                   </div>
@@ -125,7 +125,7 @@ export default function Contact() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="e.g. sarah@example.com"
+                      placeholder="e.g. elena@example.com"
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm focus:outline-none focus:border-theme-primary"
                     />
                   </div>
@@ -134,7 +134,7 @@ export default function Contact() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold font-jost text-theme-navy uppercase tracking-wider mb-2">
-                      Phone Number
+                      Phone / WhatsApp Number
                     </label>
                     <input
                       type="tel"
@@ -147,14 +147,14 @@ export default function Contact() {
                   </div>
                   <div>
                     <label className="block text-xs font-bold font-jost text-theme-navy uppercase tracking-wider mb-2">
-                      Subject
+                      Goal / Learning Interest
                     </label>
                     <input
                       type="text"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      placeholder="e.g. Course Enrollment"
+                      placeholder="e.g. IELTS Exam Prep / Spoken Fluency"
                       className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm focus:outline-none focus:border-theme-primary"
                     />
                   </div>
@@ -162,7 +162,7 @@ export default function Contact() {
 
                 <div>
                   <label className="block text-xs font-bold font-jost text-theme-navy uppercase tracking-wider mb-2">
-                    Your Message *
+                    Your Message / Target Goals *
                   </label>
                   <textarea
                     name="message"
@@ -170,26 +170,26 @@ export default function Contact() {
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us how we can assist you..."
+                    placeholder="Tell us your current English level and what you want to achieve..."
                     className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-sm focus:outline-none focus:border-theme-primary"
                   ></textarea>
                 </div>
 
                 <button type="submit" className="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-lg text-sm">
-                  <span>Send Message</span>
+                  <span>Send Message & Book Test</span>
                   <Send className="w-4 h-4 ml-2" />
                 </button>
               </form>
             </div>
 
-            {/* Location & Map Preview (5 Cols) */}
+            {/* Location & Academy Preview (5 Cols) */}
             <div className="lg:col-span-5 bg-white rounded-3xl p-8 sm:p-10 shadow-card border border-slate-100 flex flex-col justify-between">
               <div>
                 <h3 className="text-2xl font-bold font-jost text-theme-navy mb-4">
-                  Visit Our Learning Center
+                  Visit ENGtutor Language Center
                 </h3>
                 <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                  Experience our immersive smart classrooms, meet certified instructors in person, and take a free computer-based placement test.
+                  Experience interactive smart classrooms, meet our certified native English instructors in person, and take a free CEFR diagnostic exam.
                 </p>
               </div>
 

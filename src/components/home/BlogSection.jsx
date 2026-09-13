@@ -11,13 +11,13 @@ export default function BlogSection() {
         {/* Section Title */}
         <div className="section-title">
           <span className="section-title-tag">
-            Latest News & Articles
+            English Study Guides
           </span>
           <h2 className="section-title-heading">
-            Educational Insights & Study Guides
+            Latest Tips, Idioms & Fluency Articles
           </h2>
           <p className="section-title-desc">
-            Stay updated with modern learning methodologies, language study routines, and career advice.
+            Stay updated with proven speaking techniques, IELTS test strategies, and professional vocabulary guides.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export default function BlogSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <Link to="/blog" className="btn-outline">
-            <span>Read All Articles</span>
+            <span>Read All English Guides</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>

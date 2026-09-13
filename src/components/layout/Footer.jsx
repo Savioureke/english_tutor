@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, Facebook, Twitter, Linkedin, Instagram, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Facebook, Twitter, Linkedin, Instagram, CheckCircle2, GraduationCap } from 'lucide-react';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -20,24 +20,19 @@ export default function Footer() {
       <div className="container mx-auto">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
-          {/* Col 1: About & Info */}
+          
+          {/* Col 1: Brand & About */}
           <div className="space-y-5">
-            <Link to="/" className="inline-block">
-              <img
-                src="/assets/img/logo.png"
-                alt="Eduleb"
-                className="h-10 w-auto brightness-200 contrast-125"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.nextSibling.style.display = 'block';
-                }}
-              />
-              <span className="hidden text-white font-jost font-bold text-2xl">
-                Edu<span className="text-theme-primary">leb</span>
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-10 h-10 rounded-xl bg-theme-primary flex items-center justify-center text-white shadow-md">
+                <GraduationCap className="w-6 h-6" />
+              </div>
+              <span className="text-2xl sm:text-3xl font-extrabold font-jost text-white tracking-tight">
+                ENG<span className="text-theme-primary">tutor</span>
               </span>
             </Link>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Empowering global learners through world-class English tutoring and modern digital skill courses led by certified industry experts.
+              Empowering global learners to achieve fluent English communication, IELTS & TOEFL exam success, and career confidence through 1-on-1 sessions with certified native tutors.
             </p>
             <div className="flex items-center space-x-3 pt-2">
               <a
@@ -82,27 +77,27 @@ export default function Footer() {
           {/* Col 2: Quick Links */}
           <div>
             <h4 className="text-white font-jost font-semibold text-lg sm:text-xl mb-5 border-l-4 border-theme-primary pl-3">
-              Explore Links
+              Explore Programs
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/about" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>About Our Academy</span>
+                  <span>›</span> <span>About ENGtutor Academy</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Popular Online Courses</span>
+                  <span>›</span> <span>Conversational English Courses</span>
                 </Link>
               </li>
               <li>
                 <Link to="/instructors" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Certified Instructors</span>
+                  <span>›</span> <span>Certified Native Tutors</span>
                 </Link>
               </li>
               <li>
                 <Link to="/pricing" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Membership Pricing</span>
+                  <span>›</span> <span>Tutoring Membership Plans</span>
                 </Link>
               </li>
               <li>
@@ -112,7 +107,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/contact" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Contact & Support</span>
+                  <span>›</span> <span>Book Free Level Test</span>
                 </Link>
               </li>
             </ul>
@@ -121,37 +116,37 @@ export default function Footer() {
           {/* Col 3: Popular Categories */}
           <div>
             <h4 className="text-white font-jost font-semibold text-lg sm:text-xl mb-5 border-l-4 border-theme-primary pl-3">
-              Top Categories
+              English Categories
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Conversational English</span>
+                  <span>›</span> <span>Conversational Fluency</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Business Communication</span>
+                  <span>›</span> <span>IELTS Academic & General</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>UI/UX & Product Design</span>
+                  <span>›</span> <span>Business English for Leaders</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Full Stack Web Development</span>
+                  <span>›</span> <span>Accent Reduction & Phonetics</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Digital Marketing & SEO</span>
+                  <span>›</span> <span>TOEFL iBT High Scoring</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Financial Analysis</span>
+                  <span>›</span> <span>Grammar & Vocabulary Mastery</span>
                 </Link>
               </li>
             </ul>
@@ -163,7 +158,7 @@ export default function Footer() {
               Newsletter
             </h4>
             <p className="text-sm text-slate-300 mb-4">
-              Subscribe to get exclusive discounts, weekly English study tips, and early course access.
+              Subscribe for weekly English vocabulary guides, idiom of the day, and exclusive tutoring discounts.
             </p>
             <form onSubmit={handleSubscribe} className="space-y-3">
               <div className="relative">
@@ -206,11 +201,11 @@ export default function Footer() {
 
         {/* Bottom Copyright */}
         <div className="pt-8 mt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm text-slate-400 gap-4">
-          <p>© {new Date().getFullYear()} Eduleb Education. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} ENGtutor Language Academy. All Rights Reserved.</p>
           <div className="flex items-center space-x-6">
             <Link to="/about" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link to="/about" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link to="/contact" className="hover:text-white transition-colors">Support</Link>
+            <Link to="/contact" className="hover:text-white transition-colors">Contact Support</Link>
           </div>
         </div>
       </div>

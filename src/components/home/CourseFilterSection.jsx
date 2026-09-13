@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import CourseCard from '../common/CourseCard';
 import { courses, courseCategories } from '../../data/mockData';
 
@@ -17,13 +17,13 @@ export default function CourseFilterSection() {
         {/* Section Heading */}
         <div className="section-title">
           <span className="section-title-tag">
-            Our Popular Courses
+            Our English Programs
           </span>
           <h2 className="section-title-heading">
-            Explore Top Rated Interactive Courses
+            Explore Top-Rated English Tutoring Courses
           </h2>
           <p className="section-title-desc">
-            Choose from industry-vetted courses designed to build practical mastery and accelerate your career.
+            Choose from comprehensive courses designed to develop spoken fluency, business communication, and exam mastery.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default function CourseFilterSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <Link to="/courses" className="btn-outline">
-            <span>Browse All 150+ Courses</span>
+            <span>Browse All English Courses</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>

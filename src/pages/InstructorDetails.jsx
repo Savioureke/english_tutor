@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
 import CourseCard from '../components/common/CourseCard';
 import { instructors, courses } from '../data/mockData';
-import { Star, BookOpen, Users, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Star, BookOpen, Users, Facebook, Twitter, Linkedin } from 'lucide-react';
 
 export default function InstructorDetails() {
   const { id } = useParams();
@@ -11,10 +11,10 @@ export default function InstructorDetails() {
   const instructorCourses = courses.filter((c) => c.instructor.name === instructor.name);
 
   const skills = [
-    { name: "Language Teaching Methodology", percentage: 95 },
-    { name: "Curriculum & Lesson Planning", percentage: 90 },
-    { name: "Conversational Coaching", percentage: 98 },
-    { name: "Student Mentorship & Support", percentage: 92 },
+    { name: "Conversational Coaching & Dialogue", percentage: 98 },
+    { name: "Accent Reduction & Phonetics", percentage: 95 },
+    { name: "IELTS / TOEFL Exam Strategy", percentage: 94 },
+    { name: "Grammar Demystification & Syntax", percentage: 96 },
   ];
 
   return (
@@ -22,8 +22,8 @@ export default function InstructorDetails() {
       <PageHeader
         title={instructor.name}
         breadcrumbs={[
-          { label: 'Instructors', path: '/instructors' },
-          { label: 'Instructor Details' }
+          { label: 'English Tutors', path: '/instructors' },
+          { label: 'Tutor Details' }
         ]}
       />
 
@@ -40,9 +40,6 @@ export default function InstructorDetails() {
                     src={instructor.image}
                     alt={instructor.name}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80';
-                    }}
                   />
                 </div>
                 <div className="flex items-center justify-center space-x-3">
@@ -83,13 +80,13 @@ export default function InstructorDetails() {
                     {instructor.name}
                   </h2>
                   <p className="text-slate-600 leading-relaxed text-sm sm:text-base">
-                    {instructor.bio} With years of active classroom and online tutoring experience, {instructor.name} specializes in personalized learning paths, interactive dialogues, and boosting conversational fluency for international professionals.
+                    {instructor.bio} Passionate about breaking down speaking anxiety and accelerating natural verbal fluency through interactive conversation scenarios and constructive accent feedback.
                   </p>
                 </div>
 
                 {/* Skill Bars */}
                 <div className="space-y-4 pt-2">
-                  <h4 className="font-bold font-jost text-theme-navy text-lg">Core Competencies</h4>
+                  <h4 className="font-bold font-jost text-theme-navy text-lg">Tutoring Competencies</h4>
                   {skills.map((skill, sIdx) => (
                     <div key={sIdx} className="space-y-1.5">
                       <div className="flex justify-between text-xs sm:text-sm font-medium text-slate-700">
@@ -110,15 +107,15 @@ export default function InstructorDetails() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
                   <div className="flex items-center space-x-2 text-sm text-slate-600">
                     <BookOpen className="w-4 h-4 text-theme-primary" />
-                    <span>{instructor.coursesCount} Courses Taught</span>
+                    <span>{instructor.coursesCount} English Courses</span>
                   </div>
                   <div className="flex items-center space-x-2 text-sm text-slate-600">
                     <Users className="w-4 h-4 text-theme-coral" />
-                    <span>{instructor.students} Students</span>
+                    <span>{instructor.students} Students Coached</span>
                   </div>
                   <div className="flex items-center space-x-2 text-sm text-slate-600">
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                    <span>{instructor.rating} Instructor Rating</span>
+                    <span>{instructor.rating} Tutor Rating</span>
                   </div>
                 </div>
               </div>
@@ -129,7 +126,7 @@ export default function InstructorDetails() {
           {/* Assigned Courses Section */}
           <div>
             <h3 className="text-2xl font-bold font-jost text-theme-navy mb-8">
-              Courses by {instructor.name}
+              Courses Taught by {instructor.name}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {(instructorCourses.length > 0 ? instructorCourses : courses.slice(0, 3)).map((course) => (

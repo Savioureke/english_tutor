@@ -17,18 +17,17 @@ export default function TestimonialsSection() {
 
   return (
     <section className="py-16 lg:py-24 bg-[#f8f9fc] relative overflow-hidden">
-      {/* Background Graphic elements */}
       <div className="container mx-auto">
         {/* Section Title */}
         <div className="section-title">
           <span className="section-title-tag">
-            Testimonials
+            Student Success Stories
           </span>
           <h2 className="section-title-heading">
-            What Our Students Say About Eduleb
+            What Our Students Say About ENGtutor
           </h2>
           <p className="section-title-desc">
-            Read genuine success stories from learners who achieved fluency and career breakthroughs.
+            Read inspiring stories from global learners who achieved spoken fluency, IELTS high bands, and career milestones.
           </p>
         </div>
 
@@ -55,13 +54,20 @@ export default function TestimonialsSection() {
 
             {/* Author Info & Nav Buttons */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-t border-slate-100 pt-6 gap-4">
-              <div>
-                <h4 className="text-lg font-bold font-jost text-theme-navy">
-                  {currentTestimonial.name}
-                </h4>
-                <p className="text-xs sm:text-sm text-theme-primary font-medium">
-                  {currentTestimonial.role}
-                </p>
+              <div className="flex items-center space-x-4">
+                <img
+                  src={currentTestimonial.avatar}
+                  alt={currentTestimonial.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-200"
+                />
+                <div>
+                  <h4 className="text-lg font-bold font-jost text-theme-navy">
+                    {currentTestimonial.name}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-theme-primary font-medium">
+                    {currentTestimonial.role}
+                  </p>
+                </div>
               </div>
 
               {/* Slider Controls */}

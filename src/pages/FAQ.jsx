@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PageHeader from '../components/common/PageHeader';
 import { faqs } from '../data/mockData';
-import { ChevronDown, HelpCircle, MessageSquare, Mail, Phone, ArrowRight } from 'lucide-react';
+import { ChevronDown, MessageSquare, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function FAQ() {
@@ -18,7 +18,7 @@ export default function FAQ() {
     <div>
       <PageHeader
         title="Frequently Asked Questions"
-        subtitle="Find answers to commonly asked questions about our tutoring programs, billing, and certificates."
+        subtitle="Find answers to common questions about our native English tutors, live speaking sessions, placement tests, and certificates."
         breadcrumbs={[{ label: 'FAQ' }]}
       />
 
@@ -62,14 +62,14 @@ export default function FAQ() {
               <MessageSquare className="w-7 h-7" />
             </div>
             <h3 className="text-2xl font-bold font-jost text-theme-navy mb-2">
-              Still Have Questions?
+              Have Questions About Tutoring?
             </h3>
             <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
-              Our student advisors are here 24/7 to help guide your learning journey and answer any questions.
+              Our English advisors are here 24/7 to help you choose the right tutor and placement level.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact" className="btn-primary w-full sm:w-auto px-6 py-2.5 rounded">
-                <span>Contact Student Support</span>
+                <span>Talk to an English Advisor</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>

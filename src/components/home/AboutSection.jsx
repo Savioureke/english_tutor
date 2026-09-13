@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Play, Award, Sparkles, ArrowRight } from 'lucide-react';
+import { CheckCircle2, Play, Award, ArrowRight } from 'lucide-react';
 
 export default function AboutSection({ onOpenVideo }) {
   const points = [
     {
-      title: "Self-Paced Flexible Schedule",
-      desc: "Learn comfortably at your own pace with 24/7 access to recorded lectures, course materials, and interactive quizzes."
+      title: "Interactive 1-on-1 Native Speaking Practice",
+      desc: "Practice natural conversations, correct real-time pronunciation mistakes, and expand your vocabulary."
     },
     {
-      title: "Industry-Certified Native Instructors",
-      desc: "Receive personalized feedback and mentorship from accredited English tutors and technology veterans."
+      title: "Certified IELTS, TOEFL & Cambridge Tutors",
+      desc: "Learn proven scoring strategies and get detailed grading for mock speaking tests and essay tasks."
     },
     {
-      title: "Real-World Projects & Certifications",
-      desc: "Graduate with an employer-ready portfolio and shareable digital certificates verified across top industries."
+      title: "Internationally Accredited CEFR Certificates",
+      desc: "Earn verifiable credentials from Beginner (A1) to Mastery (C2) to showcase on LinkedIn and university applications."
     }
   ];
 
@@ -29,12 +29,9 @@ export default function AboutSection({ onOpenVideo }) {
               {/* Main Image Frame */}
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white">
                 <img
-                  src="/assets/img/about3.png"
-                  alt="Online Tutoring Session"
+                  src="https://images.unsplash.com/photo-1577896851231-70ef18881754?w=700&auto=format&fit=crop&q=80"
+                  alt="English Tutoring Classroom"
                   className="w-full h-auto object-cover transform hover:scale-102 transition-transform duration-500"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&auto=format&fit=crop&q=80';
-                  }}
                 />
                 
                 {/* Play Video Trigger Overlay */}
@@ -53,8 +50,8 @@ export default function AboutSection({ onOpenVideo }) {
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">12+ Years</div>
-                  <div className="text-xs text-slate-500">Excellence in Tutoring</div>
+                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">10+ Years</div>
+                  <div className="text-xs text-slate-500">English Teaching Excellence</div>
                 </div>
               </div>
             </div>
@@ -64,13 +61,13 @@ export default function AboutSection({ onOpenVideo }) {
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
             <div>
               <span className="section-title-tag">
-                About Our Academy
+                About ENGtutor Academy
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-jost text-theme-navy leading-tight mt-2">
-                We Transform Your Potential Into Global Professional Fluency
+                We Build Natural Spoken English & Global Communication Confidence
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed mt-4">
-                At Eduleb, we believe quality education should be accessible, interactive, and directly aligned with modern job market requirements. Our curriculum bridges language learning with modern vocational skills.
+                At ENGtutor, our mission is to eliminate language barriers. We combine personalized 1-on-1 tutoring sessions with comprehensive multimedia lessons tailored to your proficiency level and career ambition.
               </p>
             </div>
 
@@ -95,7 +92,7 @@ export default function AboutSection({ onOpenVideo }) {
 
             <div className="pt-2">
               <Link to="/about" className="btn-primary">
-                <span>Learn More About Us</span>
+                <span>Learn More About ENGtutor</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>

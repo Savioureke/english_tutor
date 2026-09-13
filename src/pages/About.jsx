@@ -14,8 +14,8 @@ export default function About() {
   return (
     <div>
       <PageHeader
-        title="About Our Academy"
-        subtitle="Empowering learners worldwide through quality education, interactive mentorship, and career-driven certifications."
+        title="About ENGtutor Academy"
+        subtitle="Empowering learners worldwide through immersive English language education, 1-on-1 native mentorship, and accredited certifications."
         breadcrumbs={[{ label: 'About Us' }]}
       />
 
