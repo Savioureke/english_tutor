@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply font-sans text-theme-body bg-white overflow-x-hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-jost text-theme-navy font-medium tracking-normal;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center bg-theme-primary text-white font-jost font-semibold px-7 py-3.5 rounded transition-all duration-300 hover:bg-theme-coral hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center border-2 border-theme-primary text-theme-primary font-jost font-semibold px-7 py-3 rounded transition-all duration-300 hover:bg-theme-primary hover:text-white hover:shadow-md active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-white {
+    @apply inline-flex items-center justify-center bg-white text-theme-navy font-jost font-semibold px-7 py-3.5 rounded shadow-sm transition-all duration-300 hover:bg-theme-primary hover:text-white hover:shadow-lg active:scale-95;
+  }
+
+  .section-title {
+    @apply text-center max-w-2xl mx-auto mb-12 sm:mb-16;
+  }
+
+  .section-title-tag {
+    @apply inline-block text-theme-primary font-semibold text-sm tracking-wider uppercase bg-theme-primary/10 px-4 py-1.5 rounded-full mb-3;
+  }
+
+  .section-title-heading {
+    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-theme-navy leading-tight mb-4;
+  }
+
+  .section-title-desc {
+    @apply text-theme-body text-base sm:text-lg leading-relaxed;
+  }
+
+  .card-hover-effect {
+    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #525fe1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #f26b65;
+}
