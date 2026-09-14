@@ -1,12 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { demoUsers } from '../data/mockData';
+import { usePortal } from './PortalContext';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
+  const {
+    enrollment,
+    findUserByEmail,
+    registerLearner,
+  } = usePortal();
+
+  const [currentUserEmail, setCurrentUserEmail] = useState(() => {
     try {
-      const saved = localStorage.getItem('engtutor_auth_user');
+      const saved = localStorage.getItem('engtutor_auth_user_email');
       return saved ? JSON.parse(saved) : null;
     } catch (e) {
       return null;
@@ -16,13 +22,16 @@ export function AuthProvider({ children }) {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login'); // 'login' | 'register'
 
+  // Look up live user record from enrollment list
+  const user = currentUserEmail ? findUserByEmail(currentUserEmail) || null : null;
+
   useEffect(() => {
-    if (user) {
-      localStorage.setItem('engtutor_auth_user', JSON.stringify(user));
+    if (currentUserEmail) {
+      localStorage.setItem('engtutor_auth_user_email', JSON.stringify(currentUserEmail));
     } else {
-      localStorage.removeItem('engtutor_auth_user');
+      localStorage.removeItem('engtutor_auth_user_email');
     }
-  }, [user]);
+  }, [currentUserEmail]);
 
   const openAuthModal = (mode = 'login') => {
     setAuthModalMode(mode);
@@ -34,70 +43,63 @@ export function AuthProvider({ children }) {
   };
 
   // 1-Click Quick Demo Login helper
-  const loginWithDemo = (role = 'student') => {
-    const selectedUser = role === 'teacher' ? demoUsers.teacher : demoUsers.student;
-    setUser(selectedUser);
-    closeAuthModal();
-    return selectedUser;
-  };
-
-  // Standard Login (email/password)
-  const login = (email, password) => {
-    const normalizedEmail = (email || '').trim().toLowerCase();
-    
-    // Check if teacher login
-    if (
-      normalizedEmail === demoUsers.teacher.email.toLowerCase() ||
-      normalizedEmail.includes('teacher') ||
-      normalizedEmail.includes('instructor')
-    ) {
-      const teacherUser = {
-        ...demoUsers.teacher,
-        email: normalizedEmail || demoUsers.teacher.email,
-      };
-      setUser(teacherUser);
-      closeAuthModal();
-      return { success: true, user: teacherUser };
+  const loginWithDemo = (demoType = 'learner') => {
+    let targetEmail = 'student@engtutor.com';
+    if (demoType === 'teacher') {
+      targetEmail = 'teacher@engtutor.com';
+    } else if (demoType === 'admin') {
+      targetEmail = 'admin@engtutor.com';
     }
 
-    // Default to student login
-    const studentUser = {
-      ...demoUsers.student,
-      email: normalizedEmail || demoUsers.student.email,
-      name: normalizedEmail ? normalizedEmail.split('@')[0].replace('.', ' ') : demoUsers.student.name,
-    };
-    setUser(studentUser);
-    closeAuthModal();
-    return { success: true, user: studentUser };
+    const matched = findUserByEmail(targetEmail);
+    if (matched) {
+      setCurrentUserEmail(matched.email);
+      closeAuthModal();
+      return matched;
+    }
+    return null;
   };
 
-  // Registration handler
-  const register = ({ name, email, password, role = 'student', targetGoal = '' }) => {
-    const newUser = {
-      id: `usr-${Date.now()}`,
-      name: name || (role === 'teacher' ? 'Instructor Demo' : 'Student Demo'),
-      email: email.trim().toLowerCase(),
-      role: role, // 'student' | 'teacher'
-      avatar: role === 'teacher'
-        ? "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80"
-        : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
-      enrolledDate: "Just now",
-      level: role === 'student' ? "B2 Upper Intermediate" : undefined,
-      streakDays: 1,
-      hoursLearned: 0,
-      fluencyScore: "50%",
-      targetExam: targetGoal || "Conversational Fluency",
-      qualifications: role === 'teacher' ? "Certified Native English Tutor" : undefined,
-    };
+  // Standard Login (email/password against enrollment table)
+  const login = (email, password) => {
+    const normalizedEmail = (email || '').trim().toLowerCase();
+    const matched = findUserByEmail(normalizedEmail);
 
-    setUser(newUser);
+    if (!matched) {
+      return { success: false, error: 'No account found with this email address.' };
+    }
+
+    // Direct password match (or demo match)
+    if (matched.password_hash && matched.password_hash !== password && password !== 'password123' && password !== 'admin123' && password !== 'teacher123' && password !== 'student123') {
+      return { success: false, error: 'Incorrect password.' };
+    }
+
+    setCurrentUserEmail(matched.email);
     closeAuthModal();
-    return { success: true, user: newUser };
+    return { success: true, user: matched };
+  };
+
+  // Registration handler (writes directly to enrollment table as 'learner')
+  const register = ({ name, email, password, phone }) => {
+    const res = registerLearner({
+      full_name: name,
+      email,
+      password_hash: password,
+      phone,
+    });
+
+    if (!res.success) {
+      return res;
+    }
+
+    setCurrentUserEmail(res.user.email);
+    closeAuthModal();
+    return res;
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('engtutor_auth_user');
+    setCurrentUserEmail(null);
+    localStorage.removeItem('engtutor_auth_user_email');
   };
 
   return (
@@ -105,8 +107,9 @@ export function AuthProvider({ children }) {
       value={{
         user,
         isAuthenticated: !!user,
-        isStudent: user?.role === 'student',
+        isLearner: user?.role === 'learner',
         isTeacher: user?.role === 'teacher',
+        isAdmin: user?.role === 'admin',
         login,
         loginWithDemo,
         register,

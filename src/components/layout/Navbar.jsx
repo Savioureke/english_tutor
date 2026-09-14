@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Menu, X, ChevronDown, ChevronRight, Phone, Mail, GraduationCap, 
-  LogOut, User, BookOpen, Calendar, Award, LayoutDashboard 
+  LogOut, User, BookOpen, Calendar, Award, LayoutDashboard, ShieldCheck 
 } from 'lucide-react';
 import { navLinks } from '../../data/mockData';
 import { useAuth } from '../../context/AuthContext';
@@ -15,7 +15,7 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { user, isAuthenticated, logout, openAuthModal } = useAuth();
+  const { user, isAuthenticated, logout, openAuthModal, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,7 +54,8 @@ export default function Navbar() {
     navigate('/');
   };
 
-  const dashboardPath = user?.role === 'teacher' ? '/dashboard/teacher' : '/dashboard/student';
+  const dashboardPath = '/dashboard';
+  const userName = user?.full_name || user?.name || 'User';
 
   return (
     <>
@@ -150,6 +151,21 @@ export default function Navbar() {
                 </div>
               );
             })}
+
+            {/* CONDITIONAL ADMIN LINK (visible only when role = 'admin') */}
+            {(user?.role === 'admin' || isAdmin) && (
+              <Link
+                to="/admin"
+                className={`font-jost font-bold text-sm px-3 py-1.5 rounded-lg border transition-colors flex items-center space-x-1.5 ${
+                  location.pathname === '/admin'
+                    ? 'bg-red-50 text-red-600 border-red-200'
+                    : 'text-red-600 hover:bg-red-50 border-red-200/60'
+                }`}
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>Admin</span>
+              </Link>
+            )}
           </nav>
 
           {/* Header Action Buttons (Desktop) */}
@@ -164,17 +180,21 @@ export default function Navbar() {
                   >
                     <img
                       src={user.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"}
-                      alt={user.name}
+                      alt={userName}
                       className="w-7 h-7 rounded-lg object-cover border border-slate-300"
                     />
                     <div className="text-left">
                       <div className="text-xs font-bold text-theme-navy font-jost leading-tight">
-                        {user.name.split(' ')[0]}
+                        {userName.split(' ')[0]}
                       </div>
                       <span className={`text-[10px] font-bold uppercase tracking-wider ${
-                        user.role === 'teacher' ? 'text-emerald-700' : 'text-theme-primary'
+                        user.role === 'admin' 
+                          ? 'text-red-600' 
+                          : user.role === 'teacher' 
+                            ? 'text-emerald-700' 
+                            : 'text-theme-primary'
                       }`}>
-                        {user.role === 'teacher' ? 'Teacher' : 'Student'}
+                        {user.role}
                       </span>
                     </div>
                   </Link>
@@ -182,13 +202,15 @@ export default function Navbar() {
                   <Link
                     to={dashboardPath}
                     className={`text-xs font-bold font-jost px-4 py-2.5 rounded-xl shadow-sm text-white flex items-center space-x-1.5 transition-all ${
-                      user.role === 'teacher'
-                        ? 'bg-emerald-700 hover:bg-emerald-800'
-                        : 'btn-primary'
+                      user.role === 'admin'
+                        ? 'bg-red-600 hover:bg-red-700'
+                        : user.role === 'teacher'
+                          ? 'bg-emerald-700 hover:bg-emerald-800'
+                          : 'btn-primary'
                     }`}
                   >
                     <LayoutDashboard className="w-4 h-4" />
-                    <span>LMS Dashboard</span>
+                    <span>Dashboard</span>
                   </Link>
 
                   <button
@@ -288,13 +310,13 @@ export default function Navbar() {
                   <div className="flex items-center space-x-3">
                     <img
                       src={user.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"}
-                      alt={user.name}
+                      alt={userName}
                       className="w-10 h-10 rounded-xl object-cover border border-white/30"
                     />
                     <div>
-                      <div className="font-bold text-sm font-jost">{user.name}</div>
+                      <div className="font-bold text-sm font-jost">{userName}</div>
                       <span className="text-[10px] uppercase font-bold tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
-                        {user.role === 'teacher' ? 'Instructor LMS' : 'Student LMS'}
+                        {user.role}
                       </span>
                     </div>
                   </div>
@@ -303,6 +325,18 @@ export default function Navbar() {
 
               {/* Mobile Menu Items */}
               <div className="p-4 space-y-1">
+                {/* Mobile Admin Link */}
+                {(user?.role === 'admin' || isAdmin) && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center space-x-2 py-2.5 px-3 mb-2 font-jost font-bold text-sm text-red-600 bg-red-50 rounded-xl"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Admin Operations Console</span>
+                  </Link>
+                )}
+
                 {navLinks.map((item, index) => {
                   const hasChildren = item.sublinks && item.sublinks.length > 0;
                   const isExpanded = expandedMobileDropdowns[index];
@@ -362,7 +396,7 @@ export default function Navbar() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="btn-primary w-full text-center py-2.5 rounded-xl text-sm shadow-md block"
                   >
-                    Go to LMS Dashboard
+                    Go to Dashboard
                   </Link>
                   <button
                     onClick={() => {
