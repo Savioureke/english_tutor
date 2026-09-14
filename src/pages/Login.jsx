@@ -78,10 +78,10 @@ export default function Login() {
             </Link>
 
             <h2 className="text-2xl sm:text-3xl font-bold font-jost leading-tight mb-4">
-              Access Your English Learning Management System
+              Access Your Teacher Training & Monetization Portal
             </h2>
             <p className="text-sm text-slate-300 mb-6 leading-relaxed">
-              One unified portal for both Students and Certified Tutors. Real-time class bookings, IELTS scoring, video lessons, and speaking evaluations.
+              You already speak English. Learn how to teach it with structured methodology, manage paying clients, and track lead fee deductions.
             </p>
 
             <div className="space-y-3 text-xs sm:text-sm text-slate-200">
@@ -89,19 +89,19 @@ export default function Login() {
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                   ✓
                 </div>
-                <span>1-on-1 Speaking Practice with Native Tutors</span>
+                <span>PPP & Task-Based Teaching Frameworks</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                   ✓
                 </div>
-                <span>IELTS & TOEFL Band Score Evaluations</span>
+                <span>Step-by-Step 45-Minute Lesson Planning</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                   ✓
                 </div>
-                <span>Curriculum Management & Homework Grading</span>
+                <span>Direct Client Acquisition & Payment Channel Setup</span>
               </div>
             </div>
           </div>
@@ -109,11 +109,11 @@ export default function Login() {
           <div className="pt-8 border-t border-white/10 mt-8 flex items-center justify-between text-xs text-slate-400">
             <div className="flex items-center space-x-1">
               <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span className="text-slate-200 font-medium">4.9 / 5.0 Rating</span>
+              <span className="text-slate-200 font-medium">98.7% Pass Rate</span>
             </div>
             <div className="flex items-center space-x-1">
               <Users className="w-3.5 h-3.5 text-theme-coral" />
-              <span className="text-slate-200">35,000+ Enrolled</span>
+              <span className="text-slate-200">1,200+ Trained Teachers</span>
             </div>
           </div>
         </div>
@@ -123,10 +123,10 @@ export default function Login() {
           <div>
             <div className="mb-6">
               <h3 className="text-2xl font-bold font-jost text-theme-navy mb-1">
-                LMS Sign In
+                Teacher & Student Sign In
               </h3>
               <p className="text-sm text-slate-500">
-                Enter your credentials or use the 1-click frontend demo cards below.
+                Enter your credentials or use the 1-click frontend demo cards below to access your workspace.
               </p>
             </div>
 

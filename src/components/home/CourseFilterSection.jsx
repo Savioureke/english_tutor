@@ -17,13 +17,13 @@ export default function CourseFilterSection() {
         {/* Section Heading */}
         <div className="section-title">
           <span className="section-title-tag">
-            Our English Programs
+            Monetize Your Skill
           </span>
           <h2 className="section-title-heading">
-            Explore Top-Rated English Tutoring Courses
+            How to Teach English While Making Money
           </h2>
           <p className="section-title-desc">
-            Choose from comprehensive courses designed to develop spoken fluency, business communication, and exam mastery.
+            Follow our proven monetization pathway: turn your existing English fluency into a paid service, set up your payment channel, and get discovered by paying students.
           </p>
         </div>
 
@@ -54,7 +54,7 @@ export default function CourseFilterSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <Link to="/courses" className="btn-outline">
-            <span>Browse All English Courses</span>
+            <span>Browse All Teaching Training Modules</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>

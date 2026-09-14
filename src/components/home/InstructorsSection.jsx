@@ -11,13 +11,13 @@ export default function InstructorsSection() {
         {/* Section Heading */}
         <div className="section-title">
           <span className="section-title-tag">
-            Meet Our Native Tutors
+            Featured Coaches
           </span>
           <h2 className="section-title-heading">
-            Learn From Certified English Language Specialists
+            Top Earning Teachers
           </h2>
           <p className="section-title-desc">
-            Our accredited educators bring passionate teaching methodologies, Oxford & Cambridge credentials, and real-world immersion to every session.
+            Trained on this platform. Rated by real students. Available now.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export default function InstructorsSection() {
         {/* Bottom CTA */}
         <div className="text-center">
           <Link to="/instructors" className="btn-outline">
-            <span>View All English Tutors</span>
+            <span>View All Top Earning Teachers</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
         </div>

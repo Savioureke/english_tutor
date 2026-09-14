@@ -5,16 +5,16 @@ import { CheckCircle2, Play, Award, ArrowRight } from 'lucide-react';
 export default function AboutSection({ onOpenVideo }) {
   const points = [
     {
-      title: "Interactive 1-on-1 Native Speaking Practice",
-      desc: "Practice natural conversations, correct real-time pronunciation mistakes, and expand your vocabulary."
+      title: "How to Structure a 45-Minute Lesson Plan",
+      desc: "Step-by-step blueprints to balance presentation, guided student speaking practice, and targeted drills without running out of time."
     },
     {
-      title: "Certified IELTS, TOEFL & Cambridge Tutors",
-      desc: "Learn proven scoring strategies and get detailed grading for mock speaking tests and essay tasks."
+      title: "How to Correct Student Errors Without Friction",
+      desc: "Master tactful delayed feedback and natural conversational correction techniques that build student fluency and trust."
     },
     {
-      title: "Internationally Accredited CEFR Certificates",
-      desc: "Earn verifiable credentials from Beginner (A1) to Mastery (C2) to showcase on LinkedIn and university applications."
+      title: "How to Set Hourly Rates ($20–$65+/hr) & Onboard Students",
+      desc: "Proven onboarding workflows to set your pricing, handle initial client consultations, and turn trial lessons into long-term bookings."
     }
   ];
 
@@ -50,8 +50,8 @@ export default function AboutSection({ onOpenVideo }) {
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">10+ Years</div>
-                  <div className="text-xs text-slate-500">English Teaching Excellence</div>
+                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">100% Practical</div>
+                  <div className="text-xs text-slate-500">Step-by-Step Procedures</div>
                 </div>
               </div>
             </div>
@@ -61,13 +61,13 @@ export default function AboutSection({ onOpenVideo }) {
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
             <div>
               <span className="section-title-tag">
-                About ENGtutor Academy
+                Step-by-Step Procedures
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-jost text-theme-navy leading-tight mt-2">
-                We Build Natural Spoken English & Global Communication Confidence
+                Learn the Exact Procedures to Run Lessons and Onboard Paying Students
               </h2>
               <p className="text-slate-600 text-sm sm:text-base leading-relaxed mt-4">
-                At ENGtutor, our mission is to eliminate language barriers. We combine personalized 1-on-1 tutoring sessions with comprehensive multimedia lessons tailored to your proficiency level and career ambition.
+                You already have the language. We teach you the professional teaching methodology, lesson structuring protocols, and monetization steps to build a high-earning independent coaching service.
               </p>
             </div>
 
@@ -92,7 +92,7 @@ export default function AboutSection({ onOpenVideo }) {
 
             <div className="pt-2">
               <Link to="/about" className="btn-primary">
-                <span>Learn More About ENGtutor</span>
+                <span>Explore Teaching Procedures</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             </div>

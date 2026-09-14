@@ -16,27 +16,27 @@ export default function Hero({ onOpenVideo }) {
           <div className="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center space-x-2 bg-theme-primary/10 text-theme-primary px-4 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide">
               <Sparkles className="w-4 h-4 text-theme-primary" />
-              <span>#1 Live Online English Tutoring Academy</span>
+              <span>Teacher Training & Monetization Platform</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold font-jost text-theme-navy leading-[1.15] tracking-tight">
-              Speak Fluent English & <br className="hidden sm:inline" />
+              You Already Speak English. Now Learn How to <br className="hidden sm:inline" />
               <span className="text-theme-primary relative inline-block">
-                Unlock Global
+                Teach It —
                 <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 250 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3 9C60 3 190 3 247 9" stroke="#f26b65" strokeWidth="4" strokeLinecap="round"/>
                 </svg>
-              </span> Opportunities
+              </span> and Get Paid.
             </h1>
 
             <p className="text-base sm:text-lg text-theme-body max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Achieve natural spoken fluency, ace your IELTS/TOEFL exams, and elevate your international career with certified native English tutors in customized 1-on-1 lessons.
+              Transform your fluency into a high-earning remote teaching business with structured methodology, step-by-step procedures, and direct client acquisition.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-4 text-base rounded-md shadow-md hover:shadow-lg">
-                <span>Find Your English Course</span>
+                <span>Start Teaching Training</span>
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
               
@@ -47,7 +47,7 @@ export default function Hero({ onOpenVideo }) {
                 <span className="w-12 h-12 rounded-full bg-theme-primary/10 text-theme-primary flex items-center justify-center group-hover:bg-theme-primary group-hover:text-white transition-all transform group-hover:scale-110 shadow-sm">
                   <Play className="w-5 h-5 fill-current ml-0.5" />
                 </span>
-                <span>Watch Demo Lesson</span>
+                <span>Monetize Your English Skill</span>
               </button>
             </div>
 
@@ -55,15 +55,15 @@ export default function Hero({ onOpenVideo }) {
             <div className="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm text-slate-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>100% Native English Tutors</span>
+                <span>Structured Teaching Methodology</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>1-on-1 Speaking Practice</span>
+                <span>Step-by-Step Procedures</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Verifiable CEFR Certificate</span>
+                <span>Direct Client Acquisition</span>
               </div>
             </div>
           </div>
@@ -87,8 +87,8 @@ export default function Hero({ onOpenVideo }) {
                   <Users className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">35,000+</div>
-                  <div className="text-xs text-slate-500">Fluent English Learners</div>
+                  <div className="text-xl sm:text-2xl font-bold font-jost text-theme-navy">$20–$65+/hr</div>
+                  <div className="text-xs text-slate-500">Teacher Earning Potential</div>
                 </div>
               </div>
 
@@ -98,8 +98,8 @@ export default function Hero({ onOpenVideo }) {
                   <Star className="w-5 h-5 fill-amber-400" />
                 </div>
                 <div>
-                  <div className="text-base font-bold font-jost text-theme-navy">4.9 / 5.0</div>
-                  <div className="text-xs text-slate-500">Rated by 3,800+ Students</div>
+                  <div className="text-base font-bold font-jost text-theme-navy">Top Earning Teachers</div>
+                  <div className="text-xs text-slate-500">Trained & Rated on Platform</div>
                 </div>
               </div>
             </div>

@@ -71,24 +71,24 @@ export default function Register() {
             </Link>
 
             <h2 className="text-2xl sm:text-3xl font-bold font-jost leading-tight mb-4">
-              Start Your English Learning & Teaching Journey
+              Learn How to Teach English and Monetize Your Skill
             </h2>
             <p className="text-sm text-slate-300 mb-6 leading-relaxed">
-              Create a personalized LMS profile to track your speaking fluency, book native 1-on-1 tutoring sessions, or manage and tutor students.
+              Register to begin your teaching training. You already speak English — we'll teach you how to teach it and how to get paid for it. Funding your account (minimum $10) unlocks the monetization module and puts you live on the homepage.
             </p>
 
             <div className="space-y-3 text-xs sm:text-sm text-slate-200">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">✓</div>
-                <span>Free 15-Minute Level Assessment</span>
+                <span>PPP & TBLT Lesson Plan Blueprints</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">✓</div>
-                <span>Interactive Homework & Speaking Labs</span>
+                <span>Friction-Free Error Correction Methods</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">✓</div>
-                <span>Internationally Recognized CEFR Certificates</span>
+                <span>Direct Client Acquisition & Payment Setup</span>
               </div>
             </div>
           </div>
@@ -96,11 +96,11 @@ export default function Register() {
           <div className="pt-8 border-t border-white/10 mt-8 flex items-center justify-between text-xs text-slate-400">
             <div className="flex items-center space-x-1">
               <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span className="text-slate-200 font-medium">99.4% Pass Rate</span>
+              <span className="text-slate-200 font-medium">98.7% Pass Rate</span>
             </div>
             <div className="flex items-center space-x-1">
               <Users className="w-3.5 h-3.5 text-theme-coral" />
-              <span className="text-slate-200">65+ Native Tutors</span>
+              <span className="text-slate-200">1,200+ Trained Teachers</span>
             </div>
           </div>
         </div>
@@ -111,10 +111,10 @@ export default function Register() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-2xl font-bold font-jost text-theme-navy mb-1">
-                  Create LMS Account
+                  Teacher Registration
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500">
-                  Select your role and start your tailored learning experience.
+                  Register to begin your teaching training. You already speak English — we'll teach you how to teach it and how to get paid for it. Funding your account (minimum $10) unlocks the monetization module and puts you live on the homepage.
                 </p>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function Register() {
                 type="submit"
                 className="w-full py-3 bg-theme-primary hover:bg-theme-navy text-white font-jost font-semibold text-sm rounded-xl transition-all shadow-md shadow-theme-primary/20 flex items-center justify-center space-x-2 mt-2"
               >
-                <span>Register & Go to {role === 'teacher' ? 'Teacher' : 'Student'} LMS</span>
+                <span>Start Training</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>

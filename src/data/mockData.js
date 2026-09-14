@@ -9,20 +9,20 @@ export const navLinks = [
   },
   { title: "About", path: "/about" },
   {
-    title: "Course",
+    title: "Training",
     path: "/courses",
     sublinks: [
-      { title: "English Courses", path: "/courses" },
-      { title: "Course Details", path: "/course/1" },
+      { title: "Teacher Training Modules", path: "/courses" },
+      { title: "Methodology Details", path: "/course/1" },
     ]
   },
   {
     title: "Pages",
     path: "#",
     sublinks: [
-      { title: "English Tutors", path: "/instructors" },
-      { title: "Tutor Details", path: "/instructor/1" },
-      { title: "Pricing Plan", path: "/pricing" },
+      { title: "Top Earning Teachers", path: "/instructors" },
+      { title: "Teacher Profile", path: "/instructor/1" },
+      { title: "Monetization Plans", path: "/pricing" },
       { title: "FAQ Page", path: "/faq" },
     ]
   },
@@ -30,7 +30,7 @@ export const navLinks = [
     title: "Blog",
     path: "/blog",
     sublinks: [
-      { title: "English Blog", path: "/blog" },
+      { title: "Teaching Guides", path: "/blog" },
       { title: "Article Details", path: "/blog/1" },
     ]
   },
@@ -38,46 +38,46 @@ export const navLinks = [
 ];
 
 export const statistics = [
-  { count: "35K+", label: "Fluent Graduates", icon: "Users" },
-  { count: "65+", label: "Native English Tutors", icon: "GraduationCap" },
-  { count: "120+", label: "English Video Modules", icon: "BookOpen" },
-  { count: "99.4%", label: "Student Success Rate", icon: "Award" },
+  { count: "$35/hr+", label: "Avg. Teacher Rate", icon: "Users" },
+  { count: "1,200+", label: "Trained English Coaches", icon: "GraduationCap" },
+  { count: "100%", label: "Procedural Methodology", icon: "BookOpen" },
+  { count: "98.7%", label: "Teacher Success Rate", icon: "Award" },
 ];
 
 export const promoCards = [
   {
     id: 1,
-    title: "Conversational Practice",
-    description: "Immersive 1-on-1 speaking sessions with native tutors to build spontaneous confidence and vocabulary.",
+    title: "PPP Teaching Methodology",
+    description: "Master the Presentation–Practice–Production (PPP) framework to deliver structured 45-minute lesson plans that keep students engaged.",
     icon: "Lightbulb",
     bgClass: "bg-[#f4f7ff] text-[#525fe1]",
     accentBorder: "border-[#525fe1]/20",
   },
   {
     id: 2,
-    title: "IELTS & TOEFL Prep",
-    description: "Targeted strategies, mock speaking interviews, and essay evaluations to achieve your target band score.",
+    title: "Task-Based & Natural Coaching",
+    description: "Implement Task-Based Language Teaching (TBLT) and Natural Conversational Coaching to run high-value student speaking sessions.",
     icon: "Compass",
     bgClass: "bg-[#fff7f0] text-[#ffa41b]",
     accentBorder: "border-[#ffa41b]/20",
   },
   {
     id: 3,
-    title: "Business English",
-    description: "Executive presentation coaching, email writing etiquette, and professional cross-cultural communication.",
+    title: "Business & Accent Blueprints",
+    description: "Deploy specialized blueprints for executive business coaching, interview prep, error correction without friction, and accent reduction.",
     icon: "Target",
     bgClass: "bg-[#f0fbf7] text-[#28a745]",
     accentBorder: "border-[#28a745]/20",
   }
 ];
 
-export const courseCategories = ["All", "Conversational", "Business English", "Exam Prep", "Pronunciation", "Grammar"];
+export const courseCategories = ["All", "Teaching Frameworks", "Lesson Planning", "Monetization & Rates", "Client Acquisition", "Business Coaching"];
 
 export const courses = [
   {
     id: 1,
-    title: "Conversational English Fluency: Speak Naturally in 30 Days",
-    category: "Conversational",
+    title: "The Complete English Teacher Blueprint: From Fluent Speaker to $50/hr Coach",
+    category: "Teaching Frameworks",
     price: 49.00,
     originalPrice: 99.00,
     rating: 4.9,
@@ -89,16 +89,16 @@ export const courses = [
     instructor: {
       name: "Emma Watson",
       avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
-      role: "British English Specialist"
+      role: "Lead Methodology Trainer"
     },
-    tag: "Speaking",
-    description: "Overcome fear of speaking, master everyday conversational idioms, and develop spontaneous fluency with live interactive dialogues and native audio breakdowns.",
+    tag: "Core Framework",
+    description: "Learn how to structure 45-minute lessons, manage teacher talk time, correct student errors without friction, and build a dependable client roster.",
     featured: true,
   },
   {
     id: 2,
-    title: "IELTS Academic & General: Complete Band 8+ Masterclass",
-    category: "Exam Prep",
+    title: "PPP & TBLT Lesson Structuring Masterclass for 1-on-1 & Group Classes",
+    category: "Lesson Planning",
     price: 59.00,
     originalPrice: 119.00,
     rating: 5.0,
@@ -110,16 +110,16 @@ export const courses = [
     instructor: {
       name: "James Miller",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-      role: "Certified IELTS Examiner"
+      role: "Senior Methodology Specialist"
     },
-    tag: "IELTS",
-    description: "Step-by-step preparation for all four IELTS modules (Speaking, Writing Task 1 & 2, Reading, and Listening) with official sample answers and marking criteria.",
+    tag: "Lesson Planning",
+    description: "Step-by-step procedures to plan 45-minute sessions, execute engaging practice activities, and evaluate student progress systematically.",
     featured: true,
   },
   {
     id: 3,
-    title: "Business English & Executive Presentation Coaching",
-    category: "Business English",
+    title: "Monetization & Client Acquisition: Setting Rates ($20–$65+/hr) & Onboarding",
+    category: "Monetization & Rates",
     price: 69.00,
     originalPrice: 139.00,
     rating: 4.9,
@@ -131,16 +131,16 @@ export const courses = [
     instructor: {
       name: "Michael Davies",
       avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-      role: "Corporate English Coach"
+      role: "Teaching Business Coach"
     },
-    tag: "Business",
-    description: "Designed for international managers and professionals. Learn high-impact negotiation vocabulary, professional email phrasing, and confident pitching techniques.",
+    tag: "Monetization",
+    description: "Set up payment channels, onboard your first paying students, establish transparent hourly rates, and optimize your teacher profile for student inquiries.",
     featured: true,
   },
   {
     id: 4,
-    title: "English Pronunciation & Accent Reduction Intensive",
-    category: "Pronunciation",
+    title: "Error Correction & Conversational Coaching Without Student Friction",
+    category: "Teaching Frameworks",
     price: 39.00,
     originalPrice: 79.00,
     rating: 4.8,
@@ -152,16 +152,16 @@ export const courses = [
     instructor: {
       name: "Sarah Jenkins",
       avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
-      role: "Phonetics & Accent Coach"
+      role: "Phonetics & Feedback Mentor"
     },
-    tag: "Accent",
-    description: "Master English vowel sounds, connected speech, intonation curves, syllable stress, and eliminate common pronunciation hurdles.",
+    tag: "Coaching Skills",
+    description: "Master delayed vs immediate error correction, tactful pronunciation guidance, and conversational prompts that encourage student output.",
     featured: true,
   },
   {
     id: 5,
-    title: "Complete English Grammar: From Zero to Advanced Mastery",
-    category: "Grammar",
+    title: "Grammar Teaching Procedures: Clear Explanations & Target Drills",
+    category: "Lesson Planning",
     price: 34.00,
     originalPrice: 69.00,
     rating: 4.9,
@@ -173,16 +173,16 @@ export const courses = [
     instructor: {
       name: "David Brooks",
       avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80",
-      role: "Grammar & Linguistics Tutor"
+      role: "Linguistic Procedures Mentor"
     },
-    tag: "Grammar",
-    description: "Demystify complex English tenses, conditional sentences, passive voice, phrasal verbs, and prepositions with straightforward explanations and practical drills.",
+    tag: "Grammar Methods",
+    description: "Teach grammar conceptually using timelines, elicitation techniques, and guided discovery rather than dry rule memorization.",
     featured: true,
   },
   {
     id: 6,
-    title: "TOEFL iBT Score Booster: High Scoring Strategies",
-    category: "Exam Prep",
+    title: "High-Ticket Business English & Executive Coaching Blueprint",
+    category: "Business Coaching",
     price: 54.00,
     originalPrice: 109.00,
     rating: 4.9,
@@ -194,10 +194,10 @@ export const courses = [
     instructor: {
       name: "Sophia Taylor",
       avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80",
-      role: "TOEFL Prep Coach"
+      role: "Executive English Mentor"
     },
-    tag: "TOEFL",
-    description: "Proven tactics for academic listening note-taking, speed reading comprehension, integrated speaking responses, and high-scoring independent essays.",
+    tag: "High-Ticket",
+    description: "Equip yourself to train corporate executives in international business meetings, negotiations, and cross-cultural communication.",
     featured: true,
   }
 ];
@@ -206,12 +206,12 @@ export const instructors = [
   {
     id: 1,
     name: "Emma Watson",
-    role: "Senior British English Tutor",
+    role: "Certified English Coach · ★ 4.9 · 142+ students",
     image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80",
-    bio: "Emma is an Oxford-certified ESL educator with over 10 years of experience teaching conversational English, RP British pronunciation, and literature to global students.",
+    bio: "Trained on this platform. Specializes in conversational fluency procedures, PPP lesson plans, and British pronunciation drills.",
     coursesCount: 14,
     rating: 4.9,
-    students: "18k+",
+    students: "142+",
     social: {
       facebook: "https://facebook.com",
       twitter: "https://twitter.com",
@@ -222,12 +222,12 @@ export const instructors = [
   {
     id: 2,
     name: "James Miller",
-    role: "Certified IELTS Examiner & Coach",
+    role: "Certified English Coach · ★ 5.0 · 210+ students",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
-    bio: "James is a former British Council test examiner with 12+ years of coaching thousands of students to score Band 8.0 and above on the IELTS Academic test.",
+    bio: "Trained on this platform. Expert in IELTS exam preparation frameworks, essay marking rubrics, and mock interview coaching.",
     coursesCount: 10,
     rating: 5.0,
-    students: "24k+",
+    students: "210+",
     social: {
       facebook: "https://facebook.com",
       twitter: "https://twitter.com",
@@ -238,12 +238,12 @@ export const instructors = [
   {
     id: 3,
     name: "Michael Davies",
-    role: "Corporate Business English Coach",
+    role: "Certified English Coach · ★ 4.9 · 120+ students",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80",
-    bio: "Michael coaches senior executives and international professionals in cross-cultural corporate negotiation, diplomatic phrasing, and boardroom presentation.",
+    bio: "Trained on this platform. Mentors corporate professionals in executive presentation delivery, business emails, and negotiation.",
     coursesCount: 8,
     rating: 4.9,
-    students: "12k+",
+    students: "120+",
     social: {
       facebook: "https://facebook.com",
       twitter: "https://twitter.com",
@@ -254,12 +254,12 @@ export const instructors = [
   {
     id: 4,
     name: "Sarah Jenkins",
-    role: "Pronunciation & Accent Specialist",
+    role: "Certified English Coach · ★ 4.8 · 160+ students",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
-    bio: "Sarah holds a Master's degree in Applied Linguistics and specializes in phonetic articulation, rhythm, and reducing accents for non-native English speakers.",
+    bio: "Trained on this platform. Delivers structured phonetics blueprints, rhythm drills, and friction-free error correction.",
     coursesCount: 12,
     rating: 4.8,
-    students: "16k+",
+    students: "160+",
     social: {
       facebook: "https://facebook.com",
       twitter: "https://twitter.com",
@@ -272,26 +272,26 @@ export const instructors = [
 export const testimonials = [
   {
     id: 1,
-    name: "Elena Gomez",
-    role: "Senior Product Manager (Madrid)",
+    name: "Marcus Vance",
+    role: "Full-Time Remote English Coach (London)",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    review: "ENGtutor transformed my spoken English! In just 3 months of 1-on-1 speaking sessions with Emma, I went from hesitating in team meetings to leading international product demos with full confidence.",
+    review: "I already spoke fluent English, but I had zero clue how to structure a lesson or find students. This platform taught me the PPP framework, how to onboard students, and within 3 weeks I was charging $45/hr with a full schedule!",
     rating: 5,
   },
   {
     id: 2,
-    name: "Kenji Tanaka",
-    role: "Postgraduate Scholar (Tokyo)",
+    name: "Clara Johansson",
+    role: "Independent IELTS Tutor (Stockholm)",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80",
-    review: "I needed a minimum IELTS score of 7.5 for my university admission in the UK. James's speaking feedback and writing frameworks helped me score an incredible 8.5 on my first attempt!",
+    review: "The procedure-based training is gold. Learning how to correct errors without discouraging students and structuring 45-minute lesson plans turned my natural English into a reliable $3,200/month remote income.",
     rating: 5,
   },
   {
     id: 3,
-    name: "Amira Al-Mansoor",
-    role: "Management Consultant (Dubai)",
+    name: "David O'Connor",
+    role: "Executive Business English Coach (Dublin)",
     avatar: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=150&auto=format&fit=crop&q=80",
-    review: "The Business English coaching was exactly what I needed. Learning executive presentation techniques and negotiation vocabulary allowed me to secure a promotion at a global consulting firm.",
+    review: "Funding my account activated my listing and students started messaging me directly. The lead fee deduction model is completely transparent and paid for itself on my very first client session.",
     rating: 5,
   }
 ];
@@ -299,57 +299,57 @@ export const testimonials = [
 export const pricingPlans = [
   {
     id: "starter",
-    name: "Starter Tutoring",
+    name: "Teacher Foundations",
     monthlyPrice: 29,
     yearlyPrice: 290,
     popular: false,
-    description: "Ideal for self-paced learners building grammar and vocabulary foundations.",
+    description: "Complete methodology training for fluent speakers starting their teaching journey.",
     features: [
-      "Access to 40+ Core English Video Courses",
-      "Interactive Grammar Quizzes & Worksheets",
-      "Digital Certificate of Completion",
-      "Mobile & Tablet App Access",
-      "Weekly English Vocabulary Newsletter",
+      "Access to Core Teacher Methodology Modules",
+      "PPP & TBLT Lesson Plan Blueprints",
+      "Error Correction Guide & Worksheets",
+      "Teacher Training Certificate",
+      "Weekly Teaching Tips & Strategies",
     ],
     unavailableFeatures: [
-      "Live 1-on-1 Native Speaking Sessions",
-      "IELTS / TOEFL Essay Grading",
-      "Personalized Accent Correction"
+      "Homepage Teacher Advertising Listing",
+      "Direct Student Messaging Channel",
+      "Monetization Lead Fee System"
     ]
   },
   {
     id: "standard",
-    name: "Fluency Pro",
+    name: "Monetization Pro",
     monthlyPrice: 59,
     yearlyPrice: 590,
     popular: true,
-    description: "Our most popular plan for rapid conversational fluency & exam success.",
+    description: "Full training plus profile activation to receive direct student booking inquiries.",
     features: [
-      "Access to All 120+ English Courses",
-      "4 Live 1-on-1 Tutor Sessions / Month",
-      "Monthly IELTS / TOEFL Mock Speaking Test",
-      "Detailed Pronunciation & Accent Feedback",
-      "Unlimited Essay & Writing Corrections",
-      "Verifiable CEFR Certificate for LinkedIn"
+      "Complete Teacher Training & Methodology Access",
+      "Active Homepage Teacher Profile Listing",
+      "Direct Student Lead Generation System",
+      "Hourly Rate Calculator ($20–$65+/hr)",
+      "Payment Channel Setup & Onboarding Kit",
+      "Verified English Coach Badge"
     ],
     unavailableFeatures: [
-      "Executive 1-on-1 Daily WhatsApp Coaching"
+      "1-on-1 Mentorship with Master Trainer"
     ]
   },
   {
     id: "executive",
-    name: "Executive Immersion",
+    name: "Master Coach Accelerator",
     monthlyPrice: 119,
     yearlyPrice: 1150,
     popular: false,
-    description: "Intensive 1-on-1 mentorship for executives, doctors, and exam takers.",
+    description: "Accelerated training with priority homepage placement and high-ticket business blueprints.",
     features: [
-      "Unlimited All-Access Course Library",
-      "12 Live 1-on-1 Native Tutor Sessions / Month",
-      "Direct WhatsApp Messaging with Lead Tutor",
-      "Bespoke Business English & Interview Prep",
-      "Comprehensive Accent Diagnostic & Plan",
-      "Job Interview & Resume English Polish"
+      "Unlimited Access to All Teaching Blueprints",
+      "Priority Top-Earning Teacher Directory Placement",
+      "High-Ticket Business English Coaching System",
+      "Direct Mentorship with Lead Trainer",
+      "Client Contract & Invoicing Templates",
+      "Advanced Lead Optimization Strategy"
     ],
     unavailableFeatures: []
   }
@@ -358,60 +358,60 @@ export const pricingPlans = [
 export const blogPosts = [
   {
     id: 1,
-    title: "10 Daily Habits for Rapid Conversational English Fluency in 2026",
+    title: "How to Structure a High-Impact 45-Minute English Lesson: Step-by-Step",
     date: "14 May, 2026",
     comments: 12,
     author: "Emma Watson",
     image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=700&auto=format&fit=crop&q=80",
-    excerpt: "Discover the psychological and linguistic micro-habits that help non-native speakers overcome speech hesitation and think directly in English.",
-    category: "Fluency Tips"
+    excerpt: "Learn how to balance teacher talk time, presentation, guided practice, and independent production to deliver engaging 1-on-1 English sessions.",
+    category: "Methodology"
   },
   {
     id: 2,
-    title: "How to Score Band 8.0+ on IELTS Speaking: Examiner Secrets",
+    title: "Setting Your Hourly Rates: How Remote English Tutors Earn $35–$65+/hr",
     date: "10 May, 2026",
     comments: 19,
     author: "James Miller",
     image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80",
-    excerpt: "Learn what IELTS examiners actually look for in lexical resource, grammatical accuracy, fluency, and pronunciation during the Part 2 and 3 interviews.",
-    category: "Exam Prep"
+    excerpt: "Discover how positioning, specialized frameworks (IELTS, Business English), and professional onboarding allow teachers to command premium hourly fees.",
+    category: "Monetization"
   },
   {
     id: 3,
-    title: "The Ultimate Guide to Business English Email Etiquette & Phrasing",
+    title: "Correcting Student Errors Without Friction: The Art of Delayed Feedback",
     date: "06 May, 2026",
     comments: 8,
     author: "Michael Davies",
     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&auto=format&fit=crop&q=80",
-    excerpt: "Polite expressions, diplomatic phrasing, and professional templates for communicating effectively with international clients and managers.",
-    category: "Business English"
+    excerpt: "Practical techniques for noting student grammar and pronunciation mistakes during conversational drills and addressing them tactfully at the end.",
+    category: "Teaching Skills"
   }
 ];
 
 export const faqs = [
   {
-    question: "How do the 1-on-1 English tutoring sessions work?",
-    answer: "Once enrolled, you can book live 1-on-1 video sessions with your chosen native tutor at any time that fits your schedule. Sessions focus on conversational dialogues, exam speaking practice, accent correction, or business presentations."
+    question: "Do I need prior teaching experience to join?",
+    answer: "No. You already speak English fluently. Our platform teaches you the step-by-step procedures, lesson structuring frameworks (PPP & TBLT), and student management techniques required to teach professionally."
   },
   {
-    question: "Are your English tutors certified native speakers?",
-    answer: "Yes! 100% of our tutors are certified native English speakers holding accredited qualifications (CELTA, TEFL, TESOL) or university degrees in English linguistics."
+    question: "How does the monetization and homepage listing work?",
+    answer: "After completing your initial training, funding your account (minimum $10) unlocks the monetization module and activates your profile on the homepage so students can discover and message you directly."
   },
   {
-    question: "How do I know my current English level?",
-    answer: "After signing up, you can take our free 15-minute CEFR English placement test, which assesses your reading, listening, vocabulary, and grammar to place you in the optimal course level."
+    question: "How does the lead fee deduction work?",
+    answer: "When your profile is live on the homepage, each direct student message deducts the platform lead fee from your funded balance. You set your own hourly rates ($20–$65+/hr) and keep 100% of the lesson fees you charge students."
   },
   {
-    question: "Can I prepare for IELTS, TOEFL, or Cambridge exams?",
-    answer: "Absolutely. We offer dedicated exam prep masterclasses and 1-on-1 mock interviews designed by certified former examiners to help you achieve Band 7.5 - 9.0 in IELTS or 100+ in TOEFL."
+    question: "What teaching methodologies will I learn?",
+    answer: "You will master the Presentation–Practice–Production (PPP) model, Task-Based Language Teaching (TBLT), Natural Conversational Coaching, and blueprints for IELTS prep and Business English."
   },
   {
-    question: "Are the course completion certificates recognized internationally?",
-    answer: "Yes, every course comes with a verifiable digital certificate linked to the Common European Framework of Reference for Languages (CEFR A1 - C2), perfect for LinkedIn and resumes."
+    question: "How much can I charge as a trained teacher?",
+    answer: "Trained teachers on our platform typically charge between $20 to $65+ per hour, depending on their specialization (general conversational coaching, IELTS preparation, or executive business English)."
   },
   {
-    question: "What is your refund policy if I am not satisfied?",
-    answer: "We offer a 30-day money-back guarantee on all our course plans. If you are not completely happy with your learning progress, simply contact us for a full refund."
+    question: "How do I set up my payment channel?",
+    answer: "Inside your teacher workspace, you can configure your preferred payout channel (Stripe, PayPal, direct bank transfer) so students can pay you seamlessly for their scheduled sessions."
   }
 ];
 

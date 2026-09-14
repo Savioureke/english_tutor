@@ -23,24 +23,24 @@ export default function VideoCTA({ onOpenVideo }) {
         </div>
 
         <span className="inline-block text-theme-coral font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3">
-          Interactive Live Lesson Tour
+          Teacher Training Blueprint
         </span>
 
         <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-jost text-white leading-tight mb-6">
-          Experience How 1-on-1 English Tutoring Unlocks Spoken Fluency Fast
+          Learn How to Teach English and Build a Paid Client Pipeline
         </h2>
 
         <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
-          Watch a sample lesson with our native tutors to see how real-time dialogue coaching, pronunciation correction, and personalized feedback build confidence.
+          Watch how our procedural training equips fluent speakers with professional lesson frameworks, student onboarding steps, error correction methods, and payment channels.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-md">
-            <span>Explore English Courses</span>
+            <span>Start Teaching Training</span>
             <ArrowRight className="w-4 h-4 ml-2" />
           </Link>
-          <Link to="/contact" className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-md">
-            <span>Book Free Trial Lesson</span>
+          <Link to="/pricing" className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-md">
+            <span>Monetize Your Skill</span>
           </Link>
         </div>
       </div>

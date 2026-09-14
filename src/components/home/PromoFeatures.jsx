@@ -37,7 +37,7 @@ export default function PromoFeatures() {
                   to="/courses"
                   className="inline-flex items-center space-x-2 text-sm font-semibold font-jost text-theme-navy group-hover:text-theme-primary transition-colors pt-4 border-t border-slate-100"
                 >
-                  <span>Explore Courses</span>
+                  <span>Explore Methodology</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

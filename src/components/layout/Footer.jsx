@@ -32,7 +32,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Empowering global learners to achieve fluent English communication, IELTS & TOEFL exam success, and career confidence through 1-on-1 sessions with certified native tutors.
+              A professional portal for fluent English speakers to learn teaching methodology and monetize their skill. Not a language-learning app.
             </p>
             <div className="flex items-center space-x-3 pt-2">
               <a
@@ -77,27 +77,27 @@ export default function Footer() {
           {/* Col 2: Quick Links */}
           <div>
             <h4 className="text-white font-jost font-semibold text-lg sm:text-xl mb-5 border-l-4 border-theme-primary pl-3">
-              Explore Programs
+              Teacher Training
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/about" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>About ENGtutor Academy</span>
+                  <span>›</span> <span>About Teacher Training</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Conversational English Courses</span>
+                  <span>›</span> <span>PPP & TBLT Methodologies</span>
                 </Link>
               </li>
               <li>
                 <Link to="/instructors" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Certified Native Tutors</span>
+                  <span>›</span> <span>Top Earning Teachers</span>
                 </Link>
               </li>
               <li>
                 <Link to="/pricing" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Tutoring Membership Plans</span>
+                  <span>›</span> <span>Monetization & Plans</span>
                 </Link>
               </li>
               <li>
@@ -107,7 +107,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link to="/contact" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Book Free Level Test</span>
+                  <span>›</span> <span>Teacher Support Desk</span>
                 </Link>
               </li>
             </ul>
@@ -116,37 +116,37 @@ export default function Footer() {
           {/* Col 3: Popular Categories */}
           <div>
             <h4 className="text-white font-jost font-semibold text-lg sm:text-xl mb-5 border-l-4 border-theme-primary pl-3">
-              English Categories
+              Teaching Blueprints
             </h4>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Conversational Fluency</span>
+                  <span>›</span> <span>PPP Lesson Structuring</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>IELTS Academic & General</span>
+                  <span>›</span> <span>Task-Based Language Teaching</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Business English for Leaders</span>
+                  <span>›</span> <span>Friction-Free Error Correction</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Accent Reduction & Phonetics</span>
+                  <span>›</span> <span>Setting Rates ($20–$65+/hr)</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>TOEFL iBT High Scoring</span>
+                  <span>›</span> <span>Client Onboarding Procedures</span>
                 </Link>
               </li>
               <li>
                 <Link to="/courses" className="hover:text-theme-coral transition-colors flex items-center space-x-2">
-                  <span>›</span> <span>Grammar & Vocabulary Mastery</span>
+                  <span>›</span> <span>Executive Business Coaching</span>
                 </Link>
               </li>
             </ul>

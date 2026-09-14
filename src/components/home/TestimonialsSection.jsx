@@ -21,13 +21,13 @@ export default function TestimonialsSection() {
         {/* Section Title */}
         <div className="section-title">
           <span className="section-title-tag">
-            Student Success Stories
+            Teacher Success Stories
           </span>
           <h2 className="section-title-heading">
-            What Our Students Say About ENGtutor
+            What Trained Teachers Say About ENGtutor
           </h2>
           <p className="section-title-desc">
-            Read inspiring stories from global learners who achieved spoken fluency, IELTS high bands, and career milestones.
+            Read inspiring stories from fluent English speakers who mastered teaching methodology and built lucrative remote teaching incomes.
           </p>
         </div>
 

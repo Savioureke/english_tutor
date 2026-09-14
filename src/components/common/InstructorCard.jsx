@@ -59,19 +59,28 @@ export default function InstructorCard({ instructor }) {
             </Link>
           </h4>
           <p className="text-xs sm:text-sm text-theme-primary font-medium mt-1">
-            {instructor.role}
+            {instructor.role || `Certified English Coach · ★ ${instructor.rating} · ${instructor.students} students`}
           </p>
         </div>
 
-        <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-around text-xs text-slate-500">
-          <span className="flex items-center space-x-1">
-            <BookOpen className="w-3.5 h-3.5 text-theme-primary" />
-            <span>{instructor.coursesCount} Courses</span>
-          </span>
-          <span className="flex items-center space-x-1">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span>{instructor.rating} Rating</span>
-          </span>
+        <div className="pt-4 mt-4 border-t border-slate-100 flex flex-col gap-2.5">
+          <div className="flex items-center justify-around text-xs text-slate-500">
+            <span className="flex items-center space-x-1">
+              <BookOpen className="w-3.5 h-3.5 text-theme-primary" />
+              <span>{instructor.coursesCount} Modules</span>
+            </span>
+            <span className="flex items-center space-x-1">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <span>★ {instructor.rating}</span>
+            </span>
+          </div>
+
+          <Link
+            to="/contact"
+            className="w-full py-2 bg-theme-primary/10 hover:bg-theme-primary text-theme-primary hover:text-white font-jost font-semibold text-xs rounded-lg transition-colors text-center"
+          >
+            Message & Book
+          </Link>
         </div>
       </div>
     </div>

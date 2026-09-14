@@ -90,12 +90,12 @@ export default function AuthModal() {
             </div>
             <div>
               <h3 className="text-xl font-bold font-jost tracking-tight">
-                {authModalMode === 'login' ? 'Welcome Back to ENGtutor LMS' : 'Create Your ENGtutor Account'}
+                {authModalMode === 'login' ? 'Welcome Back to Teacher Portal' : 'Register to Begin Teacher Training'}
               </h3>
               <p className="text-xs text-white/80">
                 {authModalMode === 'login' 
-                  ? 'Sign in to access your interactive learning & teaching portal' 
-                  : 'Join 35,000+ fluent English students and certified tutors'}
+                  ? 'Sign in to access your teaching modules, client bookings, and monetization dashboard' 
+                  : "You already speak English — we'll teach you how to teach it and how to get paid for it."}
               </p>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function AuthModal() {
               type="submit"
               className="w-full py-2.5 bg-theme-primary hover:bg-theme-navy text-white font-jost font-semibold text-sm rounded-lg transition-all shadow-md shadow-theme-primary/20 flex items-center justify-center space-x-2"
             >
-              <span>{authModalMode === 'login' ? 'Sign In to LMS Dashboard' : 'Complete Registration & Enter LMS'}</span>
+              <span>{authModalMode === 'login' ? 'Sign In to Dashboard' : 'Start Training'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>

@@ -24,17 +24,17 @@ export default function HomeTwo() {
             
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <span className="inline-block text-theme-coral font-bold text-xs sm:text-sm uppercase tracking-wider bg-theme-coral/10 px-4 py-1.5 rounded-full">
-                Welcome to ENGtutor Online Academy
+                Teacher Training & Monetization Platform
               </span>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-jost text-white leading-tight">
-                Empower Your Voice With <span className="text-theme-coral">Fluent English</span> Mastery
+                You Already Speak English. <span className="text-theme-coral">Learn to Teach</span> & Get Paid
               </h1>
               <p className="text-slate-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Connect with certified native tutors, practice real-time conversational dialogues, and achieve verifiable CEFR English language certifications.
+                Transform your existing fluency into a remote coaching business with structured teaching methodologies, lesson plans, and direct client acquisition.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
                 <Link to="/courses" className="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-md">
-                  <span>Explore Courses</span>
+                  <span>Start Teaching Training</span>
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
                 <button
@@ -42,7 +42,7 @@ export default function HomeTwo() {
                   className="btn-white w-full sm:w-auto px-8 py-3.5 rounded-md flex items-center justify-center space-x-2"
                 >
                   <Play className="w-4 h-4 fill-current" />
-                  <span>Watch Lesson Tour</span>
+                  <span>Monetize Your Skill</span>
                 </button>
               </div>
             </div>

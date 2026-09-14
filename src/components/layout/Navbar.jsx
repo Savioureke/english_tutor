@@ -72,8 +72,8 @@ export default function Navbar() {
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-white/60">Certified Native English Tutors</span>
-            <span className="text-theme-coral font-medium">Free 15-Min Level Assessment</span>
+            <span className="text-white/60">Teacher Training & Monetization Portal</span>
+            <span className="text-theme-coral font-medium">Turn Your Fluency Into An Income</span>
           </div>
         </div>
       </div>
