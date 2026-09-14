@@ -24,7 +24,6 @@ export const navLinks = [
       { title: "Tutor Details", path: "/instructor/1" },
       { title: "Pricing Plan", path: "/pricing" },
       { title: "FAQ Page", path: "/faq" },
-      { title: "404 Page", path: "/404" },
     ]
   },
   {
@@ -424,3 +423,378 @@ export const partnerLogos = [
   "/assets/img/clients/5.png",
   "/assets/img/clients/6.png",
 ];
+
+export const demoUsers = {
+  student: {
+    id: "stu-101",
+    name: "Alex Morgan",
+    email: "student@engtutor.com",
+    role: "student",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+    enrolledDate: "January 2026",
+    level: "B2 Upper Intermediate",
+    streakDays: 14,
+    hoursLearned: 38.5,
+    fluencyScore: "78%",
+    targetExam: "IELTS Band 7.5+",
+    primaryTutor: "Emma Watson",
+  },
+  teacher: {
+    id: "tch-201",
+    name: "Emma Watson",
+    email: "teacher@engtutor.com",
+    role: "teacher",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+    qualifications: "MA TESOL, Cambridge CELTA Certified",
+    specialty: "British Pronunciation & IELTS Speaking",
+    totalStudents: 142,
+    hoursTaught: 320,
+    rating: 4.98,
+    activeCourses: 3,
+  }
+};
+
+export const studentEnrolledCourses = [
+  {
+    id: 1,
+    title: "Conversational English Fluency: Speak Naturally in 30 Days",
+    instructor: "Emma Watson",
+    instructorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=700&auto=format&fit=crop&q=80",
+    progress: 72,
+    totalLessons: 24,
+    completedLessons: 17,
+    lastLesson: "Lesson 18: Mastering Idiomatic Phrasal Verbs in Dialogue",
+    category: "Conversational",
+    nextLiveDate: "Tomorrow at 10:00 AM UTC",
+    modules: [
+      {
+        title: "Module 1: Everyday Natural Phrasing",
+        lessons: [
+          { id: 101, title: "1.1 Breaking Free From Literal Translations", duration: "18 mins", completed: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          { id: 102, title: "1.2 Small Talk Mastery & Topic Starters", duration: "24 mins", completed: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          { id: 103, title: "1.3 Interactive Roleplay: Coffee Shop & Travel Scenarios", duration: "30 mins", completed: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+        ]
+      },
+      {
+        title: "Module 2: Pronunciation, Rhythm & Connected Speech",
+        lessons: [
+          { id: 104, title: "2.1 The Magic of Linking Sounds & Elision", duration: "22 mins", completed: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          { id: 105, title: "2.2 Sentence Stress & Intonation Patterns", duration: "28 mins", completed: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          { id: 106, title: "2.3 Eliminating Accent Blockers (Th, R, L sounds)", duration: "35 mins", completed: false, isCurrent: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+        ]
+      },
+      {
+        title: "Module 3: Advanced Idioms & Spontaneous Fluency",
+        lessons: [
+          { id: 107, title: "3.1 Top 50 Essential Idioms for Social Conversations", duration: "25 mins", completed: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+          { id: 108, title: "3.2 Thinking in English Without Mental Translating", duration: "32 mins", completed: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "IELTS Academic Band 7.5+ Masterclass (Speaking & Writing)",
+    instructor: "Michael Davies",
+    instructorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=700&auto=format&fit=crop&q=80",
+    progress: 45,
+    totalLessons: 32,
+    completedLessons: 14,
+    lastLesson: "Lesson 15: IELTS Writing Task 2 - Structuring Agree/Disagree Essays",
+    category: "Exam Prep",
+    nextLiveDate: "Thursday at 2:00 PM UTC",
+    modules: [
+      {
+        title: "Section 1: Speaking Band 8 Descriptors",
+        lessons: [
+          { id: 201, title: "1.1 Fluency & Coherence Scoring Criteria", duration: "20 mins", completed: true },
+          { id: 202, title: "1.2 Lexical Resource: High Band Synonyms", duration: "25 mins", completed: true },
+        ]
+      },
+      {
+        title: "Section 2: Writing Task 1 & 2 Strategies",
+        lessons: [
+          { id: 203, title: "2.1 Describing Graphs & Charts accurately", duration: "30 mins", completed: true },
+          { id: 204, title: "2.2 Structuring Cohesive Academic Paragraphs", duration: "35 mins", completed: false, isCurrent: true },
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: "Executive Business English: Presentations, Meetings & Negotiation",
+    instructor: "Sophia Rodriguez",
+    instructorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=700&auto=format&fit=crop&q=80",
+    progress: 20,
+    totalLessons: 20,
+    completedLessons: 4,
+    lastLesson: "Lesson 5: Leading Cross-Cultural Business Meetings",
+    category: "Business English",
+    nextLiveDate: "Friday at 4:30 PM UTC",
+  }
+];
+
+export const upcomingLiveSessions = [
+  {
+    id: "live-1",
+    title: "1-on-1 Accent Reduction & Speaking Drill",
+    tutor: "Emma Watson",
+    tutorAvatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+    date: "Tomorrow, Sep 15",
+    time: "10:00 AM - 10:45 AM (UTC)",
+    status: "Confirmed",
+    roomLink: "https://meet.engtutor.com/room/live-emma-alex",
+    topic: "Mastering the British /th/ & /r/ sounds in rapid speech",
+  },
+  {
+    id: "live-2",
+    title: "IELTS Speaking Part 2 & 3 Mock Simulation",
+    tutor: "Michael Davies",
+    tutorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    date: "Thursday, Sep 17",
+    time: "02:00 PM - 02:45 PM (UTC)",
+    status: "Confirmed",
+    roomLink: "https://meet.engtutor.com/room/live-michael-alex",
+    topic: "Simulated Examiner Interview & Instant Band Feedback",
+  },
+  {
+    id: "live-3",
+    title: "Business Pitch & Presentation Q&A Practice",
+    tutor: "Sophia Rodriguez",
+    tutorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+    date: "Friday, Sep 18",
+    time: "04:30 PM - 05:15 PM (UTC)",
+    status: "Upcoming",
+    roomLink: "https://meet.engtutor.com/room/live-sophia-alex",
+    topic: "Persuasive Phrasing for Stakeholder Pitches",
+  }
+];
+
+export const studentAssignments = [
+  {
+    id: "asg-1",
+    title: "IELTS Task 2: Artificial Intelligence & Future of Education",
+    course: "IELTS Academic Band 7.5+ Masterclass",
+    dueDate: "Sep 18, 2026",
+    status: "Graded",
+    score: "Band 7.5",
+    feedback: "Outstanding cohesion and topic-specific vocabulary! Work on reducing minor comma splices in complex conditionals.",
+    submissionDate: "Sep 12, 2026",
+    criteria: [
+      { name: "Task Achievement", score: "8.0" },
+      { name: "Coherence & Cohesion", score: "7.5" },
+      { name: "Lexical Resource", score: "8.0" },
+      { name: "Grammatical Accuracy", score: "7.0" },
+    ]
+  },
+  {
+    id: "asg-2",
+    title: "Voice Audio Task: 2-Minute Spontaneous Opinion on Remote Work",
+    course: "Conversational English Fluency",
+    dueDate: "Sep 16, 2026",
+    status: "Submitted",
+    score: "Pending Review",
+    feedback: "Tutor Emma Watson is evaluating your audio pronunciation.",
+    submissionDate: "Sep 14, 2026",
+  },
+  {
+    id: "asg-3",
+    title: "Business Email Rewrite: Resolving Client Conflict with Tact",
+    course: "Executive Business English",
+    dueDate: "Sep 22, 2026",
+    status: "Pending",
+    score: "--",
+    feedback: "Not yet submitted. Word count: 180 - 250 words.",
+    submissionDate: "--",
+  }
+];
+
+export const vocabularyCards = [
+  {
+    id: 1,
+    word: "Articulate",
+    phonetic: "/ɑːrˈtɪk.jə.lət/",
+    partOfSpeech: "adjective / verb",
+    definition: "Able to express thoughts and ideas clearly and effectively in speech or writing.",
+    example: "She gave an articulate and persuasive speech at the global conference.",
+    level: "C1 Advanced",
+    audioSample: "articulate",
+  },
+  {
+    id: 2,
+    word: "Concur",
+    phonetic: "/kənˈkɜːr/",
+    partOfSpeech: "verb",
+    definition: "To agree with someone or have the same opinion.",
+    example: "I concur with your assessment that we need more practice with connected speech.",
+    level: "B2 Upper-Intermediate",
+    audioSample: "concur",
+  },
+  {
+    id: 3,
+    word: "Meticulous",
+    phonetic: "/məˈtɪk.jə.ləs/",
+    partOfSpeech: "adjective",
+    definition: "Showing great attention to detail; very careful and precise.",
+    example: "His meticulous essay drafting resulted in a Band 8.5 score.",
+    level: "C1 Advanced",
+    audioSample: "meticulous",
+  },
+  {
+    id: 4,
+    word: "Pragmatic",
+    phonetic: "/præɡˈmæt.ɪk/",
+    partOfSpeech: "adjective",
+    definition: "Dealing with things sensibly and realistically based on practical rather than theoretical considerations.",
+    example: "Taking 15 minutes of daily conversational drills is a pragmatic approach to fluency.",
+    level: "B2 Upper-Intermediate",
+    audioSample: "pragmatic",
+  }
+];
+
+export const studentCertificates = [
+  {
+    id: "cert-101",
+    title: "Certificate of English Fluency (CEFR B2 Level)",
+    issuedBy: "ENGtutor International Language Academy",
+    date: "August 2026",
+    grade: "Distinction (94%)",
+    credentialId: "ENG-B2-2026-98144",
+    tutor: "Emma Watson, Lead Tutor",
+  },
+  {
+    id: "cert-102",
+    title: "IELTS Intensive Speaking Preparation Certificate",
+    issuedBy: "ENGtutor Exam Board",
+    date: "July 2026",
+    grade: "Band 7.5 Predicted",
+    credentialId: "ENG-IELTS-2026-47201",
+    tutor: "Michael Davies, Senior Examiner",
+  }
+];
+
+// TEACHER LMS DATA
+export const teacherRoster = [
+  {
+    id: "stu-101",
+    name: "Alex Morgan",
+    email: "student@engtutor.com",
+    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    course: "Conversational English Fluency",
+    level: "B2 Upper Intermediate",
+    progress: 72,
+    attendance: "96%",
+    nextSession: "Tomorrow, 10:00 AM",
+    lastFeedback: "Excellent tone control; needs work on /th/ sound.",
+    status: "Active",
+  },
+  {
+    id: "stu-102",
+    name: "David Kim",
+    email: "david.k@gmail.com",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    course: "IELTS Academic Band 7.5+ Masterclass",
+    level: "B2 Intermediate",
+    progress: 58,
+    attendance: "88%",
+    nextSession: "Wednesday, 3:00 PM",
+    lastFeedback: "Task 1 paragraph structure improved drastically.",
+    status: "Active",
+  },
+  {
+    id: "stu-103",
+    name: "Elena Rostova",
+    email: "elena.r@outlook.com",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
+    course: "Conversational English Fluency",
+    level: "C1 Advanced",
+    progress: 90,
+    attendance: "100%",
+    nextSession: "Friday, 11:30 AM",
+    lastFeedback: "Near-native idiomatic expression in dialogues.",
+    status: "Active",
+  },
+  {
+    id: "stu-104",
+    name: "Carlos Mendez",
+    email: "carlos.m@yahoo.com",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    course: "Executive Business English",
+    level: "B1 Intermediate",
+    progress: 35,
+    attendance: "80%",
+    nextSession: "Next Monday, 2:00 PM",
+    lastFeedback: "Practicing polite email openers and email closures.",
+    status: "Needs Support",
+  }
+];
+
+export const teacherSubmissionsToGrade = [
+  {
+    id: "sub-1",
+    studentName: "Alex Morgan",
+    studentAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    title: "Spontaneous Speaking Audio Clip: Tech in Daily Life",
+    course: "Conversational English Fluency",
+    submittedTime: "2 hours ago",
+    type: "Audio Recording (2m 14s)",
+    status: "Awaiting Feedback",
+    currentGrade: null,
+  },
+  {
+    id: "sub-2",
+    studentName: "David Kim",
+    studentAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    title: "IELTS Writing Task 1: Renewable Energy Bar Graph",
+    course: "IELTS Academic Band 7.5+ Masterclass",
+    submittedTime: "5 hours ago",
+    type: "Essay (190 words)",
+    status: "Awaiting Feedback",
+    currentGrade: null,
+  },
+  {
+    id: "sub-3",
+    studentName: "Carlos Mendez",
+    studentAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+    title: "Business Email: Resolving Delivery Delay",
+    course: "Executive Business English",
+    submittedTime: "1 day ago",
+    type: "Writing (210 words)",
+    status: "Graded",
+    currentGrade: "92/100 (A)",
+  }
+];
+
+export const teacherTodaySchedule = [
+  {
+    id: "sch-1",
+    time: "10:00 AM - 10:45 AM",
+    student: "Alex Morgan",
+    studentAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+    topic: "Accent Reduction: /th/ & /r/ Sounds Drill",
+    type: "1-on-1 Video Session",
+    status: "Ready",
+  },
+  {
+    id: "sch-2",
+    time: "02:00 PM - 02:45 PM",
+    student: "David Kim",
+    studentAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
+    topic: "IELTS Mock Speaking Evaluation (Parts 1-3)",
+    type: "Examiner Simulation",
+    status: "Upcoming",
+  },
+  {
+    id: "sch-3",
+    time: "04:30 PM - 05:30 PM",
+    student: "Group Batch (8 Students)",
+    studentAvatar: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=150&auto=format&fit=crop&q=80",
+    topic: "Live Group Workshop: British Idioms & Slang",
+    type: "Group Live Webinar",
+    status: "Upcoming",
+  }
+];
+

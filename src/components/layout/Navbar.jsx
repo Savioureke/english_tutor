@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ChevronRight, Phone, Mail, GraduationCap } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { 
+  Menu, X, ChevronDown, ChevronRight, Phone, Mail, GraduationCap, 
+  LogOut, User, BookOpen, Calendar, Award, LayoutDashboard 
+} from 'lucide-react';
 import { navLinks } from '../../data/mockData';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [expandedMobileDropdowns, setExpandedMobileDropdowns] = useState({});
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user, isAuthenticated, logout, openAuthModal } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,9 +30,10 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer when route changes
+  // Close mobile drawer and dropdown when route changes
   useEffect(() => {
     setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
   }, [location.pathname]);
 
   const toggleMobileDropdown = (index) => {
@@ -36,9 +45,16 @@ export default function Navbar() {
 
   const isActive = (path) => {
     if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    if (path !== '/' && path !== '#' && location.pathname.startsWith(path)) return true;
     return false;
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const dashboardPath = user?.role === 'teacher' ? '/dashboard/teacher' : '/dashboard/student';
 
   return (
     <>
@@ -136,30 +152,95 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Header Action Buttons (Desktop & Tablet) */}
+          {/* Header Action Buttons (Desktop) */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link
-              to="/contact"
-              className="text-theme-navy hover:text-theme-primary font-jost font-semibold text-sm xl:text-base px-3 py-2 transition-colors"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/contact"
-              className="btn-primary text-sm xl:text-base px-6 py-2.5 rounded-md"
-            >
-              Sign Up
-            </Link>
+            {isAuthenticated && user ? (
+              /* User Profile & Dashboard Menu */
+              <div className="relative">
+                <div className="flex items-center space-x-3">
+                  <Link
+                    to={dashboardPath}
+                    className="flex items-center space-x-2 py-1.5 px-3.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-colors"
+                  >
+                    <img
+                      src={user.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"}
+                      alt={user.name}
+                      className="w-7 h-7 rounded-lg object-cover border border-slate-300"
+                    />
+                    <div className="text-left">
+                      <div className="text-xs font-bold text-theme-navy font-jost leading-tight">
+                        {user.name.split(' ')[0]}
+                      </div>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                        user.role === 'teacher' ? 'text-emerald-700' : 'text-theme-primary'
+                      }`}>
+                        {user.role === 'teacher' ? 'Teacher' : 'Student'}
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link
+                    to={dashboardPath}
+                    className={`text-xs font-bold font-jost px-4 py-2.5 rounded-xl shadow-sm text-white flex items-center space-x-1.5 transition-all ${
+                      user.role === 'teacher'
+                        ? 'bg-emerald-700 hover:bg-emerald-800'
+                        : 'btn-primary'
+                    }`}
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>LMS Dashboard</span>
+                  </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                    title="Sign Out"
+                    aria-label="Sign Out"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Logged Out: Sign In & Sign Up buttons */
+              <>
+                <button
+                  type="button"
+                  onClick={() => openAuthModal('login')}
+                  className="text-theme-navy hover:text-theme-primary font-jost font-semibold text-sm xl:text-base px-3 py-2 transition-colors cursor-pointer"
+                >
+                  Sign In
+                </button>
+                <button
+                  type="button"
+                  onClick={() => openAuthModal('register')}
+                  className="btn-primary text-sm xl:text-base px-6 py-2.5 rounded-md shadow-md cursor-pointer"
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile & Tablet Hamburger Toggle */}
           <div className="flex items-center space-x-3 lg:hidden">
-            <Link
-              to="/contact"
-              className="btn-primary text-xs sm:text-sm px-3.5 py-2 rounded-md sm:hidden"
-            >
-              Join
-            </Link>
+            {isAuthenticated ? (
+              <Link
+                to={dashboardPath}
+                className="btn-primary text-xs px-3 py-1.5 rounded-lg"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openAuthModal('login')}
+                className="btn-primary text-xs sm:text-sm px-3.5 py-2 rounded-md sm:hidden"
+              >
+                Sign In
+              </button>
+            )}
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 text-theme-navy hover:text-theme-primary focus:outline-none rounded-lg border border-slate-200"
@@ -200,6 +281,25 @@ export default function Navbar() {
                   <X className="w-5 h-5" />
                 </button>
               </div>
+
+              {/* Mobile User Profile Section if logged in */}
+              {isAuthenticated && user && (
+                <div className="p-4 bg-gradient-to-r from-theme-navy to-theme-primary text-white">
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={user.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80"}
+                      alt={user.name}
+                      className="w-10 h-10 rounded-xl object-cover border border-white/30"
+                    />
+                    <div>
+                      <div className="font-bold text-sm font-jost">{user.name}</div>
+                      <span className="text-[10px] uppercase font-bold tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
+                        {user.role === 'teacher' ? 'Instructor LMS' : 'Student LMS'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Mobile Menu Items */}
               <div className="p-4 space-y-1">
@@ -255,20 +355,49 @@ export default function Navbar() {
 
             {/* Mobile Drawer Footer */}
             <div className="p-5 border-t border-slate-100 bg-slate-50 space-y-3">
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-outline w-full text-center py-2.5 rounded text-sm"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="btn-primary w-full text-center py-2.5 rounded text-sm"
-              >
-                Sign Up Now
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to={dashboardPath}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="btn-primary w-full text-center py-2.5 rounded-xl text-sm shadow-md block"
+                  >
+                    Go to LMS Dashboard
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full text-center py-2 text-xs text-red-600 font-semibold hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openAuthModal('login');
+                    }}
+                    className="btn-outline w-full text-center py-2.5 rounded-xl text-sm block"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      openAuthModal('register');
+                    }}
+                    className="btn-primary w-full text-center py-2.5 rounded-xl text-sm block"
+                  >
+                    Sign Up Now
+                  </button>
+                </>
+              )}
               <div className="text-center pt-2">
                 <p className="text-xs text-slate-500">Need help? support@engtutor.com</p>
               </div>
