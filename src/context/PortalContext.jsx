@@ -8,12 +8,12 @@ export function PortalProvider({ children }) {
   const [platformSettings, setPlatformSettings] = useState({
     lead_fee: 1.50,
     min_funding: 10.00,
-    training_video_1_url: 'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE',
-    training_video_1_title: 'Mastering the PPP English Teaching Methodology',
-    training_video_1_description: 'Complete step-by-step masterclass on conducting 45-minute communicative English lessons.',
-    training_video_2_url: 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso',
-    training_video_2_title: 'Teacher Monetization & Direct Payout Acquisition Strategy',
-    training_video_2_description: 'How to set your hourly rate, handle student inquiries, and collect payments directly.',
+    training_video_1_url: 'https://www.youtube.com/embed/Jm-3M4iS_5g',
+    training_video_1_title: 'Mastering the PPP English Teaching Methodology (Presentation, Practice, Production)',
+    training_video_1_description: 'Step-by-step masterclass on conducting structured 45-minute communicative English lessons, error correction, and student speaking drills.',
+    training_video_2_url: 'https://www.youtube.com/embed/yP5JtL1S8mQ',
+    training_video_2_title: 'Teacher Monetization & 1-on-1 Online English Coaching Strategy',
+    training_video_2_description: 'How to structure 1-on-1 online speaking lessons, handle student inquiries, and collect payments directly.',
   });
   const [teacherMessages, setTeacherMessages] = useState([]);
   const [deductionLogs, setDeductionLogs] = useState([]);
@@ -59,12 +59,12 @@ export function PortalProvider({ children }) {
         setPlatformSettings({
           lead_fee: parseFloat(settingsData.lead_fee) || 1.50,
           min_funding: parseFloat(settingsData.min_funding) || 10.00,
-          training_video_1_url: settingsData.training_video_1_url || 'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE',
-          training_video_1_title: settingsData.training_video_1_title || 'Mastering the PPP English Teaching Methodology',
-          training_video_1_description: settingsData.training_video_1_description || 'Complete step-by-step masterclass on conducting 45-minute communicative English lessons.',
-          training_video_2_url: settingsData.training_video_2_url || 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso',
-          training_video_2_title: settingsData.training_video_2_title || 'Teacher Monetization & Direct Payout Acquisition Strategy',
-          training_video_2_description: settingsData.training_video_2_description || 'How to set your hourly rate, handle student inquiries, and collect payments directly.',
+          training_video_1_url: settingsData.training_video_1_url || 'https://www.youtube.com/embed/Jm-3M4iS_5g',
+          training_video_1_title: settingsData.training_video_1_title || 'Mastering the PPP English Teaching Methodology (Presentation, Practice, Production)',
+          training_video_1_description: settingsData.training_video_1_description || 'Step-by-step masterclass on conducting structured 45-minute communicative English lessons, error correction, and student speaking drills.',
+          training_video_2_url: settingsData.training_video_2_url || 'https://www.youtube.com/embed/yP5JtL1S8mQ',
+          training_video_2_title: settingsData.training_video_2_title || 'Teacher Monetization & 1-on-1 Online English Coaching Strategy',
+          training_video_2_description: settingsData.training_video_2_description || 'How to structure 1-on-1 online speaking lessons, handle student inquiries, and collect payments directly.',
         });
       }
 

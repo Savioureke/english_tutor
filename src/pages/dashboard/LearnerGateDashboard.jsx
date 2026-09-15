@@ -111,8 +111,8 @@ export default function LearnerGateDashboard() {
               </span>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-bold font-jost">
-              Welcome, {currentUser.full_name || 'Learner'}!
+            <h1 className="text-2xl sm:text-3xl font-bold font-jost text-white">
+              Welcome, <span className="text-white font-extrabold">{currentUser.full_name || 'Learner'}</span>!
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
               You already speak English fluently. Complete the 5-step procedure below to master our teaching methodology, fund your wallet (minimum ${platformSettings.min_funding || 10}), and unlock your live listing on the homepage to start receiving direct student inquiries.

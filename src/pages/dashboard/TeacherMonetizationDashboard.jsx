@@ -102,8 +102,8 @@ export default function TeacherMonetizationDashboard() {
                     <span>{user?.rating || '4.98'} Rating</span>
                   </span>
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-bold font-jost mt-1">
-                  Teacher Workspace: {user?.full_name || "Emma Watson"}
+                <h1 className="text-2xl sm:text-3xl font-bold font-jost mt-1 text-white">
+                  Teacher Workspace: <span className="text-white font-extrabold">{user?.full_name || "Emma Watson"}</span>
                 </h1>
                 <p className="text-xs sm:text-sm text-emerald-100">
                   {user?.qualifications || "Certified Native English Coach • PPP & TBLT Specialist"}
