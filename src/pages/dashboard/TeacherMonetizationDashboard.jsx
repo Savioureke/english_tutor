@@ -7,19 +7,22 @@ import {
   Users, CheckCircle2, AlertCircle, ArrowUpRight, Plus, 
   Calendar, Video, BookOpen, Clock, ShieldCheck, Phone, CheckSquare, Edit3
 } from 'lucide-react';
-import { teacherTodaySchedule, studentEnrolledCourses } from '../../data/mockData';
 
 export default function TeacherMonetizationDashboard() {
   const { user } = useAuth();
   const { 
     teacherMessages, 
     deductionLogs, 
+    lessonBookings,
     platformSettings, 
     fundWallet, 
-    updatePaymentChannel 
+    updatePaymentChannel,
+    confirmLessonBooking,
+    payLessonBooking,
+    completeLessonBooking,
   } = usePortal();
 
-  const [activeTab, setActiveTab] = useState('monetization'); // 'monetization' | 'inbox' | 'wallet' | 'classes'
+  const [activeTab, setActiveTab] = useState('monetization'); // 'monetization' | 'bookings' | 'inbox' | 'wallet' | 'classes'
   const [topUpModalOpen, setTopUpModalOpen] = useState(false);
   const [topUpAmount, setTopUpAmount] = useState('25');
   const [topUpSuccess, setTopUpSuccess] = useState(false);
@@ -28,9 +31,18 @@ export default function TeacherMonetizationDashboard() {
   const [newChannelText, setNewChannelText] = useState(user?.payment_channel || 'PayPal (emma.watson@payments.com)');
   const [channelEditSuccess, setChannelEditSuccess] = useState(false);
 
-  // Filter messages & deductions for this specific teacher
+  const [completionNotesModalOpen, setCompletionNotesModalOpen] = useState(false);
+  const [selectedBookingForCompletion, setSelectedBookingForCompletion] = useState(null);
+  const [completionNotes, setCompletionNotes] = useState('');
+  const [completionSuccess, setCompletionSuccess] = useState(false);
+
+  // Filter messages & deductions & bookings for this specific teacher
   const myMessages = teacherMessages.filter(
     (m) => m.teacher_id === user?.id || m.teacher_name === user?.full_name || m.teacher_name === 'Emma Watson'
+  );
+
+  const myBookings = (lessonBookings || []).filter(
+    (b) => b.teacher_id === user?.id || b.teacher_name === user?.full_name || b.teacher_name === 'Emma Watson'
   );
 
   const myDeductions = deductionLogs.filter(
@@ -169,6 +181,7 @@ export default function TeacherMonetizationDashboard() {
         <div className="flex overflow-x-auto scrollbar-none space-x-2 border-b border-slate-200 pb-2 mb-6">
           {[
             { id: 'monetization', label: 'Monetization & Lead Overview', icon: Globe },
+            { id: 'bookings', label: 'Bookings & Live Lessons', icon: BookOpen, badge: `${myBookings.length} Bookings` },
             { id: 'inbox', label: 'Student Message Inbox', icon: MessageSquare, badge: `${myMessages.length} Leads` },
             { id: 'wallet', label: 'Wallet & Deduction History', icon: DollarSign },
             { id: 'classes', label: 'Live Schedule & Curriculum', icon: Calendar },
@@ -354,6 +367,148 @@ export default function TeacherMonetizationDashboard() {
           </div>
         )}
 
+        {/* ================= TAB: BOOKINGS & LIVE LESSONS ================= */}
+        {activeTab === 'bookings' && (
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div>
+                <h3 className="text-xl font-bold font-jost text-theme-navy">
+                  Student Lesson Bookings ({myBookings.length} Total)
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500">
+                  Manage incoming student bookings, accept lessons, verify direct payments, and mark classes as completed.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
+                  My Rate: ${user?.hourly_rate || 25}/hr
+                </span>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {myBookings.map((b) => (
+                <div
+                  key={b.id}
+                  className="p-5 rounded-3xl bg-slate-50 border border-slate-200/80 space-y-4 hover:border-emerald-300 transition-all"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200/60 pb-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center space-x-2">
+                        <span className="font-mono text-xs text-slate-400">{b.id}</span>
+                        <h4 className="font-bold font-jost text-base text-theme-navy">{b.student_name}</h4>
+                      </div>
+                      <p className="text-xs text-slate-500 font-medium">{b.lesson_topic}</p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      {/* Payment Badge */}
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                        b.payment_status === 'paid'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-amber-100 text-amber-800'
+                      }`}>
+                        {b.payment_status === 'paid' ? `Paid: $${b.amount_paid?.toFixed(2) || b.hourly_rate?.toFixed(2)}` : `Unpaid ($${b.hourly_rate?.toFixed(2) || '25.00'})`}
+                      </span>
+
+                      {/* Status Badge */}
+                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                        b.lesson_status === 'completed'
+                          ? 'bg-purple-100 text-purple-800'
+                          : b.lesson_status === 'in_progress'
+                          ? 'bg-blue-100 text-blue-800 animate-pulse'
+                          : b.lesson_status === 'confirmed'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-slate-200 text-slate-800'
+                      }`}>
+                        {b.lesson_status === 'completed' ? '✓ Completed' : b.lesson_status.toUpperCase()}
+                      </span>
+                    </div>
+                  </div>
+
+                  {b.session_notes && (
+                    <div className="p-3 bg-white rounded-2xl border border-slate-100 text-xs text-slate-700 italic">
+                      Note from student: "{b.session_notes}"
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap items-center justify-between gap-4 pt-2 text-xs">
+                    <div className="flex flex-wrap items-center gap-4 text-slate-600">
+                      <div className="flex items-center space-x-1.5">
+                        <Mail className="w-3.5 h-3.5 text-theme-primary" />
+                        <a href={`mailto:${b.student_email}`} className="text-theme-primary font-semibold hover:underline">
+                          {b.student_email}
+                        </a>
+                      </div>
+                      {b.student_phone && (
+                        <div className="flex items-center space-x-1.5">
+                          <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>{b.student_phone}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center space-x-1.5 text-slate-400">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{new Date(b.created_at || Date.now()).toLocaleString()}</span>
+                      </div>
+                    </div>
+
+                    {/* Teacher Action Buttons */}
+                    <div className="flex flex-wrap items-center gap-2">
+                      {b.lesson_status === 'inquiry' && (
+                        <button
+                          onClick={() => confirmLessonBooking(b.id)}
+                          className="px-3.5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-1"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>Confirm Booking</span>
+                        </button>
+                      )}
+
+                      {b.payment_status === 'pending' && (
+                        <button
+                          onClick={() => payLessonBooking(b.id, b.hourly_rate || 25.00)}
+                          className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-1"
+                        >
+                          <DollarSign className="w-3.5 h-3.5" />
+                          <span>Verify Student Payment (${(b.hourly_rate || 25).toFixed(2)})</span>
+                        </button>
+                      )}
+
+                      {b.lesson_status !== 'completed' && (
+                        <button
+                          onClick={() => {
+                            setSelectedBookingForCompletion(b);
+                            setCompletionNotes(b.session_notes || '');
+                            setCompletionNotesModalOpen(true);
+                          }}
+                          className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-1"
+                        >
+                          <CheckSquare className="w-3.5 h-3.5" />
+                          <span>Mark Lesson Completed</span>
+                        </button>
+                      )}
+
+                      {b.lesson_status === 'completed' && (
+                        <div className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl border border-purple-200">
+                          Lesson Delivered & Completed {b.completed_at ? `on ${new Date(b.completed_at).toLocaleDateString()}` : ''}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {myBookings.length === 0 && (
+                <div className="p-12 text-center text-xs text-slate-400 space-y-2">
+                  <BookOpen className="w-8 h-8 mx-auto text-slate-300" />
+                  <p>No lesson bookings yet. When students book a 1-on-1 session with you, they will appear here.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* ================= TAB 2: STUDENT MESSAGE INBOX ================= */}
         {activeTab === 'inbox' && (
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
@@ -502,27 +657,54 @@ export default function TeacherMonetizationDashboard() {
         {/* ================= TAB 4: SCHEDULE & CURRICULUM ================= */}
         {activeTab === 'classes' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
-              <h3 className="text-xl font-bold font-jost text-theme-navy">
-                Today's Live Teaching Schedule
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {teacherTodaySchedule.map((slot) => (
-                  <div key={slot.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
-                    <div className="flex justify-between items-center text-xs font-bold">
-                      <span className="text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md">{slot.time}</span>
-                      <span className="text-slate-500">{slot.type}</span>
-                    </div>
-                    <div className="flex items-center space-x-2.5">
-                      <img src={slot.studentAvatar} alt={slot.student} className="w-10 h-10 rounded-xl object-cover" />
-                      <div>
-                        <div className="font-bold text-xs text-theme-navy">{slot.student}</div>
-                        <div className="text-[11px] text-slate-500">{slot.topic}</div>
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div>
+                  <h3 className="text-xl font-bold font-jost text-theme-navy">
+                    Live 1-on-1 Sessions & Scheduled Lessons ({myBookings.length})
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Real-time student lesson roster and active practice sessions.
+                  </p>
+                </div>
+                <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full self-start sm:self-center">
+                  {myBookings.filter(b => b.lesson_status === 'confirmed' || b.lesson_status === 'in_progress').length} Active Sessions
+                </span>
+              </div>
+
+              {myBookings.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {myBookings.map((slot) => (
+                    <div key={slot.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3 hover:border-emerald-300 transition-all">
+                      <div className="flex justify-between items-center text-xs font-bold">
+                        <span className={`px-2 py-0.5 rounded-md ${
+                          slot.lesson_status === 'completed'
+                            ? 'bg-purple-100 text-purple-800'
+                            : slot.lesson_status === 'in_progress'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-emerald-100 text-emerald-800'
+                        }`}>
+                          {slot.lesson_status.toUpperCase()}
+                        </span>
+                        <span className="text-slate-500 font-mono text-[11px]">${(slot.hourly_rate || 25).toFixed(2)}/hr</span>
+                      </div>
+                      <div className="space-y-1">
+                        <div className="font-bold text-sm text-theme-navy">{slot.student_name}</div>
+                        <div className="text-xs text-slate-600 line-clamp-2">{slot.lesson_topic}</div>
+                      </div>
+                      <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-200 flex items-center justify-between">
+                        <span>{slot.student_email}</span>
+                        <span>{new Date(slot.created_at || Date.now()).toLocaleDateString()}</span>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-12 text-center text-xs text-slate-400 space-y-2">
+                  <Calendar className="w-8 h-8 mx-auto text-slate-300" />
+                  <p>No active 1-on-1 sessions scheduled yet. When students book lessons with you, they will appear in your live schedule.</p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -633,6 +815,67 @@ export default function TeacherMonetizationDashboard() {
                   className="w-full py-3 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md"
                 >
                   Save Changes
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: Complete Lesson with Notes */}
+      {completionNotesModalOpen && selectedBookingForCompletion && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 className="text-lg font-bold font-jost text-theme-navy">
+                Complete Lesson Session
+              </h3>
+              <button onClick={() => setCompletionNotesModalOpen(false)} className="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+
+            {completionSuccess ? (
+              <div className="p-4 bg-purple-50 text-purple-800 rounded-2xl text-center space-y-2">
+                <CheckCircle2 className="w-8 h-8 text-purple-600 mx-auto" />
+                <div className="font-bold text-sm">Lesson Completed!</div>
+                <p className="text-xs">The lesson status has been updated and recorded in the database.</p>
+              </div>
+            ) : (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  completeLessonBooking(selectedBookingForCompletion.id, completionNotes);
+                  setCompletionSuccess(true);
+                  setTimeout(() => {
+                    setCompletionSuccess(false);
+                    setCompletionNotesModalOpen(false);
+                    setSelectedBookingForCompletion(null);
+                  }, 1500);
+                }}
+                className="space-y-4"
+              >
+                <div className="p-3 bg-slate-50 rounded-xl text-xs space-y-1">
+                  <div className="font-bold text-theme-navy">{selectedBookingForCompletion.student_name}</div>
+                  <div className="text-slate-500">{selectedBookingForCompletion.lesson_topic}</div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Lesson Feedback & Tutor Notes:
+                  </label>
+                  <textarea
+                    rows="3"
+                    value={completionNotes}
+                    onChange={(e) => setCompletionNotes(e.target.value)}
+                    placeholder="Enter notes on student progress, pronunciation drills completed, homework assigned..."
+                    className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-purple-600"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs sm:text-sm font-bold shadow-md"
+                >
+                  Confirm Lesson Completion
                 </button>
               </form>
             )}

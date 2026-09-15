@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { 
   X, Mail, Lock, User, GraduationCap, Phone, CheckCircle2, 
-  ArrowRight, ShieldCheck, Sparkles, KeyRound 
+  ArrowRight, ShieldCheck 
 } from 'lucide-react';
-import { demoUsers } from '../../data/mockData';
 
 export default function AuthModal() {
   const { 
@@ -14,7 +13,6 @@ export default function AuthModal() {
     authModalMode, 
     openAuthModal, 
     login, 
-    loginWithDemo, 
     register 
   } = useAuth();
   
@@ -25,37 +23,12 @@ export default function AuthModal() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
-  const [copiedRole, setCopiedRole] = useState(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isAuthModalOpen) return null;
 
-  const handleQuickLogin = (selectedRole) => {
-    const user = loginWithDemo(selectedRole);
-    if (user) {
-      if (user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
-    }
-  };
-
-  const handleCopyCredentials = (demoRole) => {
-    if (demoRole === 'admin') {
-      setEmail('admin@engtutor.com');
-      setPassword('admin123');
-    } else if (demoRole === 'teacher') {
-      setEmail('teacher@engtutor.com');
-      setPassword('teacher123');
-    } else {
-      setEmail('student@engtutor.com');
-      setPassword('student123');
-    }
-    setCopiedRole(demoRole);
-    setTimeout(() => setCopiedRole(null), 2500);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -64,7 +37,10 @@ export default function AuthModal() {
         setError('Please enter both email and password.');
         return;
       }
-      const res = login(email, password);
+      setIsSubmitting(true);
+      const res = await login(email, password);
+      setIsSubmitting(false);
+
       if (!res.success) {
         setError(res.error || 'Login failed.');
         return;
@@ -79,7 +55,10 @@ export default function AuthModal() {
         setError('Please fill in all required fields.');
         return;
       }
-      const res = register({ name, email, password, phone });
+      setIsSubmitting(true);
+      const res = await register({ name, email, password, phone });
+      setIsSubmitting(false);
+
       if (!res.success) {
         setError(res.error || 'Registration failed.');
         return;
@@ -145,68 +124,6 @@ export default function AuthModal() {
         </div>
 
         <div className="p-6 overflow-y-auto space-y-4">
-          {/* Quick Demo Access Grid */}
-          <div className="bg-gradient-to-br from-indigo-50/90 via-blue-50/60 to-purple-50/80 p-4 rounded-xl border border-indigo-100/80 shadow-sm">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center space-x-2">
-                <Sparkles className="w-4 h-4 text-theme-primary" />
-                <span className="text-xs font-bold uppercase tracking-wider text-theme-navy font-jost">
-                  1-Click Demo Accounts
-                </span>
-              </div>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-theme-primary/10 text-theme-primary font-medium">
-                Instant Portal Access
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {/* Learner Demo */}
-              <div className="p-2.5 bg-white rounded-lg border border-blue-200 hover:border-theme-primary transition-all shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="font-semibold text-xs text-blue-900 mb-1">👩‍🎓 Learner Intake</div>
-                  <div className="font-mono text-[10px] text-slate-600 mb-1.5">student@engtutor.com</div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('learner')}
-                  className="w-full py-1 bg-theme-primary hover:bg-theme-navy text-white text-[11px] font-medium rounded transition-colors"
-                >
-                  Login Learner
-                </button>
-              </div>
-
-              {/* Teacher Demo */}
-              <div className="p-2.5 bg-white rounded-lg border border-emerald-200 hover:border-emerald-600 transition-all shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="font-semibold text-xs text-emerald-900 mb-1">👨‍🏫 Live Teacher</div>
-                  <div className="font-mono text-[10px] text-slate-600 mb-1.5">teacher@engtutor.com</div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('teacher')}
-                  className="w-full py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-medium rounded transition-colors"
-                >
-                  Login Teacher
-                </button>
-              </div>
-
-              {/* Admin Demo */}
-              <div className="p-2.5 bg-white rounded-lg border border-red-200 hover:border-red-600 transition-all shadow-xs flex flex-col justify-between">
-                <div>
-                  <div className="font-semibold text-xs text-red-900 mb-1">🛡️ Admin Console</div>
-                  <div className="font-mono text-[10px] text-slate-600 mb-1.5">admin@engtutor.com</div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('admin')}
-                  className="w-full py-1 bg-red-600 hover:bg-red-700 text-white text-[11px] font-medium rounded transition-colors"
-                >
-                  Login Admin
-                </button>
-              </div>
-            </div>
-          </div>
-
           {/* Account notice on register */}
           {authModalMode === 'register' && (
             <div className="p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-xs text-indigo-900 flex items-start space-x-2">

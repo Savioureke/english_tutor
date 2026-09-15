@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
-  GraduationCap, Mail, Lock, User, ArrowRight, Sparkles, 
+  GraduationCap, Mail, Lock, User, ArrowRight, 
   ShieldCheck, Phone, Star, Users, CheckCircle2 
 } from 'lucide-react';
 
 export default function Register() {
-  const { register, loginWithDemo, isAuthenticated, user } = useAuth();
+  const { register, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -15,6 +15,8 @@ export default function Register() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // If already logged in, redirect
   React.useEffect(() => {
@@ -27,18 +29,7 @@ export default function Register() {
     }
   }, [isAuthenticated, user, navigate]);
 
-  const handleQuickLogin = (demoRole) => {
-    const loggedUser = loginWithDemo(demoRole);
-    if (loggedUser) {
-      if (loggedUser.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -47,7 +38,10 @@ export default function Register() {
       return;
     }
 
-    const res = register({ name, email, password, phone });
+    setIsSubmitting(true);
+    const res = await register({ name, email, password, phone });
+    setIsSubmitting(false);
+
     if (!res.success) {
       setError(res.error || 'Registration failed.');
       return;
@@ -122,35 +116,11 @@ export default function Register() {
             </div>
 
             {/* REQUIRED CLEAR INDICATOR */}
-            <div className="mb-4 p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-100 text-xs text-indigo-900 flex items-start space-x-2.5">
+            <div className="mb-6 p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-100 text-xs text-indigo-900 flex items-start space-x-2.5">
               <CheckCircle2 className="w-4 h-4 text-theme-primary shrink-0 mt-0.5" />
               <span>
                 <strong>Account Notice:</strong> Signing up creates your learner account. You can upgrade to a teacher after funding your account (minimum $10).
               </span>
-            </div>
-
-            {/* Quick Demo Bypass */}
-            <div className="mb-5 p-3 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center justify-between text-xs">
-              <div className="flex items-center space-x-2 text-blue-900 font-medium">
-                <Sparkles className="w-4 h-4 text-theme-primary shrink-0" />
-                <span>Want to test quickly without filling forms?</span>
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('learner')}
-                  className="px-2.5 py-1 bg-theme-primary text-white rounded font-medium hover:bg-theme-navy transition-colors text-[11px]"
-                >
-                  Demo Learner
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleQuickLogin('teacher')}
-                  className="px-2.5 py-1 bg-emerald-600 text-white rounded font-medium hover:bg-emerald-700 transition-colors text-[11px]"
-                >
-                  Demo Teacher
-                </button>
-              </div>
             </div>
 
             {error && (

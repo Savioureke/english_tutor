@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import PageHeader from '../components/common/PageHeader';
+import { usePortal } from '../context/PortalContext';
 import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from 'lucide-react';
 
 export default function Contact() {
+  const { submitContactInquiry } = usePortal();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,10 +15,15 @@ export default function Contact() {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.message) {
+      setIsSubmitting(true);
+      await submitContactInquiry(formData);
+      setIsSubmitting(false);
+
       setSubmitted(true);
       setTimeout(() => setSubmitted(false), 6000);
       setFormData({

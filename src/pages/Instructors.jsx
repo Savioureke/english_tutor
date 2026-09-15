@@ -1,10 +1,26 @@
 import React from 'react';
 import PageHeader from '../components/common/PageHeader';
 import InstructorCard from '../components/common/InstructorCard';
+import { usePortal } from '../context/PortalContext';
 import { instructors } from '../data/mockData';
 import { Award, Users, Star } from 'lucide-react';
 
 export default function Instructors() {
+  const { liveTeachers } = usePortal();
+
+  const displayInstructors = (liveTeachers && liveTeachers.length > 0)
+    ? liveTeachers.map((t) => ({
+        id: t.id,
+        name: t.full_name,
+        role: `Certified English Coach · ★ ${t.rating || 5.0} · ${t.total_students || 0} students · $${t.hourly_rate || 25}/hr`,
+        image: t.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80',
+        bio: t.qualifications || 'Trained native coach specializing in conversational fluency, PPP lesson plans, and British & American pronunciation.',
+        coursesCount: 5,
+        rating: t.rating || 5.0,
+        students: `${t.total_students || 0}+`,
+      }))
+    : instructors;
+
   return (
     <div>
       <PageHeader
@@ -17,7 +33,7 @@ export default function Instructors() {
         <div className="container mx-auto">
           {/* Instructors Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {instructors.map((instructor) => (
+            {displayInstructors.map((instructor) => (
               <InstructorCard key={instructor.id} instructor={instructor} />
             ))}
           </div>

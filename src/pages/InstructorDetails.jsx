@@ -2,12 +2,32 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageHeader from '../components/common/PageHeader';
 import CourseCard from '../components/common/CourseCard';
+import { usePortal } from '../context/PortalContext';
 import { instructors, courses } from '../data/mockData';
-import { Star, BookOpen, Users, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Star, BookOpen, Users, Facebook, Twitter, Linkedin, MessageSquare, ArrowRight } from 'lucide-react';
 
 export default function InstructorDetails() {
   const { id } = useParams();
-  const instructor = instructors.find((ins) => ins.id === parseInt(id || '1')) || instructors[0];
+  const { liveTeachers, enrollment, setInquiryModalTeacher } = usePortal();
+
+  // Find in Supabase enrollment or fallback to mock directory
+  const dbTeacher = (enrollment || []).find((u) => String(u.id) === String(id));
+  const mockTeacher = instructors.find((ins) => String(ins.id) === String(id)) || instructors[0];
+
+  const instructor = dbTeacher
+    ? {
+        id: dbTeacher.id,
+        name: dbTeacher.full_name,
+        role: `Certified Native Coach · $${dbTeacher.hourly_rate || 25}/hr`,
+        image: dbTeacher.avatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=80',
+        bio: dbTeacher.qualifications || 'Trained English coach specializing in conversational fluency, PPP lesson plans, and British & American pronunciation.',
+        coursesCount: 5,
+        rating: dbTeacher.rating || 5.0,
+        students: `${dbTeacher.total_students || 0}+`,
+        hourly_rate: dbTeacher.hourly_rate || 25.00,
+      }
+    : mockTeacher;
+
   const instructorCourses = courses.filter((c) => c.instructor.name === instructor.name);
 
   const skills = [
@@ -117,6 +137,19 @@ export default function InstructorDetails() {
                     <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
                     <span>{instructor.rating} Tutor Rating</span>
                   </div>
+                </div>
+
+                {/* Direct Booking Action */}
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setInquiryModalTeacher(instructor)}
+                    className="w-full sm:w-auto px-8 py-3.5 bg-theme-primary hover:bg-theme-navy text-white font-jost font-bold text-sm rounded-xl transition-all shadow-md shadow-theme-primary/20 flex items-center justify-center space-x-2 cursor-pointer"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    <span>Book 1-on-1 Lesson with {instructor.name}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
 

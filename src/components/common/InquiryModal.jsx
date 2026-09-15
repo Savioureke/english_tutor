@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { usePortal } from '../../context/PortalContext';
 import { 
   X, Send, User, Mail, Phone, MessageSquare, CheckCircle2, 
-  AlertCircle, Star, ShieldCheck, Sparkles 
+  AlertCircle, Star, ShieldCheck, Sparkles, DollarSign, Calendar, BookOpen
 } from 'lucide-react';
 
 export default function InquiryModal() {
   const { 
     inquiryModalTeacher, 
     setInquiryModalTeacher, 
+    createLessonBooking,
     submitStudentInquiry, 
     platformSettings 
   } = usePortal();
@@ -16,6 +17,7 @@ export default function InquiryModal() {
   const [studentName, setStudentName] = useState('');
   const [studentEmail, setStudentEmail] = useState('');
   const [studentPhone, setStudentPhone] = useState('');
+  const [lessonTopic, setLessonTopic] = useState('1-on-1 Spoken Fluency & Conversation');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -23,7 +25,9 @@ export default function InquiryModal() {
 
   if (!inquiryModalTeacher) return null;
 
-  const handleSubmit = (e) => {
+  const teacherRate = inquiryModalTeacher.hourly_rate || 25.00;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -34,11 +38,14 @@ export default function InquiryModal() {
 
     setIsSubmitting(true);
 
-    const res = submitStudentInquiry({
+    const res = await createLessonBooking({
       teacher_id: inquiryModalTeacher.id || 'tch-201',
+      teacher_name: inquiryModalTeacher.name || inquiryModalTeacher.full_name,
       student_name: studentName,
       student_email: studentEmail,
       student_phone: studentPhone,
+      hourly_rate: teacherRate,
+      lesson_topic: lessonTopic,
       message,
     });
 

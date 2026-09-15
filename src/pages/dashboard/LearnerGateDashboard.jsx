@@ -15,6 +15,7 @@ export default function LearnerGateDashboard() {
     fundWallet, 
     completeVideo2, 
     updatePaymentChannel, 
+    updateHourlyRate,
     acceptTermsAndUpgrade,
     platformSettings 
   } = usePortal();
@@ -28,8 +29,9 @@ export default function LearnerGateDashboard() {
   const [termsModalOpen, setTermsModalOpen] = useState(false);
 
   // Form states
-  const [fundAmount, setFundAmount] = useState('15');
+  const [fundAmount, setFundAmount] = useState('10');
   const [fundSuccess, setFundSuccess] = useState(false);
+  const [hourlyRate, setHourlyRate] = useState('25');
   const [channelType, setChannelType] = useState('PayPal');
   const [channelAccount, setChannelAccount] = useState('');
   const [channelSuccess, setChannelSuccess] = useState(false);
@@ -44,14 +46,14 @@ export default function LearnerGateDashboard() {
   const hasChannel = Boolean(currentUser.payment_channel);
   const termsDone = Boolean(currentUser.terms_accepted);
 
-  const handleWatchVideo1 = () => {
-    completeVideo1(currentUser.id);
+  const handleWatchVideo1 = async () => {
+    await completeVideo1(currentUser.id);
     setVideo1ModalOpen(false);
   };
 
-  const handleDepositFunds = (e) => {
+  const handleDepositFunds = async (e) => {
     e.preventDefault();
-    const res = fundWallet(currentUser.id, fundAmount);
+    const res = await fundWallet(currentUser.id, fundAmount);
     if (res.success) {
       setFundSuccess(true);
       setTimeout(() => {
@@ -61,15 +63,18 @@ export default function LearnerGateDashboard() {
     }
   };
 
-  const handleWatchVideo2 = () => {
-    completeVideo2(currentUser.id);
+  const handleWatchVideo2 = async () => {
+    await completeVideo2(currentUser.id);
     setVideo2ModalOpen(false);
   };
 
-  const handleSavePaymentChannel = (e) => {
+  const handleSavePaymentChannel = async (e) => {
     e.preventDefault();
     if (!channelAccount.trim()) return;
-    updatePaymentChannel(currentUser.id, `${channelType} (${channelAccount.trim()})`);
+    if (hourlyRate) {
+      await updateHourlyRate(currentUser.id, hourlyRate);
+    }
+    await updatePaymentChannel(currentUser.id, `${channelType} (${channelAccount.trim()})`);
     setChannelSuccess(true);
     setTimeout(() => {
       setChannelSuccess(false);
@@ -77,9 +82,9 @@ export default function LearnerGateDashboard() {
     }, 1500);
   };
 
-  const handleAcceptTermsAndMonetize = () => {
+  const handleAcceptTermsAndMonetize = async () => {
     if (!termsAgreed) return;
-    const res = acceptTermsAndUpgrade(currentUser.id);
+    await acceptTermsAndUpgrade(currentUser.id);
     setUpgradeSuccess(true);
     setTimeout(() => {
       setUpgradeSuccess(false);
@@ -479,32 +484,35 @@ export default function LearnerGateDashboard() {
             <div className="p-4 bg-theme-navy text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <Play className="w-4 h-4 text-theme-coral" />
-                <span className="font-bold text-sm font-jost">Video 1: Teaching Methodology Foundation</span>
+                <span className="font-bold text-sm font-jost">Phase 1 Training: Teaching Methodology</span>
               </div>
               <button onClick={() => setVideo1ModalOpen(false)} className="text-slate-400 hover:text-white">✕</button>
             </div>
             
             <div className="p-6 space-y-4">
-              <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden flex flex-col justify-between p-6 text-white shadow-inner">
-                <div className="flex justify-between items-center z-10">
-                  <span className="bg-theme-coral px-3 py-1 rounded-full text-xs font-bold uppercase">Core Framework</span>
-                  <span className="bg-black/60 px-3 py-1 rounded-full text-xs font-mono">15:00 Mins</span>
-                </div>
-                <div className="text-center z-10 py-6">
-                  <div className="w-16 h-16 bg-theme-primary rounded-full mx-auto flex items-center justify-center mb-2 shadow-lg animate-pulse">
-                    <Play className="w-8 h-8 ml-1" />
+              <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden flex flex-col justify-between p-4 text-white shadow-inner">
+                {platformSettings.training_video_1_url ? (
+                  <iframe
+                    src={platformSettings.training_video_1_url}
+                    title={platformSettings.training_video_1_title || "Training Video 1"}
+                    className="w-full h-full rounded-xl border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <div className="text-center z-10 py-6 m-auto">
+                    <div className="w-16 h-16 bg-theme-primary rounded-full mx-auto flex items-center justify-center mb-2 shadow-lg animate-pulse">
+                      <Play className="w-8 h-8 ml-1" />
+                    </div>
+                    <h4 className="font-bold font-jost text-base">{platformSettings.training_video_1_title || "PPP & TBLT Lesson Plan Blueprint"}</h4>
+                    <p className="text-xs text-slate-300">Presentation, Practice, and Production Structure</p>
                   </div>
-                  <h4 className="font-bold font-jost text-base">PPP & TBLT Lesson Plan Blueprint</h4>
-                  <p className="text-xs text-slate-300">Presentation, Practice, and Production Structure</p>
-                </div>
-                <div className="flex justify-between text-xs text-slate-400 z-10">
-                  <span>Trainer: Emma Watson</span>
-                  <span>1080p HD Video</span>
-                </div>
+                )}
               </div>
 
-              <div className="bg-slate-50 p-3.5 rounded-xl text-xs text-slate-600 space-y-1">
-                <strong>Key Takeaway:</strong> Maintain 70% student talking time, avoid abrupt error interruption, and use guided discovery questions.
+              <div className="bg-indigo-50/80 p-3.5 rounded-xl border border-indigo-100 text-xs text-indigo-950 space-y-1">
+                <div className="font-bold text-theme-navy">{platformSettings.training_video_1_title || "Mastering the PPP English Teaching Methodology"}</div>
+                <p className="text-slate-600">{platformSettings.training_video_1_description || "Maintain 70% student talking time, avoid abrupt error interruption, and use guided discovery questions."}</p>
               </div>
 
               <button
@@ -513,7 +521,7 @@ export default function LearnerGateDashboard() {
                 className="btn-primary w-full py-3 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center space-x-2"
               >
                 <Check className="w-4 h-4" />
-                <span>Mark Video 1 as Watched & Unlock Step 2</span>
+                <span>Mark Video 1 as Completed & Unlock Account Funding ($10)</span>
               </button>
             </div>
           </div>
@@ -528,7 +536,7 @@ export default function LearnerGateDashboard() {
               <div className="flex items-center space-x-2">
                 <DollarSign className="w-5 h-5 text-theme-primary" />
                 <h3 className="text-lg font-bold font-jost text-theme-navy">
-                  Fund Teacher Wallet
+                  Fund Teacher Wallet ($10 Minimum)
                 </h3>
               </div>
               <button onClick={() => setFundingModalOpen(false)} className="text-slate-400 hover:text-slate-700">✕</button>
@@ -538,7 +546,7 @@ export default function LearnerGateDashboard() {
               <div className="p-4 bg-emerald-50 text-emerald-800 rounded-2xl text-center space-y-2">
                 <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" />
                 <div className="font-bold text-sm">Account Funded Successfully!</div>
-                <p className="text-xs">Your new balance is ${(balance + parseFloat(fundAmount)).toFixed(2)}. Step 3 is unlocked.</p>
+                <p className="text-xs">Your new balance is ${(balance + parseFloat(fundAmount)).toFixed(2)}. Step 3 (Monetization Masterclass) is unlocked.</p>
               </div>
             ) : (
               <form onSubmit={handleDepositFunds} className="space-y-4">
@@ -578,8 +586,7 @@ export default function LearnerGateDashboard() {
                     step="1"
                     value={fundAmount}
                     onChange={(e) => setFundAmount(e.target.value)}
-                    required
-                    className="w-full p-2.5 text-sm border border-slate-200 rounded-xl font-bold text-theme-navy focus:outline-none focus:border-theme-primary"
+                    className="w-full p-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:border-theme-primary"
                   />
                 </div>
 
@@ -600,7 +607,7 @@ export default function LearnerGateDashboard() {
                   type="submit"
                   className="btn-primary w-full py-3 rounded-xl text-xs sm:text-sm font-bold shadow-md"
                 >
-                  Deposit ${parseFloat(fundAmount || 0).toFixed(2)} & Continue
+                  Deposit ${fundAmount}.00 & Continue
                 </button>
               </form>
             )}
@@ -612,35 +619,38 @@ export default function LearnerGateDashboard() {
       {video2ModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
           <div className="w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-slate-100 space-y-4">
-            <div className="p-4 bg-theme-navy text-white flex items-center justify-between">
+            <div className="p-4 bg-[#0b3c2c] text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <Play className="w-4 h-4 text-theme-coral" />
-                <span className="font-bold text-sm font-jost">Video 2: Monetization System & Client Acquisition</span>
+                <Play className="w-4 h-4 text-emerald-400" />
+                <span className="font-bold text-sm font-jost">Phase 2: Monetization & Rate Setting</span>
               </div>
               <button onClick={() => setVideo2ModalOpen(false)} className="text-slate-400 hover:text-white">✕</button>
             </div>
             
             <div className="p-6 space-y-4">
-              <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden flex flex-col justify-between p-6 text-white shadow-inner">
-                <div className="flex justify-between items-center z-10">
-                  <span className="bg-emerald-500 px-3 py-1 rounded-full text-xs font-bold uppercase">Monetization</span>
-                  <span className="bg-black/60 px-3 py-1 rounded-full text-xs font-mono">20:00 Mins</span>
-                </div>
-                <div className="text-center z-10 py-6">
-                  <div className="w-16 h-16 bg-emerald-600 rounded-full mx-auto flex items-center justify-center mb-2 shadow-lg animate-pulse">
-                    <Play className="w-8 h-8 ml-1" />
+              <div className="relative aspect-video bg-slate-900 rounded-2xl overflow-hidden flex flex-col justify-between p-4 text-white shadow-inner">
+                {platformSettings.training_video_2_url ? (
+                  <iframe
+                    src={platformSettings.training_video_2_url}
+                    title={platformSettings.training_video_2_title || "Training Video 2"}
+                    className="w-full h-full rounded-xl border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <div className="text-center z-10 py-6 m-auto">
+                    <div className="w-16 h-16 bg-emerald-600 rounded-full mx-auto flex items-center justify-center mb-2 shadow-lg animate-pulse">
+                      <Play className="w-8 h-8 ml-1" />
+                    </div>
+                    <h4 className="font-bold font-jost text-base">{platformSettings.training_video_2_title || "Setting Hourly Rates ($20–$65+/hr)"}</h4>
+                    <p className="text-xs text-slate-300">Client Onboarding, Trial Conversions & Rebooking Loops</p>
                   </div>
-                  <h4 className="font-bold font-jost text-base">Setting Hourly Rates ($20–$65+/hr)</h4>
-                  <p className="text-xs text-slate-300">Client Onboarding, Trial Conversions & Rebooking Loops</p>
-                </div>
-                <div className="flex justify-between text-xs text-slate-400 z-10">
-                  <span>Trainer: Michael Davies</span>
-                  <span>1080p HD Video</span>
-                </div>
+                )}
               </div>
 
-              <div className="bg-slate-50 p-3.5 rounded-xl text-xs text-slate-600 space-y-1">
-                <strong>Key Takeaway:</strong> Charge for monthly packages (4 or 8 sessions) up front rather than single lessons to secure predictable income.
+              <div className="bg-emerald-50/80 p-3.5 rounded-xl border border-emerald-100 text-xs text-emerald-950 space-y-1">
+                <div className="font-bold text-emerald-900">{platformSettings.training_video_2_title || "Teacher Monetization & Direct Payout Strategy"}</div>
+                <p className="text-slate-600">{platformSettings.training_video_2_description || "Charge for monthly packages (4 or 8 sessions) up front rather than single lessons to secure predictable income."}</p>
               </div>
 
               <button
@@ -656,7 +666,7 @@ export default function LearnerGateDashboard() {
         </div>
       )}
 
-      {/* MODAL 4: Payment Channel Setup */}
+      {/* MODAL 4: Payment Channel & Hourly Rate Setup */}
       {channelModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/75 backdrop-blur-sm">
           <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100 space-y-4">
@@ -664,7 +674,7 @@ export default function LearnerGateDashboard() {
               <div className="flex items-center space-x-2">
                 <CreditCard className="w-5 h-5 text-theme-primary" />
                 <h3 className="text-lg font-bold font-jost text-theme-navy">
-                  Configure Payout Channel
+                  Configure Payout & Hourly Rate
                 </h3>
               </div>
               <button onClick={() => setChannelModalOpen(false)} className="text-slate-400 hover:text-slate-700">✕</button>
@@ -673,14 +683,34 @@ export default function LearnerGateDashboard() {
             {channelSuccess ? (
               <div className="p-4 bg-emerald-50 text-emerald-800 rounded-2xl text-center space-y-2">
                 <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" />
-                <div className="font-bold text-sm">Payout Channel Saved!</div>
+                <div className="font-bold text-sm">Payout & Hourly Rate Configured!</div>
                 <p className="text-xs">Step 5 (Terms & Activation) is now unlocked.</p>
               </div>
             ) : (
               <form onSubmit={handleSavePaymentChannel} className="space-y-4">
                 <p className="text-xs text-slate-500">
-                  Select where students will send lesson fees directly to you. We do not take a cut from your student lesson fees.
+                  Set how much you charge students per hour and where students will send lesson fees directly to you.
                 </p>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    Your Hourly Teaching Rate ($/hour):
+                  </label>
+                  <div className="relative">
+                    <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="number"
+                      min="5"
+                      max="200"
+                      step="1"
+                      required
+                      value={hourlyRate}
+                      onChange={(e) => setHourlyRate(e.target.value)}
+                      placeholder="e.g. 25"
+                      className="w-full pl-8 pr-3 py-2.5 text-xs border border-slate-200 rounded-xl font-bold font-mono text-emerald-600 focus:outline-none focus:border-theme-primary"
+                    />
+                  </div>
+                </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -716,7 +746,7 @@ export default function LearnerGateDashboard() {
                   type="submit"
                   className="btn-primary w-full py-3 rounded-xl text-xs sm:text-sm font-bold shadow-md"
                 >
-                  Save Payout Channel
+                  Save Rate & Payout Channel
                 </button>
               </form>
             )}

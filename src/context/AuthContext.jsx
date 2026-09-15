@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { usePortal } from './PortalContext';
+import { supabase, hashPassword, verifyPassword } from '../lib/supabaseClient';
 
 const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export function AuthProvider({ children }) {
     enrollment,
     findUserByEmail,
     registerLearner,
+    fetchPortalData,
   } = usePortal();
 
   const [currentUserEmail, setCurrentUserEmail] = useState(() => {
@@ -19,17 +21,35 @@ export function AuthProvider({ children }) {
     }
   });
 
+  const [cachedUser, setCachedUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('engtutor_auth_user_data');
+      return saved ? JSON.parse(saved) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login'); // 'login' | 'register'
 
-  // Look up live user record from enrollment list
-  const user = currentUserEmail ? findUserByEmail(currentUserEmail) || null : null;
+  // Look up live user record from enrollment list with fallback to cachedUser
+  const liveUser = currentUserEmail ? findUserByEmail(currentUserEmail) : null;
+  const user = liveUser || (currentUserEmail && cachedUser?.email?.toLowerCase() === currentUserEmail.toLowerCase() ? cachedUser : null);
+
+  useEffect(() => {
+    if (liveUser) {
+      setCachedUser(liveUser);
+      localStorage.setItem('engtutor_auth_user_data', JSON.stringify(liveUser));
+    }
+  }, [liveUser]);
 
   useEffect(() => {
     if (currentUserEmail) {
       localStorage.setItem('engtutor_auth_user_email', JSON.stringify(currentUserEmail));
     } else {
       localStorage.removeItem('engtutor_auth_user_email');
+      localStorage.removeItem('engtutor_auth_user_data');
     }
   }, [currentUserEmail]);
 
@@ -42,49 +62,47 @@ export function AuthProvider({ children }) {
     setIsAuthModalOpen(false);
   };
 
-  // 1-Click Quick Demo Login helper
-  const loginWithDemo = (demoType = 'learner') => {
-    let targetEmail = 'student@engtutor.com';
-    if (demoType === 'teacher') {
-      targetEmail = 'teacher@engtutor.com';
-    } else if (demoType === 'admin') {
-      targetEmail = 'admin@engtutor.com';
-    }
-
-    const matched = findUserByEmail(targetEmail);
-    if (matched) {
-      setCurrentUserEmail(matched.email);
-      closeAuthModal();
-      return matched;
-    }
-    return null;
-  };
-
-  // Standard Login (email/password against enrollment table)
-  const login = (email, password) => {
+  // Standard Login (email/password against users table in Supabase)
+  const login = async (email, password) => {
     const normalizedEmail = (email || '').trim().toLowerCase();
-    const matched = findUserByEmail(normalizedEmail);
+
+    // Fetch user record from Supabase table or local cached state
+    let matched = findUserByEmail(normalizedEmail);
 
     if (!matched) {
-      return { success: false, error: 'No account found with this email address.' };
+      const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .ilike('email', normalizedEmail)
+        .maybeSingle();
+
+      if (error || !data) {
+        return { success: false, error: 'No account found with this email address.' };
+      }
+      matched = data;
     }
 
-    // Direct password match (or demo match)
-    if (matched.password_hash && matched.password_hash !== password && password !== 'password123' && password !== 'admin123' && password !== 'teacher123' && password !== 'student123') {
+    // Secure password verification (SHA-256 with salt)
+    const isMatch = await verifyPassword(password, matched.password_hash);
+    if (!isMatch) {
       return { success: false, error: 'Incorrect password.' };
     }
 
     setCurrentUserEmail(matched.email);
+    setCachedUser(matched);
+    localStorage.setItem('engtutor_auth_user_data', JSON.stringify(matched));
     closeAuthModal();
     return { success: true, user: matched };
   };
 
-  // Registration handler (writes directly to enrollment table as 'learner')
-  const register = ({ name, email, password, phone }) => {
-    const res = registerLearner({
+  // Registration handler (hashes password and writes directly to Supabase users table)
+  const register = async ({ name, email, password, phone }) => {
+    const hashedPassword = await hashPassword(password);
+
+    const res = await registerLearner({
       full_name: name,
       email,
-      password_hash: password,
+      password_hash: hashedPassword,
       phone,
     });
 
@@ -93,13 +111,17 @@ export function AuthProvider({ children }) {
     }
 
     setCurrentUserEmail(res.user.email);
+    setCachedUser(res.user);
+    localStorage.setItem('engtutor_auth_user_data', JSON.stringify(res.user));
     closeAuthModal();
     return res;
   };
 
   const logout = () => {
     setCurrentUserEmail(null);
+    setCachedUser(null);
     localStorage.removeItem('engtutor_auth_user_email');
+    localStorage.removeItem('engtutor_auth_user_data');
   };
 
   return (
@@ -111,7 +133,6 @@ export function AuthProvider({ children }) {
         isTeacher: user?.role === 'teacher',
         isAdmin: user?.role === 'admin',
         login,
-        loginWithDemo,
         register,
         logout,
         isAuthModalOpen,
@@ -132,3 +153,4 @@ export function useAuth() {
   }
   return context;
 }
+

@@ -1,271 +1,157 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 const PortalContext = createContext();
 
-const INITIAL_ENROLLMENT = [
-  {
-    id: 'adm-001',
-    full_name: 'Platform Administrator',
-    email: 'admin@engtutor.com',
-    password_hash: 'admin123',
-    phone: '+1 (555) 019-2831',
-    role: 'admin',
-    video_1_watched: true,
-    funded_balance: 100.00,
-    video_2_watched: true,
-    payment_channel: 'Stripe Corporate Vault',
-    terms_accepted: true,
-    is_live_on_homepage: false,
-    rating: 5.0,
-    total_students: 0,
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-08-01 09:00',
-  },
-  {
-    id: 'tch-201',
-    full_name: 'Emma Watson',
-    email: 'teacher@engtutor.com',
-    password_hash: 'teacher123',
-    phone: '+44 20 7946 0912',
-    role: 'teacher',
-    video_1_watched: true,
-    funded_balance: 45.00,
-    video_2_watched: true,
-    payment_channel: 'PayPal (emma.watson@payments.com)',
-    terms_accepted: true,
-    is_live_on_homepage: true,
-    rating: 4.98,
-    total_students: 142,
-    qualifications: 'MA TESOL • Cambridge CELTA Certified',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-08-10 14:30',
-  },
-  {
-    id: 'tch-202',
-    full_name: 'James Miller',
-    email: 'james@engtutor.com',
-    password_hash: 'teacher123',
-    phone: '+44 20 7946 0884',
-    role: 'teacher',
-    video_1_watched: true,
-    funded_balance: 32.50,
-    video_2_watched: true,
-    payment_channel: 'Direct Bank Wire (UK Barclays)',
-    terms_accepted: true,
-    is_live_on_homepage: true,
-    rating: 5.0,
-    total_students: 210,
-    qualifications: 'Senior IELTS Methodology Specialist',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-08-14 11:15',
-  },
-  {
-    id: 'tch-203',
-    full_name: 'Michael Davies',
-    email: 'michael@engtutor.com',
-    password_hash: 'teacher123',
-    phone: '+1 555 342 9871',
-    role: 'teacher',
-    video_1_watched: true,
-    funded_balance: 18.00,
-    video_2_watched: true,
-    payment_channel: 'Stripe Connect (michael.davies@business.com)',
-    terms_accepted: true,
-    is_live_on_homepage: true,
-    rating: 4.9,
-    total_students: 120,
-    qualifications: 'Corporate English & Negotiation Coach',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-08-18 16:45',
-  },
-  {
-    id: 'tch-204',
-    full_name: 'Sarah Jenkins',
-    email: 'sarah@engtutor.com',
-    password_hash: 'teacher123',
-    phone: '+44 20 7946 0441',
-    role: 'teacher',
-    video_1_watched: true,
-    funded_balance: 24.00,
-    video_2_watched: true,
-    payment_channel: 'Wise Transfer (sarah.jenkins@wise.com)',
-    terms_accepted: true,
-    is_live_on_homepage: true,
-    rating: 4.8,
-    total_students: 160,
-    qualifications: 'Phonetics & Accent Reduction Mentor',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-08-20 10:00',
-  },
-  {
-    id: 'stu-101',
-    full_name: 'Alex Morgan',
-    email: 'student@engtutor.com',
-    password_hash: 'student123',
-    phone: '+1 555 832 9942',
-    role: 'learner',
-    video_1_watched: false,
-    funded_balance: 0.00,
-    video_2_watched: false,
-    payment_channel: null,
-    terms_accepted: false,
-    is_live_on_homepage: false,
-    rating: 5.0,
-    total_students: 0,
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-    created_at: '2026-09-01 12:00',
-  }
-];
-
-const INITIAL_MESSAGES = [
-  {
-    id: 'msg-501',
-    teacher_id: 'tch-201',
-    teacher_name: 'Emma Watson',
-    student_name: 'David Kim',
-    student_email: 'david.k@gmail.com',
-    student_phone: '+1 555 492 1190',
-    message: 'Hello! I am preparing for IELTS Academic exam next month and would like to book 3 weekly speaking sessions.',
-    lead_fee_deducted: 1.50,
-    timestamp: '2026-09-14 09:20',
-  },
-  {
-    id: 'msg-502',
-    teacher_id: 'tch-201',
-    teacher_name: 'Emma Watson',
-    student_name: 'Elena Rostova',
-    student_email: 'elena.r@outlook.com',
-    student_phone: '+44 7700 900123',
-    message: 'Hi Emma, I want to reduce my accent for business presentations in London. Are your afternoon slots open?',
-    lead_fee_deducted: 1.50,
-    timestamp: '2026-09-14 13:45',
-  },
-  {
-    id: 'msg-503',
-    teacher_id: 'tch-202',
-    teacher_name: 'James Miller',
-    student_name: 'Carlos Mendez',
-    student_email: 'carlos.m@yahoo.com',
-    student_phone: '+34 612 345 678',
-    message: 'Looking for intensive Band 7.5 writing review and 1-on-1 feedback on Task 2 essays.',
-    lead_fee_deducted: 1.50,
-    timestamp: '2026-09-13 18:10',
-  }
-];
-
-const INITIAL_DEDUCTIONS = [
-  {
-    id: 'ded-1',
-    teacher_id: 'tch-201',
-    teacher_name: 'Emma Watson',
-    type: 'lead_fee_deduction',
-    amount: 1.50,
-    balance_after: 45.00,
-    description: 'Student inquiry lead fee from Elena Rostova (elena.r@outlook.com)',
-    timestamp: '2026-09-14 13:45',
-  },
-  {
-    id: 'ded-2',
-    teacher_id: 'tch-201',
-    teacher_name: 'Emma Watson',
-    type: 'lead_fee_deduction',
-    amount: 1.50,
-    balance_after: 46.50,
-    description: 'Student inquiry lead fee from David Kim (david.k@gmail.com)',
-    timestamp: '2026-09-14 09:20',
-  },
-  {
-    id: 'ded-3',
-    teacher_id: 'tch-201',
-    teacher_name: 'Emma Watson',
-    type: 'wallet_fund',
-    amount: 48.00,
-    balance_after: 48.00,
-    description: 'Teacher wallet funding via card deposit',
-    timestamp: '2026-09-10 10:00',
-  }
-];
-
 export function PortalProvider({ children }) {
-  // Enrollment Table State
-  const [enrollment, setEnrollment] = useState(() => {
-    try {
-      const saved = localStorage.getItem('engtutor_enrollment_table');
-      return saved ? JSON.parse(saved) : INITIAL_ENROLLMENT;
-    } catch (e) {
-      return INITIAL_ENROLLMENT;
-    }
+  const [enrollment, setEnrollment] = useState([]);
+  const [platformSettings, setPlatformSettings] = useState({
+    lead_fee: 1.50,
+    min_funding: 10.00,
+    training_video_1_url: 'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE',
+    training_video_1_title: 'Mastering the PPP English Teaching Methodology',
+    training_video_1_description: 'Complete step-by-step masterclass on conducting 45-minute communicative English lessons.',
+    training_video_2_url: 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso',
+    training_video_2_title: 'Teacher Monetization & Direct Payout Acquisition Strategy',
+    training_video_2_description: 'How to set your hourly rate, handle student inquiries, and collect payments directly.',
   });
-
-  // Platform Settings State
-  const [platformSettings, setPlatformSettings] = useState(() => {
-    try {
-      const saved = localStorage.getItem('engtutor_platform_settings');
-      return saved ? JSON.parse(saved) : { lead_fee: 1.50, min_funding: 10.00 };
-    } catch (e) {
-      return { lead_fee: 1.50, min_funding: 10.00 };
-    }
-  });
-
-  // Teacher Messages State
-  const [teacherMessages, setTeacherMessages] = useState(() => {
-    try {
-      const saved = localStorage.getItem('engtutor_teacher_messages');
-      return saved ? JSON.parse(saved) : INITIAL_MESSAGES;
-    } catch (e) {
-      return INITIAL_MESSAGES;
-    }
-  });
-
-  // Deduction & Wallet Logs State
-  const [deductionLogs, setDeductionLogs] = useState(() => {
-    try {
-      const saved = localStorage.getItem('engtutor_deduction_logs');
-      return saved ? JSON.parse(saved) : INITIAL_DEDUCTIONS;
-    } catch (e) {
-      return INITIAL_DEDUCTIONS;
-    }
-  });
-
-  // Active Inquiry Modal State
+  const [teacherMessages, setTeacherMessages] = useState([]);
+  const [deductionLogs, setDeductionLogs] = useState([]);
+  const [lessonBookings, setLessonBookings] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [inquiryModalTeacher, setInquiryModalTeacher] = useState(null);
 
-  // Sync state to LocalStorage
-  useEffect(() => {
-    localStorage.setItem('engtutor_enrollment_table', JSON.stringify(enrollment));
-  }, [enrollment]);
+  // Compute live teachers for homepage & directory display
+  const liveTeachers = enrollment.filter(
+    (u) => u.role === 'teacher' && u.is_live_on_homepage
+  );
+
+  // Fetch all initial live data from Supabase backend
+  const fetchPortalData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      // Fetch users / enrollment
+      const { data: usersData, error: usersErr } = await supabase
+        .from('users')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!usersErr && usersData) {
+        const formattedUsers = usersData.map((u) => ({
+          ...u,
+          funded_balance: parseFloat(u.funded_balance) || 0,
+          hourly_rate: parseFloat(u.hourly_rate) || 25.00,
+          rating: parseFloat(u.rating) || 5.0,
+          total_students: parseInt(u.total_students, 10) || 0,
+        }));
+        setEnrollment(formattedUsers);
+      }
+
+      // Fetch platform settings
+      const { data: settingsData, error: settingsErr } = await supabase
+        .from('platform_settings')
+        .select('*')
+        .eq('id', 'global')
+        .maybeSingle();
+
+      if (!settingsErr && settingsData) {
+        setPlatformSettings({
+          lead_fee: parseFloat(settingsData.lead_fee) || 1.50,
+          min_funding: parseFloat(settingsData.min_funding) || 10.00,
+          training_video_1_url: settingsData.training_video_1_url || 'https://www.youtube-nocookie.com/embed/M7lc1UVf-VE',
+          training_video_1_title: settingsData.training_video_1_title || 'Mastering the PPP English Teaching Methodology',
+          training_video_1_description: settingsData.training_video_1_description || 'Complete step-by-step masterclass on conducting 45-minute communicative English lessons.',
+          training_video_2_url: settingsData.training_video_2_url || 'https://www.youtube-nocookie.com/embed/L_LUpnjgPso',
+          training_video_2_title: settingsData.training_video_2_title || 'Teacher Monetization & Direct Payout Acquisition Strategy',
+          training_video_2_description: settingsData.training_video_2_description || 'How to set your hourly rate, handle student inquiries, and collect payments directly.',
+        });
+      }
+
+      // Fetch teacher messages
+      const { data: messagesData, error: msgErr } = await supabase
+        .from('teacher_messages')
+        .select('*')
+        .order('timestamp', { ascending: false });
+
+      if (!msgErr && messagesData) {
+        setTeacherMessages(
+          messagesData.map((m) => ({
+            ...m,
+            lead_fee_deducted: parseFloat(m.lead_fee_deducted) || 1.50,
+          }))
+        );
+      }
+
+      // Fetch deduction logs
+      const { data: logsData, error: logsErr } = await supabase
+        .from('deduction_logs')
+        .select('*')
+        .order('timestamp', { ascending: false });
+
+      if (!logsErr && logsData) {
+        setDeductionLogs(
+          logsData.map((l) => ({
+            ...l,
+            amount: parseFloat(l.amount) || 0,
+            balance_after: parseFloat(l.balance_after) || 0,
+          }))
+        );
+      }
+
+      // Fetch lesson bookings
+      const { data: bookingsData, error: bookErr } = await supabase
+        .from('lesson_bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!bookErr && bookingsData) {
+        setLessonBookings(
+          bookingsData.map((b) => ({
+            ...b,
+            hourly_rate: parseFloat(b.hourly_rate) || 25.00,
+            amount_paid: parseFloat(b.amount_paid) || 0.00,
+          }))
+        );
+      }
+    } catch (err) {
+      console.error('Error fetching data from Supabase:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    localStorage.setItem('engtutor_platform_settings', JSON.stringify(platformSettings));
-  }, [platformSettings]);
-
-  useEffect(() => {
-    localStorage.setItem('engtutor_teacher_messages', JSON.stringify(teacherMessages));
-  }, [teacherMessages]);
-
-  useEffect(() => {
-    localStorage.setItem('engtutor_deduction_logs', JSON.stringify(deductionLogs));
-  }, [deductionLogs]);
+    fetchPortalData();
+  }, [fetchPortalData]);
 
   // Helpers
   const findUserById = (id) => enrollment.find((u) => u.id === id);
   const findUserByEmail = (email) =>
     enrollment.find((u) => (u.email || '').toLowerCase() === (email || '').toLowerCase().trim());
 
-  // Register learner
-  const registerLearner = ({ full_name, email, password_hash, phone }) => {
-    const existing = findUserByEmail(email);
-    if (existing) {
+  // Register learner in Supabase table
+  const registerLearner = async ({ full_name, email, password_hash, phone }) => {
+    const normalizedEmail = (email || '').trim().toLowerCase();
+
+    // Check existing in Supabase or local state
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('id, email')
+      .ilike('email', normalizedEmail)
+      .maybeSingle();
+
+    if (existingUser || findUserByEmail(normalizedEmail)) {
       return { success: false, error: 'An account with this email already exists.' };
     }
 
     const newUser = {
       id: `usr-${Date.now()}`,
-      full_name: full_name.trim(),
-      email: email.trim().toLowerCase(),
+      full_name: (full_name || '').trim(),
+      email: normalizedEmail,
       password_hash: password_hash || 'password123',
       phone: phone ? phone.trim() : '',
-      role: 'learner', // Default role
+      role: 'learner',
       video_1_watched: false,
       funded_balance: 0.00,
       video_2_watched: false,
@@ -274,16 +160,26 @@ export function PortalProvider({ children }) {
       is_live_on_homepage: false,
       rating: 5.0,
       total_students: 0,
+      qualifications: null,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-      created_at: new Date().toISOString().replace('T', ' ').substring(0, 16),
+      created_at: new Date().toISOString(),
     };
+
+    const { error: insertErr } = await supabase
+      .from('users')
+      .insert(newUser);
+
+    if (insertErr) {
+      console.error('Supabase user insert error:', insertErr);
+      return { success: false, error: insertErr.message || 'Failed to create user in database.' };
+    }
 
     setEnrollment((prev) => [newUser, ...prev]);
     return { success: true, user: newUser };
   };
 
   // Video 1 Watch Action
-  const completeVideo1 = (userId) => {
+  const completeVideo1 = async (userId) => {
     let updatedUser = null;
     setEnrollment((prev) =>
       prev.map((u) => {
@@ -294,45 +190,64 @@ export function PortalProvider({ children }) {
         return u;
       })
     );
+
+    try {
+      await supabase
+        .from('users')
+        .update({ video_1_watched: true })
+        .eq('id', userId);
+    } catch (e) {
+      console.error('Error updating video 1 in Supabase:', e);
+    }
+
     return updatedUser;
   };
 
   // Wallet Funding Action
-  const fundWallet = (userId, amount) => {
+  const fundWallet = async (userId, amount) => {
     const numAmount = parseFloat(amount);
     if (isNaN(numAmount) || numAmount <= 0) return { success: false, error: 'Invalid funding amount' };
 
-    let updatedUser = null;
+    const currentUser = findUserById(userId);
+    if (!currentUser) return { success: false, error: 'User not found' };
+
+    const newBal = (currentUser.funded_balance || 0) + numAmount;
+    const updatedUser = { ...currentUser, funded_balance: newBal };
+
     setEnrollment((prev) =>
-      prev.map((u) => {
-        if (u.id === userId) {
-          const newBal = (u.funded_balance || 0) + numAmount;
-          updatedUser = { ...u, funded_balance: newBal };
-          return updatedUser;
-        }
-        return u;
-      })
+      prev.map((u) => (u.id === userId ? updatedUser : u))
     );
 
-    if (updatedUser) {
-      const newLog = {
-        id: `ded-${Date.now()}`,
-        teacher_id: updatedUser.id,
-        teacher_name: updatedUser.full_name,
-        type: 'wallet_fund',
-        amount: numAmount,
-        balance_after: updatedUser.funded_balance,
-        description: `Account deposit (+$${numAmount.toFixed(2)}) via payment gateway`,
-        timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
-      };
-      setDeductionLogs((prev) => [newLog, ...prev]);
+    const newLog = {
+      id: `ded-${Date.now()}`,
+      teacher_id: updatedUser.id,
+      teacher_name: updatedUser.full_name,
+      type: 'wallet_fund',
+      amount: numAmount,
+      balance_after: newBal,
+      description: `Account deposit (+$${numAmount.toFixed(2)}) via payment gateway`,
+      timestamp: new Date().toISOString(),
+    };
+    setDeductionLogs((prev) => [newLog, ...prev]);
+
+    try {
+      await supabase
+        .from('users')
+        .update({ funded_balance: newBal })
+        .eq('id', userId);
+
+      await supabase
+        .from('deduction_logs')
+        .insert(newLog);
+    } catch (e) {
+      console.error('Error recording wallet fund in Supabase:', e);
     }
 
     return { success: true, user: updatedUser };
   };
 
   // Video 2 Watch Action
-  const completeVideo2 = (userId) => {
+  const completeVideo2 = async (userId) => {
     let updatedUser = null;
     setEnrollment((prev) =>
       prev.map((u) => {
@@ -343,11 +258,21 @@ export function PortalProvider({ children }) {
         return u;
       })
     );
+
+    try {
+      await supabase
+        .from('users')
+        .update({ video_2_watched: true })
+        .eq('id', userId);
+    } catch (e) {
+      console.error('Error updating video 2 in Supabase:', e);
+    }
+
     return updatedUser;
   };
 
   // Payment Channel Setting Action
-  const updatePaymentChannel = (userId, channelString) => {
+  const updatePaymentChannel = async (userId, channelString) => {
     let updatedUser = null;
     setEnrollment((prev) =>
       prev.map((u) => {
@@ -358,42 +283,64 @@ export function PortalProvider({ children }) {
         return u;
       })
     );
+
+    try {
+      await supabase
+        .from('users')
+        .update({ payment_channel: channelString })
+        .eq('id', userId);
+    } catch (e) {
+      console.error('Error updating payment channel in Supabase:', e);
+    }
+
     return updatedUser;
   };
 
   // Final Gate Step: Accept T&Cs & Upgrade to Teacher
-  const acceptTermsAndUpgrade = (userId) => {
+  const acceptTermsAndUpgrade = async (userId) => {
     let updatedUser = null;
-    setEnrollment((prev) =>
-      prev.map((u) => {
-        if (u.id === userId) {
-          const isEligible =
-            u.video_1_watched &&
-            u.funded_balance >= platformSettings.min_funding &&
-            u.video_2_watched &&
-            Boolean(u.payment_channel);
+    const currentUser = findUserById(userId);
+    if (!currentUser) return null;
 
-          if (isEligible) {
-            updatedUser = {
-              ...u,
-              terms_accepted: true,
-              role: 'teacher',
-              is_live_on_homepage: true,
-            };
-            return updatedUser;
-          } else {
-            updatedUser = { ...u, terms_accepted: true };
-            return updatedUser;
-          }
-        }
-        return u;
-      })
+    const isEligible =
+      currentUser.video_1_watched &&
+      currentUser.funded_balance >= platformSettings.min_funding &&
+      currentUser.video_2_watched &&
+      Boolean(currentUser.payment_channel);
+
+    if (isEligible) {
+      updatedUser = {
+        ...currentUser,
+        terms_accepted: true,
+        role: 'teacher',
+        is_live_on_homepage: true,
+      };
+    } else {
+      updatedUser = { ...currentUser, terms_accepted: true };
+    }
+
+    setEnrollment((prev) =>
+      prev.map((u) => (u.id === userId ? updatedUser : u))
     );
+
+    try {
+      await supabase
+        .from('users')
+        .update({
+          terms_accepted: true,
+          role: updatedUser.role,
+          is_live_on_homepage: updatedUser.is_live_on_homepage,
+        })
+        .eq('id', userId);
+    } catch (e) {
+      console.error('Error upgrading teacher in Supabase:', e);
+    }
+
     return updatedUser;
   };
 
   // Student Inquiry & Lead Fee Deduction Flow
-  const submitStudentInquiry = ({
+  const submitStudentInquiry = async ({
     teacher_id,
     student_name,
     student_email,
@@ -407,7 +354,6 @@ export function PortalProvider({ children }) {
 
     const currentFee = platformSettings.lead_fee || 1.50;
 
-    // Check teacher funded balance
     if ((teacher.funded_balance || 0) < currentFee) {
       return {
         success: false,
@@ -415,27 +361,25 @@ export function PortalProvider({ children }) {
       };
     }
 
-    // Deduct lead fee from teacher's funded balance
     const newBal = (teacher.funded_balance || 0) - currentFee;
+
     setEnrollment((prev) =>
       prev.map((u) => (u.id === teacher_id ? { ...u, funded_balance: newBal } : u))
     );
 
-    // Record inquiry in teacher_messages
     const newMsg = {
       id: `msg-${Date.now()}`,
       teacher_id,
       teacher_name: teacher.full_name,
-      student_name: student_name.trim(),
-      student_email: student_email.trim(),
+      student_name: (student_name || '').trim(),
+      student_email: (student_email || '').trim(),
       student_phone: student_phone ? student_phone.trim() : '',
-      message: message.trim(),
+      message: (message || '').trim(),
       lead_fee_deducted: currentFee,
-      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
+      timestamp: new Date().toISOString(),
     };
     setTeacherMessages((prev) => [newMsg, ...prev]);
 
-    // Record deduction log
     const newLog = {
       id: `ded-${Date.now()}`,
       teacher_id,
@@ -444,22 +388,75 @@ export function PortalProvider({ children }) {
       amount: currentFee,
       balance_after: newBal,
       description: `Student inquiry lead fee from ${student_name} (${student_email})`,
-      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
+      timestamp: new Date().toISOString(),
     };
     setDeductionLogs((prev) => [newLog, ...prev]);
+
+    try {
+      await supabase
+        .from('users')
+        .update({ funded_balance: newBal })
+        .eq('id', teacher_id);
+
+      await supabase
+        .from('teacher_messages')
+        .insert(newMsg);
+
+      await supabase
+        .from('deduction_logs')
+        .insert(newLog);
+    } catch (e) {
+      console.error('Error submitting inquiry to Supabase:', e);
+    }
 
     return { success: true, message: newMsg };
   };
 
+  // Submit Contact Form Inquiry
+  const submitContactInquiry = async ({ name, email, phone, subject, message }) => {
+    const inquiryRecord = {
+      id: `inq-${Date.now()}`,
+      name: (name || '').trim(),
+      email: (email || '').trim(),
+      subject: subject ? subject.trim() : '',
+      message: (message || '').trim(),
+      created_at: new Date().toISOString(),
+    };
+
+    try {
+      const { error } = await supabase
+        .from('contact_inquiries')
+        .insert(inquiryRecord);
+
+      if (error) {
+        console.error('Supabase contact insert error:', error);
+        return { success: false, error: error.message };
+      }
+      return { success: true };
+    } catch (err) {
+      console.error('Failed to submit contact inquiry:', err);
+      return { success: false, error: err.message };
+    }
+  };
+
   // ADMIN ACTIONS
-  const updateLeadFee = (newFee) => {
+  const updateLeadFee = async (newFee) => {
     const feeNum = parseFloat(newFee);
     if (isNaN(feeNum) || feeNum < 0) return false;
     setPlatformSettings((prev) => ({ ...prev, lead_fee: feeNum }));
+
+    try {
+      await supabase
+        .from('platform_settings')
+        .upsert({ id: 'global', lead_fee: feeNum, updated_at: new Date().toISOString() });
+    } catch (e) {
+      console.error('Error updating lead fee in Supabase:', e);
+    }
+
     return true;
   };
 
-  const adjustTeacherWallet = (teacherId, type, amount, reason) => {
+  const adjustTeacherWallet = async (teacherId, type, amount, reason) => {
     const numAmount = parseFloat(amount);
     if (isNaN(numAmount) || numAmount <= 0) return { success: false, error: 'Invalid adjustment amount.' };
 
@@ -485,14 +482,27 @@ export function PortalProvider({ children }) {
       amount: numAmount,
       balance_after: newBal,
       description: `Admin manual ${type}: ${reason || 'Admin wallet adjustment'}`,
-      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16),
+      timestamp: new Date().toISOString(),
     };
     setDeductionLogs((prev) => [newLog, ...prev]);
+
+    try {
+      await supabase
+        .from('users')
+        .update({ funded_balance: newBal })
+        .eq('id', teacherId);
+
+      await supabase
+        .from('deduction_logs')
+        .insert(newLog);
+    } catch (e) {
+      console.error('Error adjusting wallet in Supabase:', e);
+    }
 
     return { success: true, balance: newBal };
   };
 
-  const toggleTeacherLiveStatus = (teacherId) => {
+  const toggleTeacherLiveStatus = async (teacherId) => {
     let updated = null;
     setEnrollment((prev) =>
       prev.map((u) => {
@@ -503,37 +513,290 @@ export function PortalProvider({ children }) {
         return u;
       })
     );
+
+    if (updated) {
+      try {
+        await supabase
+          .from('users')
+          .update({ is_live_on_homepage: updated.is_live_on_homepage })
+          .eq('id', teacherId);
+      } catch (e) {
+        console.error('Error toggling teacher live status in Supabase:', e);
+      }
+    }
+
     return updated;
   };
 
-  const changeUserRole = (userId, newRole) => {
+  const changeUserRole = async (userId, newRole) => {
+    let updated = null;
     setEnrollment((prev) =>
       prev.map((u) => {
         if (u.id === userId) {
-          return {
+          updated = {
             ...u,
             role: newRole,
             is_live_on_homepage: newRole === 'teacher' ? u.is_live_on_homepage : false,
           };
+          return updated;
         }
         return u;
       })
     );
+
+    if (updated) {
+      try {
+        await supabase
+          .from('users')
+          .update({
+            role: newRole,
+            is_live_on_homepage: updated.is_live_on_homepage,
+          })
+          .eq('id', userId);
+      } catch (e) {
+        console.error('Error changing user role in Supabase:', e);
+      }
+    }
   };
 
-  // Get live teachers for homepage carousel / directory
-  const liveTeachers = enrollment.filter(
-    (u) => u.role === 'teacher' && u.is_live_on_homepage
-  );
+  // Teacher Hourly Rate Update
+  const updateHourlyRate = async (userId, newRate) => {
+    const rateNum = parseFloat(newRate);
+    if (isNaN(rateNum) || rateNum < 0) return { success: false, error: 'Invalid hourly rate' };
+
+    let updatedUser = null;
+    setEnrollment((prev) =>
+      prev.map((u) => {
+        if (u.id === userId) {
+          updatedUser = { ...u, hourly_rate: rateNum };
+          return updatedUser;
+        }
+        return u;
+      })
+    );
+
+    try {
+      await supabase
+        .from('users')
+        .update({ hourly_rate: rateNum })
+        .eq('id', userId);
+    } catch (e) {
+      console.error('Error updating hourly rate in Supabase:', e);
+    }
+
+    return { success: true, user: updatedUser };
+  };
+
+  // Admin Training Video Update
+  const updateAdminTrainingVideo = async (videoData) => {
+    const updated = {
+      ...platformSettings,
+      ...videoData,
+      updated_at: new Date().toISOString(),
+    };
+    setPlatformSettings(updated);
+
+    try {
+      await supabase
+        .from('platform_settings')
+        .upsert({ id: 'global', ...videoData, updated_at: new Date().toISOString() });
+    } catch (e) {
+      console.error('Error updating training video in Supabase:', e);
+    }
+
+    return { success: true, settings: updated };
+  };
+
+  // Student Lesson Booking & Transaction Flow
+  const createLessonBooking = async ({
+    teacher_id,
+    teacher_name,
+    student_name,
+    student_email,
+    student_phone,
+    hourly_rate,
+    lesson_topic,
+    message,
+  }) => {
+    const teacher = findUserById(teacher_id);
+    if (!teacher) return { success: false, error: 'Teacher not found' };
+
+    const currentFee = platformSettings.lead_fee || 1.50;
+    if ((teacher.funded_balance || 0) < currentFee) {
+      return { success: false, error: "This teacher's account cannot receive new bookings right now." };
+    }
+
+    const rate = hourly_rate ? parseFloat(hourly_rate) : (teacher.hourly_rate || 25.00);
+    const newBal = (teacher.funded_balance || 0) - currentFee;
+
+    // Deduct lead fee from teacher
+    setEnrollment((prev) =>
+      prev.map((u) => (u.id === teacher_id ? { ...u, funded_balance: newBal } : u))
+    );
+
+    const bookingId = `book-${Date.now()}`;
+    const newBooking = {
+      id: bookingId,
+      teacher_id,
+      teacher_name: teacher_name || teacher.full_name,
+      student_name: (student_name || '').trim(),
+      student_email: (student_email || '').trim(),
+      student_phone: student_phone ? student_phone.trim() : '',
+      hourly_rate: rate,
+      amount_paid: 0.00,
+      payment_status: 'pending',
+      lesson_status: 'inquiry',
+      lesson_topic: lesson_topic || '1-on-1 Spoken English Practice',
+      session_notes: message ? message.trim() : '',
+      created_at: new Date().toISOString(),
+    };
+    setLessonBookings((prev) => [newBooking, ...prev]);
+
+    // Also add to teacher_messages for inbox view
+    const newMsg = {
+      id: `msg-${Date.now()}`,
+      teacher_id,
+      teacher_name: teacher.full_name,
+      student_name: (student_name || '').trim(),
+      student_email: (student_email || '').trim(),
+      student_phone: student_phone ? student_phone.trim() : '',
+      message: message ? message.trim() : `Booking request for ${lesson_topic || 'Spoken English'} at $${rate}/hr`,
+      lead_fee_deducted: currentFee,
+      timestamp: new Date().toISOString(),
+    };
+    setTeacherMessages((prev) => [newMsg, ...prev]);
+
+    // Record deduction log
+    const newLog = {
+      id: `ded-${Date.now()}`,
+      teacher_id,
+      teacher_name: teacher.full_name,
+      type: 'lead_fee_deduction',
+      amount: currentFee,
+      balance_after: newBal,
+      description: `Student lesson booking lead fee from ${student_name} (${student_email})`,
+      timestamp: new Date().toISOString(),
+    };
+    setDeductionLogs((prev) => [newLog, ...prev]);
+
+    try {
+      await supabase.from('users').update({ funded_balance: newBal }).eq('id', teacher_id);
+      await supabase.from('lesson_bookings').insert(newBooking);
+      await supabase.from('teacher_messages').insert(newMsg);
+      await supabase.from('deduction_logs').insert(newLog);
+    } catch (e) {
+      console.error('Error creating lesson booking in Supabase:', e);
+    }
+
+    return { success: true, booking: newBooking };
+  };
+
+  // Teacher confirms booking from Inbox
+  const confirmLessonBooking = async (bookingId) => {
+    let updatedBooking = null;
+    setLessonBookings((prev) =>
+      prev.map((b) => {
+        if (b.id === bookingId) {
+          updatedBooking = { ...b, lesson_status: 'confirmed' };
+          return updatedBooking;
+        }
+        return b;
+      })
+    );
+
+    try {
+      await supabase
+        .from('lesson_bookings')
+        .update({ lesson_status: 'confirmed' })
+        .eq('id', bookingId);
+    } catch (e) {
+      console.error('Error confirming booking in Supabase:', e);
+    }
+
+    return { success: true, booking: updatedBooking };
+  };
+
+  // Student pays teacher rate for lesson
+  const payLessonBooking = async (bookingId, amount) => {
+    const payNum = parseFloat(amount) || 0;
+    let updatedBooking = null;
+    setLessonBookings((prev) =>
+      prev.map((b) => {
+        if (b.id === bookingId) {
+          updatedBooking = {
+            ...b,
+            payment_status: 'paid',
+            amount_paid: payNum,
+            lesson_status: 'in_progress',
+          };
+          return updatedBooking;
+        }
+        return b;
+      })
+    );
+
+    try {
+      await supabase
+        .from('lesson_bookings')
+        .update({
+          payment_status: 'paid',
+          amount_paid: payNum,
+          lesson_status: 'in_progress',
+        })
+        .eq('id', bookingId);
+    } catch (e) {
+      console.error('Error processing lesson payment in Supabase:', e);
+    }
+
+    return { success: true, booking: updatedBooking };
+  };
+
+  // Teacher/Student completes live lesson
+  const completeLessonBooking = async (bookingId, notes = '') => {
+    let updatedBooking = null;
+    const completionTime = new Date().toISOString();
+    setLessonBookings((prev) =>
+      prev.map((b) => {
+        if (b.id === bookingId) {
+          updatedBooking = {
+            ...b,
+            lesson_status: 'completed',
+            session_notes: notes || b.session_notes,
+            completed_at: completionTime,
+          };
+          return updatedBooking;
+        }
+        return b;
+      })
+    );
+
+    try {
+      await supabase
+        .from('lesson_bookings')
+        .update({
+          lesson_status: 'completed',
+          session_notes: notes || undefined,
+          completed_at: completionTime,
+        })
+        .eq('id', bookingId);
+    } catch (e) {
+      console.error('Error completing lesson booking in Supabase:', e);
+    }
+
+    return { success: true, booking: updatedBooking };
+  };
 
   return (
     <PortalContext.Provider
       value={{
         enrollment,
+        isLoading,
         platformSettings,
         teacherMessages,
         deductionLogs,
+        lessonBookings,
         liveTeachers,
+        fetchPortalData,
         findUserById,
         findUserByEmail,
         registerLearner,
@@ -541,9 +804,16 @@ export function PortalProvider({ children }) {
         fundWallet,
         completeVideo2,
         updatePaymentChannel,
+        updateHourlyRate,
         acceptTermsAndUpgrade,
         submitStudentInquiry,
+        submitContactInquiry,
         updateLeadFee,
+        updateAdminTrainingVideo,
+        createLessonBooking,
+        confirmLessonBooking,
+        payLessonBooking,
+        completeLessonBooking,
         adjustTeacherWallet,
         toggleTeacherLiveStatus,
         changeUserRole,
@@ -563,3 +833,4 @@ export function usePortal() {
   }
   return context;
 }
+

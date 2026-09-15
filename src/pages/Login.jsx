@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
-  GraduationCap, Mail, Lock, ArrowRight, Sparkles, CheckCircle2, 
-  ShieldCheck, KeyRound, Star, Users, ShieldAlert 
+  GraduationCap, Mail, Lock, ArrowRight, ShieldCheck, Star, Users 
 } from 'lucide-react';
 
 export default function Login() {
-  const { login, loginWithDemo, isAuthenticated, user } = useAuth();
+  const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [copiedRole, setCopiedRole] = useState(null);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // If already logged in, redirect
   React.useEffect(() => {
@@ -26,33 +26,7 @@ export default function Login() {
     }
   }, [isAuthenticated, user, navigate]);
 
-  const handleQuickLogin = (role) => {
-    const loggedUser = loginWithDemo(role);
-    if (loggedUser) {
-      if (loggedUser.role === 'admin') {
-        navigate('/admin');
-      } else {
-        navigate('/dashboard');
-      }
-    }
-  };
-
-  const handleCopyCredentials = (demoRole) => {
-    if (demoRole === 'admin') {
-      setEmail('admin@engtutor.com');
-      setPassword('admin123');
-    } else if (demoRole === 'teacher') {
-      setEmail('teacher@engtutor.com');
-      setPassword('teacher123');
-    } else {
-      setEmail('student@engtutor.com');
-      setPassword('student123');
-    }
-    setCopiedRole(demoRole);
-    setTimeout(() => setCopiedRole(null), 2500);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -61,7 +35,10 @@ export default function Login() {
       return;
     }
 
-    const res = login(email, password);
+    setIsSubmitting(true);
+    const res = await login(email, password);
+    setIsSubmitting(false);
+
     if (!res.success) {
       setError(res.error || 'Invalid credentials.');
       return;
@@ -139,77 +116,8 @@ export default function Login() {
                 Portal Sign In
               </h3>
               <p className="text-sm text-slate-500">
-                Enter your credentials or click any demo profile below for instant access.
+                Enter your account email and password to access your portal.
               </p>
-            </div>
-
-            {/* Quick Demo Access Grid */}
-            <div className="mb-6 p-4 rounded-2xl bg-gradient-to-br from-indigo-50/90 via-blue-50/60 to-purple-50/80 border border-indigo-100 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-theme-primary" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-theme-navy font-jost">
-                    Instant Demo Login Shortcuts
-                  </span>
-                </div>
-                <span className="text-[10px] uppercase font-bold bg-theme-primary/10 text-theme-primary px-2 py-0.5 rounded-full">
-                  1-Click Access
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {/* Learner Demo Box */}
-                <div className="p-2.5 bg-white rounded-xl border border-blue-200 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <div className="font-semibold text-xs text-blue-900 mb-1">👩‍🎓 Learner Intake</div>
-                    <div className="font-mono text-[10px] text-slate-500 mb-1.5 truncate">student@engtutor.com</div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickLogin('learner')}
-                    className="w-full py-1.5 bg-theme-primary hover:bg-theme-navy text-white text-[11px] font-medium rounded-lg transition-colors"
-                  >
-                    Login Learner
-                  </button>
-                </div>
-
-                {/* Teacher Demo Box */}
-                <div className="p-2.5 bg-white rounded-xl border border-emerald-200 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <div className="font-semibold text-xs text-emerald-900 mb-1">👨‍🏫 Live Teacher</div>
-                    <div className="font-mono text-[10px] text-slate-500 mb-1.5 truncate">teacher@engtutor.com</div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickLogin('teacher')}
-                    className="w-full py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-medium rounded-lg transition-colors"
-                  >
-                    Login Teacher
-                  </button>
-                </div>
-
-                {/* Admin Demo Box */}
-                <div className="p-2.5 bg-white rounded-xl border border-red-200 shadow-xs flex flex-col justify-between">
-                  <div>
-                    <div className="font-semibold text-xs text-red-900 mb-1">🛡️ Admin Console</div>
-                    <div className="font-mono text-[10px] text-slate-500 mb-1.5 truncate">admin@engtutor.com</div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickLogin('admin')}
-                    className="w-full py-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-medium rounded-lg transition-colors"
-                  >
-                    Login Admin
-                  </button>
-                </div>
-              </div>
-
-              {copiedRole && (
-                <div className="mt-2 text-center text-xs text-emerald-600 font-medium flex items-center justify-center gap-1 animate-in fade-in">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>{copiedRole.toUpperCase()} credentials populated in fields below!</span>
-                </div>
-              )}
             </div>
 
             {error && (

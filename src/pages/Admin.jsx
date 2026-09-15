@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { usePortal } from '../context/PortalContext';
 import { 
   ShieldCheck, Users, DollarSign, MessageSquare, Settings, 
   ToggleLeft, ToggleRight, ArrowUpRight, ArrowDownRight, 
-  Search, Lock, Mail, CheckCircle2, AlertCircle, Save, Plus, Edit2, KeyRound
+  Search, Lock, Mail, CheckCircle2, AlertCircle, Save, Plus, Edit2, KeyRound,
+  Video, Play, BookOpen, Check, ExternalLink
 } from 'lucide-react';
 
 export default function Admin() {
-  const { user, login, loginWithDemo, logout, isAdmin } = useAuth();
+  const { user, login, logout, isAdmin } = useAuth();
   const {
     enrollment,
     platformSettings,
     teacherMessages,
     deductionLogs,
+    lessonBookings,
     updateLeadFee,
+    updateAdminTrainingVideo,
     adjustTeacherWallet,
     toggleTeacherLiveStatus,
     changeUserRole,
@@ -26,12 +29,31 @@ export default function Admin() {
   const [loginError, setLoginError] = useState('');
 
   // Dashboard active tab
-  const [activeTab, setActiveTab] = useState('enrollment'); // 'enrollment' | 'messages' | 'settings' | 'adjustments' | 'logs'
+  const [activeTab, setActiveTab] = useState('enrollment'); // 'enrollment' | 'videos' | 'bookings' | 'messages' | 'settings' | 'adjustments' | 'logs'
   const [searchQuery, setSearchQuery] = useState('');
 
   // Lead fee form state
   const [feeInput, setFeeInput] = useState(platformSettings.lead_fee.toString());
   const [feeSaved, setFeeSaved] = useState(false);
+
+  // Video course publisher state
+  const [video1Url, setVideo1Url] = useState(platformSettings.training_video_1_url || '');
+  const [video1Title, setVideo1Title] = useState(platformSettings.training_video_1_title || '');
+  const [video1Desc, setVideo1Desc] = useState(platformSettings.training_video_1_description || '');
+  const [video2Url, setVideo2Url] = useState(platformSettings.training_video_2_url || '');
+  const [video2Title, setVideo2Title] = useState(platformSettings.training_video_2_title || '');
+  const [videoSaved, setVideoSaved] = useState(false);
+
+  useEffect(() => {
+    if (platformSettings) {
+      setFeeInput(platformSettings.lead_fee.toString());
+      setVideo1Url(platformSettings.training_video_1_url || '');
+      setVideo1Title(platformSettings.training_video_1_title || '');
+      setVideo1Desc(platformSettings.training_video_1_description || '');
+      setVideo2Url(platformSettings.training_video_2_url || '');
+      setVideo2Title(platformSettings.training_video_2_title || '');
+    }
+  }, [platformSettings]);
 
   // Manual Adjustment form state
   const [selectedTeacherId, setSelectedTeacherId] = useState('');
@@ -41,7 +63,7 @@ export default function Admin() {
   const [adjustSuccess, setAdjustSuccess] = useState(false);
 
   // Handle Admin Login
-  const handleAdminLogin = (e) => {
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
 
@@ -50,7 +72,7 @@ export default function Admin() {
       return;
     }
 
-    const res = login(adminEmail, adminPassword);
+    const res = await login(adminEmail, adminPassword);
     if (!res.success) {
       setLoginError(res.error || 'Invalid credentials.');
       return;
@@ -61,23 +83,34 @@ export default function Admin() {
     }
   };
 
-  const handleQuickAdminDemo = () => {
-    loginWithDemo('admin');
-  };
-
-  const handleSaveLeadFee = (e) => {
+  const handleSaveLeadFee = async (e) => {
     e.preventDefault();
-    const ok = updateLeadFee(feeInput);
+    const ok = await updateLeadFee(feeInput);
     if (ok) {
       setFeeSaved(true);
       setTimeout(() => setFeeSaved(false), 2000);
     }
   };
 
-  const handleWalletAdjustment = (e) => {
+  const handleSaveVideos = async (e) => {
+    e.preventDefault();
+    const res = await updateAdminTrainingVideo({
+      training_video_1_url: video1Url,
+      training_video_1_title: video1Title,
+      training_video_1_description: video1Desc,
+      training_video_2_url: video2Url,
+      training_video_2_title: video2Title,
+    });
+    if (res.success) {
+      setVideoSaved(true);
+      setTimeout(() => setVideoSaved(false), 2500);
+    }
+  };
+
+  const handleWalletAdjustment = async (e) => {
     e.preventDefault();
     if (!selectedTeacherId) return;
-    const res = adjustTeacherWallet(selectedTeacherId, adjustType, adjustAmount, adjustReason);
+    const res = await adjustTeacherWallet(selectedTeacherId, adjustType, adjustAmount, adjustReason);
     if (res.success) {
       setAdjustSuccess(true);
       setTimeout(() => {
@@ -101,25 +134,6 @@ export default function Admin() {
             <p className="text-xs text-slate-400">
               Authorized personnel only. Access master enrollment tables, lead deductions, and wallet adjustments.
             </p>
-          </div>
-
-          {/* Quick Demo Bypass */}
-          <div className="p-3.5 bg-slate-700/60 rounded-2xl border border-slate-600 text-xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-amber-300 flex items-center gap-1">
-                <KeyRound className="w-3.5 h-3.5" /> 1-Click Admin Demo Login:
-              </span>
-              <button
-                type="button"
-                onClick={handleQuickAdminDemo}
-                className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold transition-colors"
-              >
-                Login as Admin
-              </button>
-            </div>
-            <div className="font-mono text-[11px] text-slate-400">
-              admin@engtutor.com • pass: admin123
-            </div>
           </div>
 
           {loginError && (
@@ -263,6 +277,8 @@ export default function Admin() {
         <div className="flex overflow-x-auto scrollbar-none space-x-2 border-b border-slate-700 pb-3 mb-6">
           {[
             { id: 'enrollment', label: 'Enrollment Master Table', icon: Users, count: enrollment.length },
+            { id: 'videos', label: 'Teacher Training Video Publisher', icon: Video },
+            { id: 'bookings', label: 'Lesson Bookings & Transactions', icon: BookOpen, count: lessonBookings?.length || 0 },
             { id: 'messages', label: 'Student Message Audit Log', icon: MessageSquare, count: teacherMessages.length },
             { id: 'settings', label: 'Lead Fee Configuration', icon: Settings },
             { id: 'adjustments', label: 'Manual Wallet Adjustment', icon: DollarSign },
@@ -558,6 +574,200 @@ export default function Admin() {
                 <span>Save Lead Fee Settings</span>
               </button>
             </form>
+          </div>
+        )}
+
+        {/* ================= TAB: TRAINING VIDEO COURSE PUBLISHER ================= */}
+        {activeTab === 'videos' && (
+          <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-xl max-w-3xl space-y-6">
+            <div>
+              <div className="flex items-center space-x-2">
+                <Video className="w-6 h-6 text-red-500" />
+                <h3 className="text-xl font-bold font-jost text-white">
+                  Teacher Training Course & Video Publisher
+                </h3>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                Configure the primary training masterclasses and video content that every new registered teacher must complete before funding their wallet and going live on the homepage.
+              </p>
+            </div>
+
+            {videoSaved && (
+              <div className="p-4 bg-emerald-900/50 border border-emerald-600 rounded-2xl text-emerald-200 text-xs flex items-center space-x-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                <span>Training videos and curriculum published live to Supabase! All new teachers will now see this course.</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSaveVideos} className="space-y-6">
+              {/* Phase 1 Video */}
+              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-700 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-theme-coral flex items-center gap-1.5">
+                    <Play className="w-3.5 h-3.5" /> Phase 1: Free Teaching Methodology Video
+                  </span>
+                  <span className="text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded-full font-bold">Mandatory Phase</span>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Lesson Title:
+                  </label>
+                  <input
+                    type="text"
+                    value={video1Title}
+                    onChange={(e) => setVideo1Title(e.target.value)}
+                    placeholder="e.g. Mastering the PPP English Teaching Methodology"
+                    required
+                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Video Embed URL (YouTube/Vimeo/CDN):
+                  </label>
+                  <input
+                    type="url"
+                    value={video1Url}
+                    onChange={(e) => setVideo1Url(e.target.value)}
+                    placeholder="https://www.youtube.com/embed/..."
+                    required
+                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-mono text-emerald-400 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Key Methodology Guidelines & Notes:
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={video1Desc}
+                    onChange={(e) => setVideo1Desc(e.target.value)}
+                    placeholder="Core instructions and takeaways for teachers..."
+                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+              </div>
+
+              {/* Phase 2 Video */}
+              <div className="p-5 bg-slate-900 rounded-2xl border border-slate-700 space-y-4">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                    <DollarSign className="w-3.5 h-3.5" /> Phase 2: Monetization & Rate Setting Video
+                  </span>
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">Unlocks After $10 Funding</span>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Lesson Title:
+                  </label>
+                  <input
+                    type="text"
+                    value={video2Title}
+                    onChange={(e) => setVideo2Title(e.target.value)}
+                    placeholder="e.g. Teacher Monetization & Direct Payout Acquisition Strategy"
+                    required
+                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-red-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Video Embed URL:
+                  </label>
+                  <input
+                    type="url"
+                    value={video2Url}
+                    onChange={(e) => setVideo2Url(e.target.value)}
+                    placeholder="https://www.youtube.com/embed/..."
+                    required
+                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs font-mono text-emerald-400 focus:outline-none focus:border-red-500"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-jost font-bold text-xs sm:text-sm rounded-xl transition-colors flex items-center space-x-2"
+              >
+                <Save className="w-4 h-4" />
+                <span>Publish Video Course to Database</span>
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* ================= TAB: LESSON BOOKINGS & TRANSACTIONS ================= */}
+        {activeTab === 'bookings' && (
+          <div className="bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-xl space-y-6">
+            <div>
+              <h3 className="text-xl font-bold font-jost text-white">
+                Live Student-Teacher Lessons & Transactions
+              </h3>
+              <p className="text-xs text-slate-400">
+                Track all student bookings, confirmed sessions, direct payments to teachers, and completed classes.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-700 text-slate-400 font-jost font-bold uppercase tracking-wider">
+                    <th className="py-3 px-3">Booking ID</th>
+                    <th className="py-3 px-3">Teacher</th>
+                    <th className="py-3 px-3">Student</th>
+                    <th className="py-3 px-3">Lesson Topic</th>
+                    <th className="py-3 px-3 text-right">Hourly Rate</th>
+                    <th className="py-3 px-3">Payment</th>
+                    <th className="py-3 px-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-700">
+                  {lessonBookings && lessonBookings.length > 0 ? (
+                    lessonBookings.map((b) => (
+                      <tr key={b.id} className="hover:bg-slate-750 transition-colors">
+                        <td className="py-3 px-3 font-mono text-slate-400">{b.id}</td>
+                        <td className="py-3 px-3 font-bold text-white">{b.teacher_name}</td>
+                        <td className="py-3 px-3 text-slate-300">
+                          {b.student_name} <br />
+                          <span className="text-[10px] text-slate-500">{b.student_email}</span>
+                        </td>
+                        <td className="py-3 px-3 text-slate-300">{b.lesson_topic}</td>
+                        <td className="py-3 px-3 text-right font-mono font-bold text-emerald-400">
+                          ${b.hourly_rate?.toFixed(2)}/hr
+                        </td>
+                        <td className="py-3 px-3">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            b.payment_status === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'
+                          }`}>
+                            {b.payment_status?.toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="py-3 px-3">
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                            b.lesson_status === 'completed' ? 'bg-emerald-500/20 text-emerald-400' :
+                            b.lesson_status === 'in_progress' ? 'bg-blue-500/20 text-blue-400' :
+                            b.lesson_status === 'confirmed' ? 'bg-purple-500/20 text-purple-400' :
+                            'bg-slate-500/20 text-slate-300'
+                          }`}>
+                            {b.lesson_status?.toUpperCase()}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={7} className="text-center py-6 text-slate-500">
+                        No student lesson bookings yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
